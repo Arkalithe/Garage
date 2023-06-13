@@ -2,21 +2,21 @@ export const Navbar = [
     {
         title: "Acceuil",
         url: "#",
-        cName: "nav-links"
+        cName: "bouton nav-link "
     }, 
     {
         title: "Service",
         url: "#",
-        cName: "nav-links"
+        cName: "bouton nav-link"
     },
     {
         title: "Contact",
         url: "#",
-        cName: "nav-links"
+        cName: "bouton nav-link"
     },
     {
         title: "Connexion",
         url: "#",
-        cName: "nav-links-mobile"
+        cName: "bouton nav-link "
     }
 ]

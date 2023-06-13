@@ -13,3 +13,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+li {
+  list-style: none;
+
+}
+footer {
+  background-color: #A9B4C3;
+  
+}
+
+.bouton {
+  background-color: #B2C9AB;
+  border-radius: 10px;
+  margin: 12.5px;
+  padding: 12.5px;
+}
+
+.layout {
+  min-height:100vh; 
+	display:flex; 
+	flex-direction:column; 
+}
+
+.section {
+  flex-grow: 1;
+}
