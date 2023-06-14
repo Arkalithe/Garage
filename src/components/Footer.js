@@ -4,7 +4,7 @@ class Footer extends Component {
     render() {
         return (
             <footer className="d-flex bd-footer flex-wrap justify-content-between py-md-2 ">
-
+                <div className="container-fluid">
                 <div className="col-md-4 d-flex align-items-center pt-2">
                     <a className="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" href="/">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
@@ -21,7 +21,7 @@ class Footer extends Component {
                         </ul>
                     </div>
                 </div>
-
+                </div>
             </footer>
         )
     }

@@ -4,25 +4,32 @@ import { Navbar } from "./Navbar";
 class Header extends Component {
     render() {
         return (
-            <nav className="NavbarItems d-flex px-3 py-2 border-bottom">
-                <div className="container">
-                    <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <nav className="border-bottom navbar navbar-expand-lg">
+                <div className="container-fluid">
 
-                        <h1 className="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-decoration-none">
+                    <div className="navbar-brand">
+                        <h1 className="align-items-center text-decoration-none ">
                             <i className="">
                             </i>
-                            Garage
+                            Garage V.Parrot
                         </h1>
+                    </div>
 
-                        <ul className="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div className="collapse navbar-collapse " id="navmenu">
+                        <ul className=" navbar-nav ms-auto" >
                             {Navbar.map((item, index) => {
                                 return (
-                                    <li key={index}>
-                                        <a href={item.url} className={item.cName}> {item.title} </a>
+                                    <li key={index} className="nav-item">
+                                        <a href={item.url} className="bouton nav-link"> {item.title} </a>
                                     </li>
                                 )
                             })}
                         </ul>
+
 
                     </div>
                 </div>
