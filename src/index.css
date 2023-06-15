@@ -24,6 +24,9 @@ footer {
   
 }
 
+.App {
+  min-height: 100vh;
+}
 .bouton {
   background-color: #B2C9AB;
   border-radius: 10px;
@@ -37,6 +40,10 @@ footer {
 	flex-direction:column; 
 }
 
-.section {
+section {
   flex-grow: 1;
+}
+.lien{
+  color: black;
+  text-decoration: none
 }

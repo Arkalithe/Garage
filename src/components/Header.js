@@ -1,41 +1,40 @@
-import { Component } from "react";
-import { Navbar } from "./Navbar";
+import React from 'react';
+import { Link } from "react-router-dom";
 
-class Header extends Component {
-    render() {
-        return (
-            <nav className="border-bottom navbar navbar-expand-lg">
-                <div className="container-fluid">
-
-                    <div className="navbar-brand">
-                        <h1 className="align-items-center text-decoration-none ">
-                            <i className="">
-                            </i>
-                            Garage V.Parrot
-                        </h1>
-                    </div>
-
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div className="collapse navbar-collapse " id="navmenu">
-                        <ul className=" navbar-nav ms-auto" >
-                            {Navbar.map((item, index) => {
-                                return (
-                                    <li key={index} className="nav-item">
-                                        <a href={item.url} className="bouton nav-link"> {item.title} </a>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-
-
-                    </div>
+const Header = () => {
+    return (
+        <nav className="border-bottom navbar navbar-expand-lg">
+            <div className="container-fluid">
+                <div className="navbar-brand">
+                    <h1  className="align-items-center text-decoration-none lien">
+                        <Link to="/" className='lien'>Garage V.Parrot</Link>                        
+                    </h1>
                 </div>
-            </nav>
-        )
-    }
+
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                <nav className="collapse navbar-collapse " id="navmenu">
+                    <ul className=" navbar-nav ms-auto" >
+                        <li className="nav-item">
+                        <Link to="/" className="bouton nav-link"> Acceuil  </Link>
+                        </li>
+                        <li className="nav-item">
+                        <Link to="/Contact" className="bouton nav-link"> Contact  </Link>
+                        </li>
+                        <li className="nav-item">
+                        <Link to="/Voiture" className="bouton nav-link"> Voiture  </Link>
+                        </li>
+                        <li className="nav-item">
+                        <Link to="/login" className="bouton nav-link"> Login  </Link>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    )
+
 }
 
 export default Header
