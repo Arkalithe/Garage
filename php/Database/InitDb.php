@@ -2,12 +2,12 @@
 include_once 'Connect.php';
 include_once 'CreationDb.php';
 include_once 'CreationTableDbUser.php';    
-
+include_once 'CreationTableDbCar.php';    
 
 
 $db_create = new DatabaseCreate();
 $db_table_user = new DatabaseTableCreateUser();
-
+$db_table_car = new DatabaseTableCreateCar;
 
 
 
@@ -16,7 +16,7 @@ $db_table_user = new DatabaseTableCreateUser();
 try {
     $db_create->creationDb();
     $db_table_user->creationTableUser();
-
+    $db_table_car->creationTableCar();
 
 } catch (PDOException $e) {
     echo $tsql . "Connection Raté : <br>" . $e->getMessage();
