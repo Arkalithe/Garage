@@ -1,9 +1,12 @@
 import React from 'react'
 import Register from '../components/Register'
 
-const AdminSpace = () => {
+const AdminSpace= () =>  {
+
+
+  
   return (
-    <div className='d-flex flex-column container-fluid form-cadre '>
+    <div className='d-flex flex-column container-fluid align-items-center m-auto'>
       <div><Register></Register> </div>
       <div> </div>
       <div></div>
@@ -11,6 +14,9 @@ const AdminSpace = () => {
       <div> </div>
     </div>
   )
+
 }
+
+
 
 export default AdminSpace

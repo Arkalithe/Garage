@@ -2,9 +2,9 @@
 include_once 'Connect.php';
 
 
-class DatabaseTableCreate
+class DatabaseTableCreateUser
 {
-    public function creationTable()
+    public function creationTableUser()
     {
         $db_connection = new DatabaseConnect();
         $conn = $db_connection->dbConnectionNamed();
@@ -13,15 +13,14 @@ class DatabaseTableCreate
 
             $tsql = "CREATE TABLE IF NOT EXISTS USERS (
                     id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                    email VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-                    password VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-                    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-                    )";
+                    email VARCHAR(50) NOT NULL,
+                    password VARCHAR(50) NOT NULL
+                    )";           
 
             $conn->exec($tsql);
             echo 'Table EMPLOYE crée avec succés<br>';
         } catch (PDOException $e) {
-            echo $tsql . "Connection Raté : <br>" . $e->getMessage();
+            echo $tsql . "Connection Raté : 1234" . $e->getMessage();
             exit;
         }
 
