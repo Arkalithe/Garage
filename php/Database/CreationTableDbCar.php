@@ -15,7 +15,7 @@ class DatabaseTableCreateCar
                 kilometrage INT(11) NOT NULL,
                 annee_circulation INT(4) NOT NULL,
                 caracteristique VARCHAR(255),
-                Equipement VARCHAR(255),
+                equipement VARCHAR(255),
                 image VARCHAR(255) NOT NULL
             )";         
 

@@ -7,6 +7,7 @@ import Home from './page/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import AdminSpace from './page/AdminSpace';
+import Car from './components/Car';
 
 
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/login" element={<Login/>} />
               <Route path="/signup" element={<Register/>} /> 
               <Route path="/adminSpace" element={<AdminSpace />} />
+              <Route path="/Voiture" element={<Car />} />
           </Routes>
         
         <Footer />

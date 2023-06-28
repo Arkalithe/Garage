@@ -6,34 +6,31 @@ class DatabaseConnect
     private $userName = "root";
     private $password = "";
     private $dbname = "garagevparrot";
+    public $conn;
     
-
     public function dbConnection()
     {
- 
+        $this->conn = null;
         try {
-            $conn =  new PDO("mysql:host=".$this->serverName.";",$this->userName, $this->password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connection base de donné reussi : ";
-            return $conn;
+            $this->conn =  new PDO("mysql:host=".$this->serverName.";",$this->userName, $this->password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);            
+            
         } catch (PDOException $e) {
-            echo "Connection Raté : " . $e->getMessage();
-            exit;
+            echo "Connection Raté : " . $e->getMessage();            
         }
+        return $this->conn;
     }
 
     public function dbConnectionNamed()
     {   
-
+        $this->conn = null;
         try {
-            $conn =  new PDO("mysql:host=".$this->serverName.";dbname=".$this->dbname,$this->userName, $this->password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connection base de donné reussi : ";
-            return $conn;
+            $this->conn =  new PDO("mysql:host=".$this->serverName.";dbname=".$this->dbname,$this->userName, $this->password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);            
         } catch (PDOException $e) {
-            echo "Connection Raté : " . $e->getMessage();
-            exit;
+            echo "Connection Raté : " . $e->getMessage();            
         }
+        return $this->conn;
     }
 
 }
