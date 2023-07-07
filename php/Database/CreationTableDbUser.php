@@ -12,7 +12,7 @@ class DatabaseTableCreateUser
         try {
 
             $tsql = "CREATE TABLE IF NOT EXISTS USERS (
-                    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     email VARCHAR(255) NOT NULL,
                     password VARCHAR(255) NOT NULL,
                     role VARCHAR(255) NOT NULL
@@ -21,7 +21,7 @@ class DatabaseTableCreateUser
             $conn->exec($tsql);
             echo 'Table EMPLOYE crée avec succés<br>';
         } catch (PDOException $e) {
-            echo $tsql . "Connection Raté : 1234" . $e->getMessage();
+            echo $tsql . "Connection Raté :" . $e->getMessage();
             exit;
         }
 

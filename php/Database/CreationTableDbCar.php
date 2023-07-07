@@ -10,10 +10,10 @@ class DatabaseTableCreateCar
 
         try {
             $tvsql = "CREATE TABLE IF NOT EXISTS VOITURES (
-                id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                prix INT(11) NOT NULL,
-                kilometrage INT(11) NOT NULL,
-                annee_circulation INT(4) NOT NULL,
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                prix INT NOT NULL,
+                kilometrage INT NOT NULL,
+                annee_circulation INT NOT NULL,
                 caracteristique VARCHAR(255),
                 equipement VARCHAR(255),
                 image VARCHAR(255) NOT NULL,
@@ -26,7 +26,7 @@ class DatabaseTableCreateCar
             $conn->exec($tvsql);
             echo 'Table Voitures crée avec succés :';
         } catch (PDOException $e) {
-            echo $tvsql . "Connection Raté : azer" . $e->getMessage();
+            echo $tvsql . "Connection Raté :" . $e->getMessage();
             exit;
         }
 
