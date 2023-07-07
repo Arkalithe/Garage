@@ -8,24 +8,21 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 
 
 include_once '../Database/Connect.php';
-include_once '../Class/Voiture.php';
+include_once '../Class/Avis.php';
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
 
-$items = new Voiture($db);
+$items = new Avis($db);
 $data = json_decode(file_get_contents("php://input"));
 
 $items->id = $data->id;
-$items->prix = $data->prix;
-$items->kilometrage = $data->kilometrage;
-$items->annee_circulation = $data->annee_circulation;
-$items->caracteristique = $data->caracteristique;
-$items->equipement = $data->equipement;
-$items->image = $data->image;
+$items->name = $data->name;
+$items->message = $data->message;
+$items->note = $data->note;
 
-if($items->updateVoiture()) {
-    echo json_encode("Voiture modifier");
+if($items->updateAvis()) {
+    echo json_encode("Avis modifier");
 } else {
-    echo json_encode("Problème modification voiture");
+    echo json_encode("Problème modification Avis");
 }

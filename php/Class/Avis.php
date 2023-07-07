@@ -1,6 +1,6 @@
 <?php
 
-class Employee
+class Avis
 {
 
     private $conn;
