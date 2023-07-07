@@ -2,7 +2,6 @@
 
 class Voiture
 {
-
     private $conn;
     public $id;
     public $prix;
@@ -11,6 +10,10 @@ class Voiture
     public $caracteristique;
     public $equipement;
     public $image;
+    public $modele;
+    public $nom;
+    public $prenom;
+    public $numero;
 
     public function __construct($db)
     {
@@ -19,7 +22,7 @@ class Voiture
 
     public function getVoiture()
     {
-        $sql = "SELECT id, prix, kilometrage, annee_circulation, caracteristique, equipement, image FROM voitures";
+        $sql = "SELECT id, prix, kilometrage, annee_circulation, caracteristique, equipement, image, modele, nom, prenom, numero FROM voitures";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt;
@@ -35,7 +38,11 @@ class Voiture
                     annee_circulation = :annee_circulation,
                     caracteristique = :caracteristique,
                     equipement = :equipement,
-                    image = :image";
+                    image = :image,
+                    modele = :modele,
+                    nom = :nom,
+                    prenom = :prenom,
+                    numero = :numero";
         $stmt = $this->conn->prepare($sql);
 
         $this->prix=htmlspecialchars(strip_tags(($this->prix)));
@@ -44,6 +51,10 @@ class Voiture
         $this->caracteristique=htmlspecialchars(strip_tags(($this->caracteristique)));
         $this->equipement=htmlspecialchars(strip_tags(($this->equipement)));
         $this->image=htmlspecialchars(strip_tags(($this->image)));
+        $this->nom=htmlspecialchars(strip_tags(($this->nom)));
+        $this->modele=htmlspecialchars(strip_tags(($this->modele)));
+        $this->prenom=htmlspecialchars(strip_tags(($this->prenom)));
+        $this->numero=htmlspecialchars(strip_tags(($this->numero)));
         
         $stmt->bindParam(":prix", $this->prix);
         $stmt->bindParam(":kilometrage", $this->kilometrage);
@@ -51,6 +62,10 @@ class Voiture
         $stmt->bindParam(":caracteristique", $this->caracteristique);
         $stmt->bindParam(":equipement", $this->equipement);
         $stmt->bindParam(":image", $this->image);
+        $stmt->bindParam(":nom", $this->nom);
+        $stmt->bindParam(":modele", $this->modele);
+        $stmt->bindParam(":prenom", $this->prenom);
+        $stmt->bindParam(":numero", $this->numero);
 
         if($stmt->execute()) {
             return true;
@@ -66,7 +81,12 @@ class Voiture
                     annee_circulation, 
                     caracteristique, 
                     equipement, 
-                    image 
+                    image,
+                    modele,
+                    nom,
+                    prenom,
+                    numero
+                    
                 FROM 
                     voitures 
                 WHERE 
@@ -84,6 +104,10 @@ class Voiture
         $this->caracteristique = $dataRow['caracteristique'];
         $this->equipement = $dataRow['equipement'];
         $this->image = $dataRow['image'];
+        $this->nom = $dataRow['nom'];
+        $this->modele = $dataRow['modele'];
+        $this->prenom = $dataRow['prenom'];
+        $this->numero = $dataRow['numero'];
     }
 
     public function updateVoiture() {
@@ -94,7 +118,11 @@ class Voiture
                     annee_circulation = :annee_circulation,
                     caracteristique = :caracteristique,
                     equipement = :equipement,
-                    image = :image
+                    image = :image,
+                    modele = :modele,
+                    nom = :nom,
+                    prenom = :prenom,
+                    numero = :numero
                 WHERE
                     id= :id";
 
@@ -107,7 +135,10 @@ class Voiture
         $this->equipement=htmlspecialchars(strip_tags(($this->equipement)));
         $this->image=htmlspecialchars(strip_tags(($this->image)));
         $this->id=htmlspecialchars(strip_tags(($this->id)));
-
+        $this->nom=htmlspecialchars(strip_tags(($this->nom)));
+        $this->modele=htmlspecialchars(strip_tags(($this->modele)));
+        $this->prenom=htmlspecialchars(strip_tags(($this->prenom)));
+        $this->numero=htmlspecialchars(strip_tags(($this->numero)));
         
         $stmt->bindParam(":prix", $this->prix);
         $stmt->bindParam(":kilometrage", $this->kilometrage);
@@ -116,6 +147,10 @@ class Voiture
         $stmt->bindParam(":equipement", $this->equipement);
         $stmt->bindParam(":image", $this->image);
         $stmt->bindParam("id", $this->id);
+        $stmt->bindParam(":nom", $this->nom);
+        $stmt->bindParam(":modele", $this->modele);
+        $stmt->bindParam(":prenom", $this->prenom);
+        $stmt->bindParam(":numero", $this->numero);
 
         if($stmt->execute()){
             return true;

@@ -24,6 +24,8 @@ const Register = () => {
   const [validMatchPassword, setValidMatchPassword] = useState(false);
   const [matchPasswordFocus, setMatchPasswordFocus] = useState(false);
 
+
+
   const [err, setErr] = useState('');
   const [success, setSuccess] = useState(false);
 
@@ -45,7 +47,7 @@ const Register = () => {
 
   useEffect(() => {
     setErr("")
-  }, [email, password, matchPassword])
+  }, [email, password, matchPassword ])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,6 +66,7 @@ const Register = () => {
       setEmail('');
       setPassword('')
       setMatchPassword('')
+      
     } catch (err) {
       if (!err?.response) {
         setErr('Pas de reponse serveur');
@@ -162,7 +165,9 @@ const Register = () => {
               />
               <p id='confirmationnote' className={matchPasswordFocus && !validMatchPassword ? 'instructions' : 'offscreen'}>
                 Doit correspondre au Mot de Passe précédent.
-              </p>
+              </p>       
+
+              
               <button className='d-flex flex-column p-2 m-2 mt-3 bouton' disabled={!validEmail || !validPassword || !validMatchPassword ? true : false}>
                 Ajouté Employé.
               </button>

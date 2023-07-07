@@ -7,6 +7,11 @@ class DatabaseConnect
     private $password = "";
     private $dbname = "garagevparrot";
     public $conn;
+
+    public function __construct()
+    {
+        
+    }
     
     public function dbConnection()
     {

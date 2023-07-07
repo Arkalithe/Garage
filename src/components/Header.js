@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import Logo from '../assests/Image/Logo.png';
 
 const Header = () => {
     return (
         <nav className="border-bottom navbar navbar-expand-lg">
             <div className="container-fluid">
                 <div className="navbar-brand">
-                    <h1  className="align-items-center text-decoration-none lien">
-                        <Link to="/" className='lien'>Garage V.Parrot</Link>                        
+                    <h1 className="align-items-center text-decoration-none lien">
+                        <Link to="/" className='lien'>
+                        <img src={Logo} alt='Logo' className='Logo' /></Link>
                     </h1>
                 </div>
 
@@ -16,21 +18,21 @@ const Header = () => {
                 </button>
 
                 <nav className="collapse navbar-collapse " id="navmenu">
-                    <ul className=" navbar-nav ms-auto" >                        
+                    <ul className=" navbar-nav ms-auto" >
                         <li className="nav-item">
-                        <Link to="/" className="bouton nav-link"> Acceuil  </Link>
+                            <Link to="/" className="bouton nav-link"> Acceuil  </Link>
                         </li>
                         <li className="nav-item">
-                        <Link to="/Contact" className="bouton nav-link"> Contact  </Link>
+                            <Link to="/Contact" className="bouton nav-link"> Contact  </Link>
                         </li>
                         <li className="nav-item">
-                        <Link to="/Voiture" className="bouton nav-link"> Voiture  </Link>
+                            <Link to="/Voiture" className="bouton nav-link"> Voiture  </Link>
                         </li>
                         <li className="nav-item">
-                        <Link to="/adminSpace" className="bouton nav-link"> Admin  </Link>
+                            <Link to="/adminSpace" className="bouton nav-link"> Admin  </Link>
                         </li>
                         <li className="nav-item">
-                        <Link to="/login" className="bouton nav-link"> Login  </Link>
+                            <Link to="/login" className="bouton nav-link"> Login  </Link>
                         </li>
                     </ul>
                 </nav>

@@ -1,9 +1,10 @@
 <?php
 
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: GET,POST,");
+header("Access-Control-Allow-Methods: GET,POST");
 header('Access-Control-Allow-Credentials: true');
-header('Content-Type: plain/text');
+header("Access-Control-Allow-Headers: access");
+header('Content-Type: application/json');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
 
 include_once '../Database/Connect.php';
@@ -21,6 +22,7 @@ function msg($success, $status, $message, $extra = [])
 
 $data = json_decode(file_get_contents("php://input"));
 $returnData = [];
+$role = "Employe";
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") :
 
@@ -57,12 +59,13 @@ else :
                 $returnData = msg(0, 422, 'Cette adresse Mail est déja utilisé');
                 http_response_code(422);
             else :
-                $insert_query = "INSERT INTO `users`(`email`,`password`) VALUES(:email,:password)";
+                $insert_query = "INSERT INTO `users`(`email`,`password`, role) VALUES(:email,:password,:role)";
                 $insert_stmt = $conn->prepare($insert_query);
 
 
                 $insert_stmt->bindValue(':email', $email, PDO::PARAM_STR);
                 $insert_stmt->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
+                $insert_stmt->bindValue(':role', $role, PDO::PARAM_STR);
 
                 $insert_stmt->execute();
                 $returnData = msg(1, 201, 'Employe ajouté reussie');

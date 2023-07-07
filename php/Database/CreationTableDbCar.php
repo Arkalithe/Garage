@@ -16,7 +16,11 @@ class DatabaseTableCreateCar
                 annee_circulation INT(4) NOT NULL,
                 caracteristique VARCHAR(255),
                 equipement VARCHAR(255),
-                image VARCHAR(255) NOT NULL
+                image VARCHAR(255) NOT NULL,
+                modele  VARCHAR(255) NOT NULL,
+                nom  VARCHAR(255) NOT NULL,
+                prenom VARCHAR(255) NOT NULL,
+                numero  VARCHAR(255) NOT NULL
             )";         
 
             $conn->exec($tvsql);
