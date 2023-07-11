@@ -1,13 +1,15 @@
 
 import './App.css';
 import { Routes, Route, } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
+
 import Home from './page/Home';
-import Login from './components/Login';
-import Register from './components/Employe/Register';
 import AdminSpace from './page/AdminSpace';
 import { Car } from './page/Car';
+
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Login from './components/Login';
+import Register from './components/Employe/Register';
 import SingleCar from './components/Car/SingleCar';
 import RequireAuth from './components/RequireAuth';
 import Layout from './components/Layout';
@@ -17,6 +19,7 @@ import GetAvis from './components/Avis/GetAvis';
 import SingleAvis from './components/Avis/SingleAvis';
 import GetEmploye from './components/Employe/GetEmploye'
 import UpdateEmploye from './components/Employe/UpdateEmploye';
+import Horaire from './components/Heure/Horaire';
 
 
 
@@ -41,6 +44,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route exact path="/Voiture" element={<Car />} />
           <Route path="/Voiture/:idVoiture" element={<SingleCar />} />
+          <Route path='/horaire' element={<Horaire />} /> 
 
             <Route path="/signup" element={<Register />} />
             <Route path="/adminSpace" element={<AdminSpace />} />
@@ -57,8 +61,7 @@ function App() {
 
           </Route>
         </Route>
-
-
+        
       </Routes>
 
       <Footer />
