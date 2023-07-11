@@ -12,95 +12,85 @@ include_once '../Class/JwtHandler.php';
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
 
-function msg($success,$status,$message,$extra = []){
-    return array_merge([
-        'success' => $success,
-        'status' => $status,
-        'message' => $message
-    ],$extra);
-}
-
-
-
 $data = json_decode(file_get_contents("php://input"));
 
 $returnData = [];
 
-if($_SERVER["REQUEST_METHOD"] != "POST"):
-    $returnData = msg(0,404,'Page non trouvé');    
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    $returnData = array(
+        'success' => 0,
+        'status' => 404,
+        'message' => 'Page non trouvé'
+    );
+    http_response_code(404);
 
-elseif(!isset($data->email) 
-    || !isset($data->password)
-
-    || empty(trim($data->email))
-    || empty(trim($data->password))
-
-    ):
-
-    $fields = ['fields' => ['email','password', 'role']];
-    $returnData = msg(0,422,'Remplissez tous les champs !',$fields);
+} elseif (!isset($data->email) || !isset($data->password) || empty(trim($data->email)) || empty(trim($data->password))) {
+    $fields = ['fields' => ['email', 'password']];
+    $returnData = array(
+        'success' => 0,
+        'status' => 422,
+        'message' => 'Remplissez tous les champs !',
+        'data' => $fields
+    );
     http_response_code(422);
 
-else:
+} else {
     $email = trim($data->email);
     $password = trim($data->password);
     
 
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)):
-        $returnData = msg(0,422,'Adresse Email Invalid ! ');
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $returnData = array(
+            'success' => 0,
+            'status' => 422,
+            'message' => 'Adresse Email Invalid !'
+        );
         http_response_code(422);
-
-    elseif(strlen($password) < 8):
-        $returnData = msg(0,422,'Le mot de passe doit avoire 8 caracatère, une majuscule, un chiffre et un caractère spécial');
+    }
+    elseif (strlen($password) < 8) {
+        $returnData = array(
+            'success' => 0,
+            'status' => 422,
+            'message' => 'Le mot de passe doit avoir 8 caractères'
+        );
         http_response_code(422);
+    } else {
+        $employee = new Employee($db);
+        $employee->email = $email;
+        $employee->singleUsers();
 
-    else:
-        try{
-            
-            $fetch_user_by_email = "SELECT * FROM `users` WHERE `email`=:email";
-            $query_stmt = $db->prepare($fetch_user_by_email);
-            $query_stmt->bindValue(':email', $email,PDO::PARAM_STR);            
-            $query_stmt->execute();
+        if (!empty($employee->id)) {
+            if (password_verify($password, $employee->password)) {
 
-            if($query_stmt->rowCount()):
-                $row = $query_stmt->fetch(PDO::FETCH_ASSOC);
-                $check_password = password_verify($password, $row['password']);                
-
-                if($check_password):
-                        
-                    $jwt = new JwtHandler();
-
-                    $accessToken = $jwt->jwtEncodeData(
-                        'http://localhost',
-                        array("id"=> $row['id'], "role"=>$row['role'])
-                    );
-
-                    $returnData = [
-                        'success' => 1,
-                        'message' => 'Vous êtes connecté.',
-                        'accessToken' => $accessToken,
-                                              
-                        
-                    ];                    
+                $jwt = new JwtHandler();
+                $accessToken = $jwt->jwtEncodeData(
+                    'http://localhost',
+                    array("id" => $employee->id, "role" => $employee->role)
+                );
                 
-                else:
-                    $returnData = msg(0,422,'Mot de passe Incorect');
-                    http_response_code(422);
-                endif;
-
-            
-            else:
-                $returnData = msg(0,422,'Addresse Email Incorect!');
+                $returnData = array(
+                    'success' => 1,
+                    'status' => 200,
+                    'message' => 'Vous êtes connecté.',
+                    'accessToken' => $accessToken 
+                );
+            } else {
+                $returnData = array(
+                    'success' => 0,
+                    'status' => 422,
+                    'message' => 'Mot de passe incorrect'
+                );
                 http_response_code(422);
-            endif;
+            }
+        } else {
+            $returnData = array(
+                'success' => 0,
+                'status' => 422,
+                'message' => 'Adresse Email incorrecte'
+            );
+            http_response_code(422);
         }
-        catch(PDOException $e){
-            $returnData = msg(0,500,$e->getMessage());
-            http_response_code(500);
-        }
+    }
+}
 
-    endif;
-
-endif;
-
-echo json_encode(array( $accessToken));
+echo json_encode($returnData);
