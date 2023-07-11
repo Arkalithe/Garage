@@ -6,9 +6,8 @@ header('Access-Control-Allow-Credentials: true');
 header('Content-Type: plain/text');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
 
-
-include_once '../Database/Connect.php';
-include_once '../Class/Voiture.php';
+include_once '../../Database/Connect.php';
+include_once '../../Class/Voiture.php';
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
@@ -22,8 +21,8 @@ $items->caracteristique = $data->caracteristique;
 $items->equipement = $data->equipement;
 $items->image = $data->image;
 
-if($items->createVoiture()){
-    echo 'Voiture ajouter avec succés';
-} else {
-    echo 'Problème ajoute voiture';
-}
+if ($_SERVER["REQUEST_METHOD"] != "POST") :
+
+else :
+    $items->createVoiture();
+endif;

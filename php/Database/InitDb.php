@@ -11,9 +11,6 @@ $db_table_car = new DatabaseTableCreateCar();
 $db_table_avis = new DatabaseTableCreateAvis();
 
 
-
-
-
 try {
     $db_create->creationDb();
     $db_table_user->creationTableUser();

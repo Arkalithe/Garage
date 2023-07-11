@@ -16,7 +16,7 @@ class Avis
 
     public function getAvis()
     {
-        $sql = "SELECT id, name, message, note FROM Avis";
+        $sql = "SELECT id, name, message, note FROM avis";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt;
@@ -25,7 +25,7 @@ class Avis
 
     public function createAvis()
     {
-        $sql = "INSERT INTO Avis 
+        $sql = "INSERT INTO avis 
                 SET
                     message = :message,
                     name = :name,
@@ -55,7 +55,7 @@ class Avis
                     name,
                     note
                 FROM 
-                    Avis 
+                    avis 
                 WHERE 
                     id = ? 
                 LIMIT 0,1";
@@ -64,15 +64,15 @@ class Avis
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
         $dataRow = $stmt->fetch();
-
-        $this->message = $dataRow['message'];
+        
         $this->name = $dataRow['name'];
+        $this->message = $dataRow['message'];        
         $this->note = $dataRow['note'];
     }
 
     public function updateAvis()
     {
-        $sql = "UPDATE Avis 
+        $sql = "UPDATE avis 
                 SET 
                     message = :message,
                     name = :name,
@@ -99,7 +99,7 @@ class Avis
     }
     function deteleteAvis()
     {
-        $sql = "DELETE FROM Avis WHERE id= :id";
+        $sql = "DELETE FROM avis WHERE id= :id";
 
         $stmt = $this->conn->prepare($sql);
         $this->id = htmlspecialchars(strip_tags($this->id));

@@ -11,6 +11,7 @@ include_once '../Database/Connect.php';
 
 $db_connection = new DatabaseConnect();
 $conn = $db_connection->dbConnectionNamed();
+
 function msg($success, $status, $message, $extra = [])
 {
     return array_merge([

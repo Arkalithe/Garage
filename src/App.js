@@ -1,17 +1,22 @@
 
 import './App.css';
-import {  Routes, Route, } from 'react-router-dom';
+import { Routes, Route, } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './page/Home';
 import Login from './components/Login';
-import Register from './components/Register';
+import Register from './components/Employe/Register';
 import AdminSpace from './page/AdminSpace';
-import Car from './components/Car';
-import CarId from './components/CarID';
+import { Car } from './page/Car';
+import SingleCar from './components/Car/SingleCar';
 import RequireAuth from './components/RequireAuth';
 import Layout from './components/Layout';
 import Unauthorized from './page/Unauthorized';
+import NewAvis from './components/Avis/NewAvis';
+import GetAvis from './components/Avis/GetAvis';
+import SingleAvis from './components/Avis/SingleAvis';
+import GetEmploye from './components/Employe/GetEmploye'
+import UpdateEmploye from './components/Employe/UpdateEmploye';
 
 
 
@@ -20,38 +25,44 @@ function App() {
   const ROLE = {
     'Admin': 'Admin',
     'Employe': 'Employe'
-    
   }
 
 
   return (
     <div className='App d-flex flex-column'>
-      
-        <Header />
-        <Routes>
-          
-          <Route path="/" element={<Layout />} >
 
-            <Route path="/" element={<Home />} exact/>
-            <Route path="/unauthorized" element={<Unauthorized />} />
-            <Route path="/login" element={<Login />} />
-            <Route exact path="/Voiture" element={<Car />} />
-            <Route path="/Voiture/:idVoiture" element={<CarId />} />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Layout />} >
 
-            <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
-              <Route path="/signup" element={<Register />} />
-            </Route>
-            
-            <Route element={<RequireAuth allowedRoles={[ROLE.Admin]} />}>
-              <Route path="/adminSpace" element={<AdminSpace />} />
-            </Route>
+          <Route path="/" element={<Home />} exact />
+          <Route path='/avis' element={<NewAvis />} exact />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/login" element={<Login />} />
+          <Route exact path="/Voiture" element={<Car />} />
+          <Route path="/Voiture/:idVoiture" element={<SingleCar />} />
+
+            <Route path="/signup" element={<Register />} />
+            <Route path="/adminSpace" element={<AdminSpace />} />
+            <Route path='/employe' element={<GetEmploye />} />
+            <Route path='/employe/update/:idEmploye' element={ <UpdateEmploye />} />
+
+            <Route path="/av" element={<GetAvis />} />
+            <Route path="/av/:idAvis" element={<SingleAvis />} />
+          <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
+
           </Route>
 
+          <Route element={<RequireAuth allowedRoles={[ROLE.Admin]} />}>
 
-        </Routes>
+          </Route>
+        </Route>
 
-        <Footer />
-      
+
+      </Routes>
+
+      <Footer />
+
     </div>
   )
 }

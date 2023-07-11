@@ -16,7 +16,7 @@ class Employee
 
     public function getUsers()
     {
-        $sql = "SELECT id, email, password, FROM users";
+        $sql = "SELECT id, email, password FROM users";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt;
@@ -72,39 +72,56 @@ class Employee
 
     public function updateUsers()
     {
-        $sql = "UPDATE users 
-                SET 
-                    password = :password,
-                    email = :email,
-                    role = :role
-                WHERE
-                    id= :id";
+    $sql = "UPDATE users 
+            SET ";
 
-        $stmt = $this->conn->prepare($sql);
+    $params = array();
 
-        $this->password = htmlspecialchars(strip_tags(($this->password)));
-        $this->email = htmlspecialchars(strip_tags(($this->email)));
-        $this->id = htmlspecialchars(strip_tags(($this->id)));
-        $this->role = htmlspecialchars(strip_tags(($this->role)));
+    if (!empty($this->email)) {
+        $sql .= "email = :email, ";
+        $params[':email'] = $this->email;
+    }
 
-        $stmt->bindParam(":password", $this->password);
-        $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam("id", $this->id);
-        $stmt->bindParam(":role", $this->role);
+    if (!empty($this->password)) {
+        $sql .= "password = :password, ";
+        $params[':password'] = password_hash($this->password, PASSWORD_DEFAULT);
+    }
 
-        if ($stmt->execute()) {
-            return true;
-        }
+    if (!empty($this->role)) {
+        $sql .= "role = :role, ";
+        $params[':role'] = $this->role;
+    }
+    $sql = rtrim($sql, ', ');
+
+    $sql .= " WHERE id = :id";
+    $params[':id'] = $this->id;
+
+    $stmt = $this->conn->prepare($sql);
+
+    foreach ($params as $param => $value) {
+        $stmt->bindValue($param, $value);
+    }
+
+    if (!$stmt->execute()) {
+        $errorInfo = $stmt->errorInfo();
+        $errorMessage = isset($errorInfo[2]) ? $errorInfo[2] : 'Unknown error';
+        echo json_encode('Error: ' . $errorMessage);
         return false;
     }
+    return true;
+}
+
     function deteleteUsers()
     {
+        if ($this->role === 'Admin') {
+            return false; 
+        }
         $sql = "DELETE FROM users WHERE id= :id";
 
         $stmt = $this->conn->prepare($sql);
         $this->id = htmlspecialchars(strip_tags($this->id));
 
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(":id", $this->id);
         if ($stmt->execute()) {
             return true;
         }

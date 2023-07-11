@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import React from 'react'
 import { Link } from "react-router-dom";
-import axios from "../api/axios";
+import axios from "../../api/axios";
 
 const email_regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#€%*]).{7,24}$/;
@@ -171,6 +171,7 @@ const Register = () => {
               <button className='d-flex flex-column p-2 m-2 mt-3 bouton' disabled={!validEmail || !validPassword || !validMatchPassword ? true : false}>
                 Ajouté Employé.
               </button>
+              
             </form>
 
 

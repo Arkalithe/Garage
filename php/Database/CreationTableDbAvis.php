@@ -13,14 +13,14 @@ class DatabaseTableCreateAvis
                 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 message VARCHAR(255) NOT NULL,
-                note INT() NOT NULL
+                note INT NOT NULL
                 
             )";         
 
             $conn->exec($tvsql);
             echo 'Table Avis crée avec succés :';
         } catch (PDOException $e) {
-            echo $tvsql . "Connection Raté : azer" . $e->getMessage();
+            echo $tvsql . "Connection Raté : " . $e->getMessage();
             exit;
         }
 

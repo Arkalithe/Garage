@@ -6,9 +6,8 @@ header('Access-Control-Allow-Credentials: true');
 header('Content-Type: plain/text');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
 
-
-include_once '../Database/Connect.php';
-include_once '../Class/Avis.php';
+include_once '../../Database/Connect.php';
+include_once '../../Class/Avis.php';
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
@@ -17,7 +16,7 @@ $items->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 $items->singleAvis();
 
-if($items->message != null && $items->note != null && $items->name != null){
+if($items->id != null ){
     $arr = array(
         "id" => $items->id,
         "name" => $items->name,

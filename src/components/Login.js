@@ -44,11 +44,6 @@ const Login = () => {
             const dcode = jwtDecode(accessToken)
             const role = dcode.data.role
 
-console.log(role)
-console.log(dcode)
-
-
-
             setAuth({ email, password,role, accessToken})
             setEmail('');
             setPassword('');
