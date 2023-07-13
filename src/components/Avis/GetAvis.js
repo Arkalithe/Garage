@@ -1,56 +1,65 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
-import { Link } from "react-router-dom";
-
-
+import { Rating } from "@mui/material";
 
 const GetAvis = () => {
-    const register_url = '/Garage/php/Api/Avis/AvisRead.php'
+    const register_url = '/Garage/php/Api/Avis/AvisRead.php';
     const [avis, setAvis] = useState([]);
 
 
     useEffect(() => {
         fetchAvis();
-    }, [])
+    }, []);
 
-    const fetchAvis = async (e) => {
-        await axios.get(register_url).then((res) => {
-            console.log(res.data);
-            setAvis(res.data)
-        })
-            .catch((err) => {
-                console.log(err);
-            })
-    }
-    
-    const avist = avis.map(aviss => {
-        return (            
-                <div className="voit col-4 d-flex flex-column align-items-start m-3 " key={aviss.id}>                    
-                    <div className="ps-2" > Liste Avis</div>
-                    <div className="ps-2" >Nom: {aviss.name} € </div>
-                    <div className="ps-2" >Message: {aviss.message} </div>
-                    <div className="ps-2" >Note: {aviss.note} </div>
-                    
-                        <Link className="align-self-center bouton lien" to={`/av/${aviss.id}`} >   Plus d'information</Link>  
+    const fetchAvis = async () => {
+        try {
+            const response = await axios.get(register_url);
+            console.log(response.data);
+            setAvis(response.data.slice(0, 4));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+    const avist = avis.map((aviss) => {
+        return (
+
+            <div className="voit d-flex flex-column container col-5 align-items-center my-3" key={aviss.id}>
+
+                <div className="container pt-2  m-auto">
+                    <div >
+                        {aviss.name}
+                    </div>
                 </div>
-            
 
-        )
-    })
+                <div className="container m-auto">
+                    <div className="my-3 avis-message">
+                        {aviss.message}
+                    </div>
+                </div>
 
-
+                <div className="container m-auto">
+                    <Rating
+                        type="number"
+                        id="note"
+                        name="read-only"
+                        size="large"
+                        value={aviss.note}
+                        readOnly
+                    />
+                </div>
+            </div>
+        );
+    });
 
     return (
 
-        <section className="container-fluid d-flex flex-row">
-            {avist}            
-        </section>
+        <div className="d-flex flex-wrap justify-content-between">
+            {avist}
+        </div>
 
+    );
+};
 
-
-
-    )
-}
-
-export default GetAvis
+export default GetAvis;
