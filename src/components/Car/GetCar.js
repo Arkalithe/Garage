@@ -61,7 +61,7 @@ const GetCar = () => {
 
     const cars = carsInRange.map(car => {
         return (
-            <div className="voit d-flex flex-column align-items-start m-3 flex-grow-0" key={car.id}>
+            <div className="voit d-flex flex-column align-items-start m-3 px-1 flex-grow-0" key={car.id}>
                 <div className="image-container align-self-center p-1">
                     <img src={require(`../../assests/Image/${car.image}`)} alt='cars' className="align-self-center py-3 img-fluid" />
                 </div>
@@ -77,61 +77,65 @@ const GetCar = () => {
         )
     })
     return (
+        <>
+            <section className="d-flex flex-column my-2" style={{ width: "100vh" }}>
+                <div className="voit">
+                    <div style={{ width: "90vh" }} className="m-auto ">
+                        <div>
+                            <label htmlFor="priceRange">Prix :</label>
+                            <span> {priceRangeValue[0]}€ - {priceRangeValue[1]}€</span>
+                        </div>
+                        <Slider
+                            getAriaLabel={() => "Price Range"}
+                            value={priceRangeValue}
+                            onChange={priceChange}
+                            valueLabelDisplay='auto'
+                            min={minmum}
+                            max={maximum}>
+                        </Slider>
 
-        <section className="d-flex flex-column">
+                    </div>
+                    <div style={{ width: "90vh" }} className="m-auto ">
+                        <div>
+                            <label htmlFor="yearRange">Annee :</label>
+                            <span> {yearRangeValue[0]} - {yearRangeValue[1]}</span>
+                        </div>
+                        <Slider
+                            getAriaLabel={() => "Year Range"}
+                            value={yearRangeValue}
+                            onChange={yearChange}
+                            valueLabelDisplay='auto'
+                            min={1960}
+                            max={maxYear}>
+                        </Slider>
 
-            <div style={{ width: "50vh" }} className="m-auto ">
-                <div>
-                    <label htmlFor="priceRange">Prix :</label>
-                    <span> {priceRangeValue[0]}€ - {priceRangeValue[1]}€</span>
+                    </div>
+                    <div style={{ width: "90vh" }} className="m-auto ">
+                        <div>
+                            <label htmlFor="kiloRange">Kilometrage :</label>
+                            <span> {kiloRangeValue[0]} - {kiloRangeValue[1]}</span>
+                        </div>
+                        <Slider
+                            getAriaLabel={() => "Kilometrage Range"}
+                            value={kiloRangeValue}
+                            onChange={kiloChange}
+                            valueLabelDisplay='auto'
+                            min={minmum}
+                            max={300000}>
+                        </Slider>
+                    </div>
                 </div>
-                <Slider
-                    getAriaLabel={() => "Price Range"}
-                    value={priceRangeValue}
-                    onChange={priceChange}
-                    valueLabelDisplay='auto'
-                    min={minmum}
-                    max={maximum}>
-                </Slider>
 
-            </div>
-            <div style={{ width: "50vh" }} className="m-auto ">
-                <div>
-                    <label htmlFor="yearRange">Annee :</label>
-                    <span> {yearRangeValue[0]} - {yearRangeValue[1]}</span>
+
+            </section>
+
+            <section>
+                <div className="d-flex flex-row align-self-center ">
+                    {cars.length > 0 ? cars : <h1 className="m-auto">Aucune voiture correspond a vos critère</h1>}
                 </div>
-                <Slider
-                    getAriaLabel={() => "Year Range"}
-                    value={yearRangeValue}
-                    onChange={yearChange}
-                    valueLabelDisplay='auto'
-                    min={1960}
-                    max={maxYear}>
-                </Slider>
+            </section>
 
-            </div>
-            <div style={{ width: "50vh" }} className="m-auto ">
-                <div>
-                    <label htmlFor="kiloRange">Kilometrage :</label>
-                    <span> {kiloRangeValue[0]} - {kiloRangeValue[1]}</span>
-                </div>
-                <Slider
-                    getAriaLabel={() => "Kilometrage Range"}
-                    value={kiloRangeValue}
-                    onChange={kiloChange}
-                    valueLabelDisplay='auto'
-                    min={minmum}
-                    max={300000}>
-                </Slider>
-            </div>
-
-            <div className="d-flex flex-row align-self-center ">
-                {cars.length > 0 ? cars : <p className="m-auto">Aucune voiture correspond a vos critère</p>}
-            </div>
-
-        </section>
-
-
+        </>
 
 
     )

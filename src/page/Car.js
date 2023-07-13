@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import GetCar from '../components/Car/GetCar';
 
 
@@ -7,7 +7,7 @@ export const Car = () => {
 
     
     return (
-        <div className='d-flex flex-column'>
+        <div className='container'>
 
             <GetCar></GetCar>
 
