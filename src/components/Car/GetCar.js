@@ -76,9 +76,6 @@ const GetCar = () => {
 
         )
     })
-
-
-
     return (
 
         <section className="d-flex flex-column">

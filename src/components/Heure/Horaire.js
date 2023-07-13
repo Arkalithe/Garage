@@ -1,68 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import useHoraire from '../../hooks/useHoraire';
+import Footer from '../Footer';
+import axios from '../../api/axios';
 
 const Horaire = () => {
-  const { businessHours, updateBusinessHours } = useHoraire();
-  const [updatedHours, setUpdatedHours] = useState(businessHours);
+
+
+  const fetch_url = '/Garage/php/Api/Horaire/HoraireRead.php';
+  const [businessHours, setBusinessHours] = useState([]);
 
   useEffect(() => {
-    if (businessHours) {
-      setUpdatedHours(businessHours);
+    fetchData()
+  }, [])
+
+  const fetchData = async (e) => {
+    try {
+      const response = await axios.get(fetch_url);
+      setBusinessHours(response.data)
+    } catch (e) {
+      console.error('Problème : ', e)
     }
-  }, [businessHours]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateBusinessHours(updatedHours);
-  };
-
-  const handleInputChange = (e) => {
-    setUpdatedHours({
-      ...updatedHours,
-      [e.target.name]: e.target.value
-    });
-  };
+  }
 
   return (
-    <div>
-      <h2>Horaire :</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="lundiVendredi" className="form-label">Lundi - Vendredi :</label>
-          <input
-            type="text"
-            id="lundiVendredi"
-            name="lundiVendredi"
-            value={updatedHours.lundiVendredi || ''}
-            onChange={handleInputChange}
-            className="form-control"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="Samedi" className="form-label">Samedi :</label>
-          <input
-            type="text"
-            id="Samedi"
-            name="Samedi"
-            value={updatedHours.Samedi || ''}
-            onChange={handleInputChange}
-            className="form-control"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="Dimanche" className="form-label">Dimanche :</label>
-          <input
-            type="text"
-            id="Dimanche"
-            name="Dimanche"
-            value={updatedHours.Dimanche || ''}
-            onChange={handleInputChange}
-            className="form-control"
-          />
-        </div>
-        <button type="submit" className="bouton">Modifié horaire</button>
-      </form>
-    </div>
+    <Footer horaire={businessHours} />
   );
 };
 

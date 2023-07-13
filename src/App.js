@@ -1,4 +1,3 @@
-
 import './App.css';
 import { Routes, Route, } from 'react-router-dom';
 
@@ -7,7 +6,6 @@ import AdminSpace from './page/AdminSpace';
 import { Car } from './page/Car';
 
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Login from './components/Login';
 import Register from './components/Employe/Register';
 import SingleCar from './components/Car/SingleCar';
@@ -20,10 +18,12 @@ import SingleAvis from './components/Avis/SingleAvis';
 import GetEmploye from './components/Employe/GetEmploye'
 import UpdateEmploye from './components/Employe/UpdateEmploye';
 import Horaire from './components/Heure/Horaire';
+import HoraireUpdate from './components/Heure/HoraireUpdate';
 
 
 
 function App() {
+  
 
   const ROLE = {
     'Admin': 'Admin',
@@ -37,14 +37,14 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Layout />} >
-
           <Route path="/" element={<Home />} exact />
           <Route path='/avis' element={<NewAvis />} exact />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/login" element={<Login />} />
           <Route exact path="/Voiture" element={<Car />} />
           <Route path="/Voiture/:idVoiture" element={<SingleCar />} />
-          <Route path='/horaire' element={<Horaire />} /> 
+          <Route path='horaire' element={<HoraireUpdate />} />
+          
 
             <Route path="/signup" element={<Register />} />
             <Route path="/adminSpace" element={<AdminSpace />} />
@@ -63,8 +63,8 @@ function App() {
         </Route>
         
       </Routes>
-
-      <Footer />
+      <Horaire />
+      
 
     </div>
   )

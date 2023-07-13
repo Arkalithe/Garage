@@ -116,12 +116,12 @@ class Employee
         if ($this->role === 'Admin') {
             return false; 
         }
+        
         $sql = "DELETE FROM users WHERE id= :id";
-
         $stmt = $this->conn->prepare($sql);
         $this->id = htmlspecialchars(strip_tags($this->id));
-
         $stmt->bindParam(":id", $this->id);
+
         if ($stmt->execute()) {
             return true;
         }

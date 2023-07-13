@@ -7,7 +7,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './context/AuthProvider';
 import { BrowserRouter } from 'react-router-dom';
-import { HoraireProvider } from './context/HoraireContext';
+
 
 
 
@@ -17,9 +17,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <HoraireProvider>
+
           <App />
-        </HoraireProvider>
+
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,

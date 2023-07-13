@@ -9,6 +9,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 include_once '../Database/Connect.php';
 include_once '../Class/JwtHandler.php';
 
+require '../vendor/autoload.php';
+
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
 

@@ -108,3 +108,11 @@ section {
   max-height: 10vh;
   
 }
+
+.labely {
+  margin-bottom: 0; 
+}
+
+.form-control {
+  width: 100%; 
+}

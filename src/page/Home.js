@@ -2,6 +2,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../context/AuthProvider";
+import Voiture from '../assests/Image/Voiture.png'
 
 
 const Home = () => {
@@ -9,37 +10,75 @@ const Home = () => {
     const navigate = useNavigate();
 
     const logout = async () => {
-        // if used in more components, this should be in context 
-        // axios to /logout endpoint 
         setAuth({});
-
         navigate('/login');
     }
-
-
-
-    const log =  async (e) => {        
+    const log = async (e) => {
         console.log(setAuth.role)
     }
+
+
     return (
-        <section>
-            <h1>Acceuil</h1>
-            <br />
-            <li className="nav-item">
-                <Link to="/signup" className="bouton nav-link"> signup  </Link>
-            </li>
+        <div className="container">
+            <section className="d-flex flex-row ">
+                <article className="form-cadre m-2 p-2">
+                    <div className="pb-2">
+                        <h1>
+                            Depannage
+                        </h1>
+                    </div>
 
-            <div className="flexGrown">
-                <button onClick={log}>gdfuhgdfg</button>
-            </div>
-
-            <div className="flexGrow">
-                <button onClick={logout}>Sign Out</button>
-            </div>
-            <li className="nav-item">
-                <Link to="adminSpace" className="bouton nav-link"> Admin  </Link>
-            </li>
-        </section>
+                    <div className="pb-3">
+                        <img className="container" src={Voiture} alt='test' ></img>
+                    </div>
+                    <div>
+                        <p>
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            Lorem ipsum Lorem ipsum Lorem ipsum
+                        </p>
+                    </div>
+                </article>
+                <article className="form-cadre m-2 p-2">
+                    <div className="pb-2">
+                        <h1>
+                            Reparation
+                        </h1>
+                    </div>
+                    <div className="pb-3">
+                        <img className="container" src={Voiture} alt='test' ></img>
+                    </div>
+                    <div className="pb-3">
+                        <p>
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            Lorem ipsum Lorem ipsum Lorem ipsum
+                        </p>
+                    </div>
+                </article>
+                <article className="form-cadre m-2 p-2">
+                    <div className="pb-2">
+                        <h1>
+                            Voiture d'occasion
+                        </h1>
+                        <div className="pb-3">
+                            <img className="container" src={Voiture} alt='test' ></img>
+                        </div>
+                    </div>
+                    <div className="pb-3">
+                        <p>
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            Lorem ipsum Lorem ipsum Lorem ipsum
+                        </p>
+                    </div>
+                </article>
+            </section>
+            <hr className="section-divider"></hr>
+        </div>
     )
 }
 

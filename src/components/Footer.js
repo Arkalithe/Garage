@@ -1,9 +1,6 @@
 import React from 'react';
-import useHoraire from '../hooks/useHoraire';
 
-const Footer = () => {
-    const { businessHours } = useHoraire();
-
+const Footer = ({ horaire }) => {
   return (
     <footer className="mt-auto">
       <div className="container-fluid">
@@ -16,10 +13,23 @@ const Footer = () => {
           </a>
 
           <div className="mb-3 mb-md-0 text-body-secondary">
-            <ul className="mb-2 mb-md-0 align-items-center">
-              <li className="d-flex align-items-start"><p>Lundi-Vendredi : {businessHours.lundiVendredi}  H</p></li>
-              <li className="d-flex align-items-start"><p>Samedi :  H</p>{businessHours.samedi}</li>
-              <li className="d-flex align-items-start"><p>Dimanche : </p>{businessHours.dimanche}</li>
+            <ul className="mb-2 mb-md-0 align-items-start">
+              {horaire.map((day) => (
+                <li className="d-flex align-items-start" key={day.id}>
+                  <strong className="pe-1">{day.jour} : </strong>
+                  {day.matin === 'Fermé' ? (
+                    <span>
+                      {day.matin} {day.apresmidi}
+                    </span>
+                  ) : day.apresmidi === '' ? (
+                    <span>{day.matin}</span>
+                  ) : (
+                    <span>
+                      {day.matin}, {day.apresmidi}
+                    </span>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

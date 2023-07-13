@@ -3,7 +3,7 @@ include_once 'Connect.php';
 
 class DatabaseTableCreateAvis
 {
-    public function creationTableCar()
+    public function creationTableAvis()
     {
         $db_connection = new DatabaseConnect();
         $conn = $db_connection->dbConnectionNamed();
