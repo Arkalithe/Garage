@@ -22,6 +22,9 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [err, setErr] = useState('');
 
+    const [formErrors, setFormErrors] = useState({ email: '', password: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     useEffect(() => {
         emailRef.current.focus();
     }, [])
@@ -30,24 +33,50 @@ const Login = () => {
         setErr('');
     }, [email, password])
 
+    const validateForm = () => {
+        let isValid = true;
+        const errors = {};
+    
+        if (!email) {
+          errors.email = 'Email Obligatoire';
+          isValid = false;
+        }
+    
+        if (!password) {
+          errors.password = 'Mots de passe obligatoire';
+          isValid = false;
+        }
+    
+        setFormErrors(errors);
+        return isValid;
+      };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (validateForm()) {
+            setIsSubmitting(true);
 
         try {
             const response = await axios.post(login_url,
                 JSON.stringify({ email, password, })
             );
-            console.log(JSON.stringify(response.data));
-            console.log(response.data)
 
             const accessToken = response.data[0];
             const dcode = jwtDecode(accessToken)
             const role = dcode.data.role
 
-            setAuth({ email, password,role, accessToken})
+            setAuth({ email, password, role, accessToken })
             setEmail('');
             setPassword('');
-            navigate(from, { replace: true });
+
+            if (role === 'Employee') {
+                navigate('/employeSpace');
+              } else if (role === 'Admin') {
+                navigate('/adminSpace');
+              } else {
+                navigate(from, { replace: true });
+              }
         } catch (err) {
             if (!err?.response) {
                 setErr('Pas de reponse serveur');
@@ -60,41 +89,49 @@ const Login = () => {
                 setErr('Problème connexion')
             }
             errRef.current.focus();
+        } finally {
+            setIsSubmitting(false);
         }
     }
+}
 
     return (
-        <div className='d-flex flex-column container-fluid align-items-center m-auto' >
-
-            <section className="form-cadre d-flex flex-column align-items-center justify-content-start m-auto">
-                <p ref={errRef} className={err ? "errmsg" : 'offscreen'} aria-live='assertive'> {err} </p>
-                <h1 className='d-flex flex-column p-2 m-2'>Connexion</h1>
-                <form className='d-flex flex-column p-2 m-2' onSubmit={handleSubmit}>
-                    <label htmlFor='email' >Email:</label>
-                    <input type='text'
-                        id='email'
-                        ref={emailRef}
-                        autoComplete='off'
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        required
-                    />
-
-                    <label htmlFor='password' >Password:</label>
-                    <input type='password'
-                        id='password'
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                        required
-                    />
-                    <button className='d-flex flex-column p-2 m-2 mt-3 bouton' > Connexion </button>
-                </form>
-            </section>
-
-        </div>
-    )
-
-
-}
+        <div className="d-flex flex-column container-fluid align-items-center m-auto">
+        <section className="form-cadre d-flex flex-column align-items-center justify-content-start m-auto">
+          <p ref={errRef} className={err ? 'errmsg' : 'offscreen'} aria-live="assertive">
+            {err}
+          </p>
+          <h1 className="d-flex flex-column p-2 m-2">Connexion</h1>
+          <form className="d-flex flex-column p-2 m-2" onSubmit={handleSubmit}>
+            <label htmlFor="email">Email:</label>
+            <input
+              type="text"
+              id="email"
+              ref={emailRef}
+              autoComplete="off"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              required
+            />
+            {formErrors.email && <p className="error-msg">{formErrors.email}</p>}
+  
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              required
+            />
+            {formErrors.password && <p className="error-msg">{formErrors.password}</p>}
+  
+            <button className="d-flex flex-column p-2 m-2 mt-3 bouton" disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting...' : 'Connexion'}
+            </button>
+          </form>
+        </section>
+      </div>
+    );
+  };
 
 export default Login;

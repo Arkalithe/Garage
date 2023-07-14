@@ -1,6 +1,7 @@
 import Voiture from '../assests/Image/Voiture.png';
 import GetAvis from '../components/Avis/GetAvis';
 
+
 const Home = () => {
   return (
     <div className="container">
@@ -14,7 +15,7 @@ const Home = () => {
               <h1>Dépannage</h1>
             </div>
             <div className="pb-3">
-              <img className="img-fluid" src={Voiture} alt="test" />
+              <img className="img-fluid" src={Voiture} alt="Dépannage" />
             </div>
             <div>
               <p>
@@ -24,14 +25,14 @@ const Home = () => {
                 Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
               </p>
             </div>
-            <button className="bouton">Plus d'information</button>
+            <button className="bouton bouton-lien">Plus d'information</button>
           </article>
           <article className="col-md-4 form-cadre m-2 p-2">
             <div className="pb-2">
               <h1>Réparation</h1>
             </div>
             <div className="pb-3">
-              <img className="img-fluid" src={Voiture} alt="test" />
+              <img className="img-fluid" src={Voiture} alt="Réparation" />
             </div>
             <div className="pb-3">
               <p>
@@ -40,14 +41,14 @@ const Home = () => {
                 Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
               </p>
             </div>
-            <button className="bouton bouton">Plus d'information</button>
+            <button className="bouton bouton-lien">Plus d'information</button>
           </article>
           <article className="col-md-4 form-cadre m-2 p-2">
             <div className="pb-2">
               <h1>Voiture d'occasion</h1>
             </div>
             <div className="pb-3">
-              <img className="img-fluid" src={Voiture} alt="test" />
+              <img className="img-fluid" src={Voiture} alt="Voiture" />
             </div>
             <div className="pb-3">
               <p>
@@ -56,7 +57,7 @@ const Home = () => {
                 Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
               </p>
             </div>
-            <button className="bouton">Plus d'information</button>
+            <button className="bouton bouton-lien">Plus d'information</button>
           </article>
         </div>
       </section>

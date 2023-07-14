@@ -40,7 +40,10 @@ footer {
   margin: 12.5px;
   padding: 12.5px;
 }
-
+.bouton-lien {
+  color: #0D21A1;
+  text-decoration: none
+}
 .layout {
   min-height:100vh; 
 	display:flex; 
@@ -68,6 +71,9 @@ section {
   padding: 0.25rem;
   position: relative;
   bottom: -10px;
+}
+.cadre-admin {
+  background: #92B6B1;
 }
 
 .instructions > svg {

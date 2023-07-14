@@ -70,7 +70,7 @@ const GetCar = () => {
                 <div className="ps-2" >Killométrage: {car.kilometrage} Km</div>
 
                 <div className="ps-2" >Prix: {car.prix} € </div>
-                <Link className="align-self-center bouton lien" to={`/Voiture/${car.id}`} >   Plus d'information</Link>
+                <Link className="align-self-center bouton bouton-lien" to={`/Voiture/${car.id}`} >   Plus d'information</Link>
             </div>
 
 
