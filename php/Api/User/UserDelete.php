@@ -24,7 +24,7 @@ if (isset($data->ids)) {
         $employee->id = $id;
         $employee->singleUsers();
         if ($employee->role !== 'Admin') { 
-            if ($employee->deteleteUsers()) {
+            if ($employee->deleteUsers()) {
                 $successCount++;
             } else {
                 $errorCount++;

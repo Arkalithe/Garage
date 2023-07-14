@@ -101,7 +101,7 @@ class Horaire
         return false;
     }
     
-    function deteleteHoraire()
+    function deleteHoraire()
     {
         $sql = "DELETE FROM horaires WHERE id= :id";
 

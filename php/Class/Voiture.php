@@ -157,7 +157,7 @@ class Voiture
         }
         return false;
     }
-    function deteleteVoiture() {
+    function deleteVoiture() {
         $sql = "DELETE FROM voitures WHERE id= :id";
 
         $stmt = $this->conn->prepare($sql);

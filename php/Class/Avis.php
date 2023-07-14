@@ -8,6 +8,7 @@ class Avis
     public $name;
     public $message;
     public $note;
+    public $moderate;
 
     public function __construct($db)
     {
@@ -16,7 +17,7 @@ class Avis
 
     public function getAvis()
     {
-        $sql = "SELECT id, name, message, note FROM avis";
+        $sql = "SELECT id, name, message, note, moderate FROM avis";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt;
@@ -29,16 +30,19 @@ class Avis
                 SET
                     message = :message,
                     name = :name,
-                    note = :note";
+                    note = :note,
+                    moderate = :moderate";
         $stmt = $this->conn->prepare($sql);
 
         $this->message = htmlspecialchars(strip_tags(($this->message)));
         $this->name = htmlspecialchars(strip_tags(($this->name)));
         $this->note = htmlspecialchars(strip_tags(($this->note)));
+        $this->moderate = htmlspecialchars(strip_tags(($this->moderate)));
 
         $stmt->bindParam(":message", $this->message);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":note", $this->note);
+        $stmt->bindParam(":moderate", $this->moderate);
 
 
         if ($stmt->execute()) {
@@ -53,7 +57,8 @@ class Avis
                     id, 
                     message, 
                     name,
-                    note
+                    note,
+                    moderate
                 FROM 
                     avis 
                 WHERE 
@@ -68,6 +73,7 @@ class Avis
         $this->name = $dataRow['name'];
         $this->message = $dataRow['message'];        
         $this->note = $dataRow['note'];
+        $this->moderate = $dataRow['moderate'];
     }
 
     public function updateAvis()
@@ -76,7 +82,8 @@ class Avis
                 SET 
                     message = :message,
                     name = :name,
-                    note = :note
+                    note = :note,
+                    moderate = :moderate
                 WHERE
                     id= :id";
 
@@ -86,25 +93,28 @@ class Avis
         $this->name = htmlspecialchars(strip_tags(($this->name)));
         $this->id = htmlspecialchars(strip_tags(($this->id)));
         $this->note = htmlspecialchars(strip_tags(($this->note)));
+        $this->moderate = htmlspecialchars(strip_tags(($this->moderate)));
 
         $stmt->bindParam(":message", $this->message);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam("id", $this->id);
         $stmt->bindParam(":note", $this->note);
+        $stmt->bindParam(":moderate", $this->moderate);
 
         if ($stmt->execute()) {
             return true;
         }
         return false;
     }
-    function deteleteAvis()
+    function deleteAvis()
     {
         $sql = "DELETE FROM avis WHERE id= :id";
 
         $stmt = $this->conn->prepare($sql);
         $this->id = htmlspecialchars(strip_tags($this->id));
 
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(":id", $this->id);
+
         if ($stmt->execute()) {
             return true;
         }

@@ -1,5 +1,4 @@
 import React from 'react'
-import Register from '../components/Employe/Register'
 import { Link } from 'react-router-dom'
 
 const AdminSpace = () => {
@@ -16,7 +15,7 @@ const AdminSpace = () => {
         </div>
 
         <div className='d-flex flex-row container-fluid align-items-center m-auto'>
-          <button className='d-flex flex-column p-2 m-2 mt-3 bouton'>Employé</button>
+          <Link to='/avis' className='d-flex flex-column p-2 m-2 mt-3 bouton'>Avis</Link>
           <button className='d-flex flex-column p-2 m-2 mt-3 bouton'>Employé</button>
         </div>
         <div className='d-flex flex-row container-fluid align-items-center m-auto'>

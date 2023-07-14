@@ -34,6 +34,13 @@ footer {
   padding: 12.5px;
 }
 
+.bouton-delete {
+  background-color: #db3e3e;
+  border-radius: 10px;
+  margin: 12.5px;
+  padding: 12.5px;
+}
+
 .layout {
   min-height:100vh; 
 	display:flex; 

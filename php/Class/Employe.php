@@ -111,7 +111,7 @@ class Employee
     return true;
 }
 
-    function deteleteUsers()
+    function deleteUsers()
     {
         if ($this->role === 'Admin') {
             return false; 

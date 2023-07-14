@@ -19,6 +19,7 @@ import GetEmploye from './components/Employe/GetEmploye'
 import UpdateEmploye from './components/Employe/UpdateEmploye';
 import Horaire from './components/Heure/Horaire';
 import HoraireUpdate from './components/Heure/HoraireUpdate';
+import ModerateAvis from './components/Avis/ModerateAvis';
 
 
 
@@ -38,12 +39,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />} >
           <Route path="/" element={<Home />} exact />
-          <Route path='/avis' element={<NewAvis />} exact />
+          <Route path='/newavis' element={<NewAvis />} exact />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/login" element={<Login />} />
           <Route exact path="/Voiture" element={<Car />} />
           <Route path="/Voiture/:idVoiture" element={<SingleCar />} />
           <Route path='horaire' element={<HoraireUpdate />} />
+          <Route path='avis' element={<ModerateAvis />}  />
           
 
             <Route path="/signup" element={<Register />} />
@@ -52,7 +54,7 @@ function App() {
             <Route path='/employe/update/:idEmploye' element={ <UpdateEmploye />} />
 
             <Route path="/av" element={<GetAvis />} />
-            <Route path="/av/:idAvis" element={<SingleAvis />} />
+            <Route path="/avis/:idAvis" element={<SingleAvis />} />
           <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
 
           </Route>

@@ -13,13 +13,16 @@ const GetAvis = () => {
 
     const fetchAvis = async () => {
         try {
-            const response = await axios.get(register_url);
-            console.log(response.data);
-            setAvis(response.data.slice(0, 4));
+          const response = await axios.get(register_url);
+          console.log(response.data);      
+          const filteredData = response.data.filter(aviss => aviss.moderate === 1);
+          const shuffledData = filteredData.sort(() => Math.random() - 0.5);
+      
+          setAvis(shuffledData.slice(0, 4));
         } catch (error) {
-            console.log(error);
+          console.log(error);
         }
-    };
+      };
 
 
     const avist = avis.map((aviss) => {
