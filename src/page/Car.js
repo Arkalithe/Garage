@@ -7,10 +7,8 @@ export const Car = () => {
 
     
     return (
-        <div className='container'>
-
+        <div className='container '>
             <GetCar></GetCar>
-
         </div>
     )
 }

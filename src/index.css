@@ -33,6 +33,10 @@ footer {
   margin: 12.5px;
   padding: 12.5px;
 }
+.bouton-alt {
+  background-color: #B2C9AB;
+  border-radius: 10px;
+}
 
 .bouton-delete {
   background-color: #db3e3e;
