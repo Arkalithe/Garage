@@ -2,6 +2,7 @@
 require '../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\ExpiredException;
 use Firebase\JWT\Key;
 
 class JwtHandler
@@ -40,9 +41,19 @@ class JwtHandler
     public function jwtDecodeData($jwt_token)
     {
         try {
-            $decode = JWT::decode($jwt_token, new Key($this->jwt_secrect , 'HS256'));
+            $decode = JWT::decode($jwt_token, new Key($this->jwt_secrect , 'HS256')); 
+            $currentTimestamp = time();
+            if ($currentTimestamp > $decode->exp) {
+                echo "<script>localStorage.removeItem('accessToken');</script>";
+                throw new ExpiredException('Token has expired');
+            }
+            
             return [
                 "data" => $decode->data
+            ];
+        } catch (ExpiredException $e) {
+            return [
+                "message" => $e->getMessage()
             ];
         } catch (Exception $e) {
             return [

@@ -4,7 +4,8 @@ import useAuth from "../hooks/useAuth";
 const RequireAuth = ({ allowedRoles }) => {
     const { auth } = useAuth();
     const location = useLocation();
-    if (auth.email === 0) {
+
+    if (!auth.accessToken) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
     if (!allowedRoles.includes(auth.role)) {        

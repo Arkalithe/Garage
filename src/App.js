@@ -24,7 +24,7 @@ import ModerateAvis from './components/Avis/ModerateAvis';
 
 
 function App() {
-  
+
 
   const ROLE = {
     'Admin': 'Admin',
@@ -45,28 +45,28 @@ function App() {
           <Route exact path="/Voiture" element={<Car />} />
           <Route path="/Voiture/:idVoiture" element={<SingleCar />} />
           <Route path='horaire' element={<HoraireUpdate />} />
-          <Route path='avis' element={<ModerateAvis />}  />
-          
+          <Route path='avis' element={<ModerateAvis />} />
 
-            <Route path="/signup" element={<Register />} />
-            <Route path="/adminSpace" element={<AdminSpace />} />
-            <Route path='/employe' element={<GetEmploye />} />
-            <Route path='/employe/update/:idEmploye' element={ <UpdateEmploye />} />
 
-            <Route path="/av" element={<GetAvis />} />
-            <Route path="/avis/:idAvis" element={<SingleAvis />} />
+          <Route path="/signup" element={<Register />} />
+
+          <Route path='/employe' element={<GetEmploye />} />
+          <Route path='/employe/update/:idEmploye' element={<UpdateEmploye />} />
+
+          <Route path="/av" element={<GetAvis />} />
+          <Route path="/avis/:idAvis" element={<SingleAvis />} />
           <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
 
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLE.Admin]} />}>
-
+            <Route path="/adminSpace" element={<AdminSpace />} />
           </Route>
         </Route>
-        
+
       </Routes>
       <Horaire />
-      
+
 
     </div>
   )
