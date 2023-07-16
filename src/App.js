@@ -20,6 +20,7 @@ import UpdateEmploye from './components/Employe/UpdateEmploye';
 import Horaire from './components/Heure/Horaire';
 import HoraireUpdate from './components/Heure/HoraireUpdate';
 import ModerateAvis from './components/Avis/ModerateAvis';
+import { NewCar } from './components/Car/NewCar';
 
 
 
@@ -33,7 +34,7 @@ function App() {
 
 
   return (
-    <div className='App d-flex flex-column'>
+    <div className='App d-flex flex-column '>
 
       <Header />
       <Routes>
@@ -55,8 +56,10 @@ function App() {
 
           <Route path="/av" element={<GetAvis />} />
           <Route path="/avis/:idAvis" element={<SingleAvis />} />
-          <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
 
+          <Route path="creationVoiture" element={<NewCar />} />
+          <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
+    
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLE.Admin]} />}>

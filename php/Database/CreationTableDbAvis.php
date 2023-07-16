@@ -18,7 +18,7 @@ class DatabaseTableCreateAvis
             )";         
 
             $conn->exec($tvsql);
-            echo 'Table Avis crée avec succés :';
+            echo 'Table Avis crée avec succés :<br>';
         } catch (PDOException $e) {
             echo $tvsql . "Connection Raté : " . $e->getMessage();
             exit;

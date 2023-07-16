@@ -18,7 +18,7 @@ const useAuth = () => {
   return {
     auth: auth,   
     setAuth: setAuthData,
-    logout
+    logout: logout,
   };
 }
 
