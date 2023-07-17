@@ -41,12 +41,12 @@ class Image
         return false;
     }
 
-    private function linkImageToVoiture($imageId, $voitureId)
+    public function linkImageToVoiture($imageId, $voitureId)
     {
-        $sql = "INSERT INTO voiture_images (voiture_id, image_id) VALUES (?, ?)";
+        $sql = "INSERT INTO voiture_images (voiture_id, image_id) VALUES (:voiture_id, :image_id)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $voitureId);
-        $stmt->bindParam(2, $imageId);
+        $stmt->bindParam(":voiture_id", $voitureId);
+        $stmt->bindParam(":image_id", $imageId);
         $stmt->execute();
     }
     
@@ -70,5 +70,10 @@ class Image
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $imageId);
         $stmt->execute();
+    }
+
+    public function getLastInsertedId()
+    {
+        return $this->conn->lastInsertId();
     }
 }

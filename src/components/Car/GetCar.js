@@ -40,7 +40,7 @@ const GetCar = () => {
   };
 
   const resetPriceRange = () => {
-    setPriceRangeValue([minmum, maximum ]);
+    setPriceRangeValue([minmum, maximum]);
   };
 
   const resetYearRange = () => {
@@ -68,8 +68,10 @@ const GetCar = () => {
   const uniqueCars = Array.from(new Set(carsInRange.map(car => car.id)))
     .map(id => carsInRange.find(car => car.id === id));
 
+
+
   const cars = uniqueCars.map((car) => {
-const carImages = car.voiture_images.split(",");
+    const carImages = car.voiture_images.split(",");
 
 
     return (
@@ -83,6 +85,7 @@ const carImages = car.voiture_images.split(",");
             src={require(`../../assests/Image/${carImages[0]}`)}
             alt="cars"
             className="align-self-center py-3 img-fluid"
+            style={{ width: "300px", height: "200px" }}
           />
         </div>
         <div className="ps-2">{car.modele}</div>
@@ -93,91 +96,92 @@ const carImages = car.voiture_images.split(",");
           Plus d'information
         </Link>
       </div>
-    )})
-;
+    )
+  })
+    ;
 
-return (
-  <>
-    <section className="d-flex flex-column my-2" style={{ width: "100%" }}>
-      <div className="voit mx-auto" style={{ maxWidth: "600px" }}>
-        <div className="mx-1">
-          <label htmlFor="priceRange">Prix:</label>
-          <span className="mx-1">
-            {priceRangeValue[0]}€ - {priceRangeValue[1]}€
-          </span>
+  return (
+    <>
+      <section className="d-flex flex-column my-2" style={{ width: "100%" }}>
+        <div className="voit mx-auto" style={{ maxWidth: "600px" }}>
+          <div className="mx-1">
+            <label htmlFor="priceRange">Prix:</label>
+            <span className="mx-1">
+              {priceRangeValue[0]}€ - {priceRangeValue[1]}€
+            </span>
+          </div>
+          <div className="d-flex align-items-center ms-2">
+            <Slider
+              getAriaLabel={() => "Price Range"}
+              value={priceRangeValue}
+              onChange={priceChange}
+              valueLabelDisplay="auto"
+              min={minmum}
+              max={maximum}
+              sx={{ width: "300px", mx: "10px" }}
+            />
+            <button type="button" className="bouton-alt p-2 mx-3" onClick={resetPriceRange}>
+              Reset
+            </button>
+          </div>
         </div>
-        <div className="d-flex align-items-center ms-2">
-          <Slider
-            getAriaLabel={() => "Price Range"}
-            value={priceRangeValue}
-            onChange={priceChange}
-            valueLabelDisplay="auto"
-            min={minmum}
-            max={maximum}
-            sx={{ width: "300px", mx: "10px" }}
-          />
-          <button type="button" className="bouton-alt p-2 mx-3" onClick={resetPriceRange}>
-            Reset
-          </button>
+        <div className="voit mx-auto" style={{ maxWidth: "600px" }}>
+          <div>
+            <label htmlFor="yearRange">Année:</label>
+            <span className="mx-1">
+              {yearRangeValue[0]} - {yearRangeValue[1]}
+            </span>
+          </div>
+          <div className="d-flex align-items-center ms-2">
+            <Slider
+              getAriaLabel={() => "Year Range"}
+              value={yearRangeValue}
+              onChange={yearChange}
+              valueLabelDisplay="auto"
+              min={1960}
+              max={maxYear}
+              sx={{ width: "300px", mx: "10px" }}
+            />
+            <button type="button" className="bouton-alt p-2 mx-3" onClick={resetYearRange}>
+              Reset
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="voit mx-auto" style={{ maxWidth: "600px" }}>
-        <div>
-          <label htmlFor="yearRange">Année:</label>
-          <span className="mx-1">
-            {yearRangeValue[0]} - {yearRangeValue[1]}
-          </span>
+        <div className="voit mx-auto" style={{ maxWidth: "600px" }}>
+          <div>
+            <label htmlFor="kiloRange">Kilométrage:</label>
+            <span className="mx-1">
+              {kiloRangeValue[0]} - {kiloRangeValue[1]}
+            </span>
+          </div>
+          <div className="d-flex align-items-center mb-3 ms-2">
+            <Slider
+              getAriaLabel={() => "Kilométrage Range"}
+              value={kiloRangeValue}
+              onChange={kiloChange}
+              valueLabelDisplay="auto"
+              min={minmum}
+              max={300000}
+              sx={{ width: "300px", mx: "10px" }}
+            />
+            <button type="button" className="bouton-alt p-2 mx-3" onClick={resetKiloRange}>
+              Reset
+            </button>
+          </div>
         </div>
-        <div className="d-flex align-items-center ms-2">
-          <Slider
-            getAriaLabel={() => "Year Range"}
-            value={yearRangeValue}
-            onChange={yearChange}
-            valueLabelDisplay="auto"
-            min={1960}
-            max={maxYear}
-            sx={{ width: "300px", mx: "10px" }}
-          />
-          <button type="button" className="bouton-alt p-2 mx-3" onClick={resetYearRange}>
-            Reset
-          </button>
-        </div>
-      </div>
-      <div className="voit mx-auto" style={{ maxWidth: "600px" }}>
-        <div>
-          <label htmlFor="kiloRange">Kilométrage:</label>
-          <span className="mx-1">
-            {kiloRangeValue[0]} - {kiloRangeValue[1]}
-          </span>
-        </div>
-        <div className="d-flex align-items-center mb-3 ms-2">
-          <Slider
-            getAriaLabel={() => "Kilométrage Range"}
-            value={kiloRangeValue}
-            onChange={kiloChange}
-            valueLabelDisplay="auto"
-            min={minmum}
-            max={300000}
-            sx={{ width: "300px", mx: "10px" }}
-          />
-          <button type="button" className="bouton-alt p-2 mx-3" onClick={resetKiloRange}>
-            Reset
-          </button>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section>
-      <div className="d-flex flex-wrap justify-content-center">
-        {cars.length > 0 ? (
-          cars
-        ) : (
-          <h1 className="m-auto">Aucune voiture correspond à vos critères</h1>
-        )}
-      </div>
-    </section>
-  </>
-);
+      <section>
+        <div className="d-flex flex-wrap justify-content-center">
+          {cars.length > 0 ? (
+            cars
+          ) : (
+            <h1 className="m-auto">Aucune voiture correspond à vos critères</h1>
+          )}
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default GetCar;

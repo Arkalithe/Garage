@@ -32,7 +32,7 @@ class DatabaseTableCreateCar
 
             $tiSql = "CREATE TABLE IF NOT EXISTS IMAGES (
                 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                image_url VARCHAR(255) NOT NULL                        
+                image BLOB NOT NULL                        
             )";
 
             $conn->exec($tiSql);
@@ -67,16 +67,6 @@ class DatabaseTableCreateCar
             
             echo 'Table EVVOITURE crée avec succès<br>';
 
-            $vtiSql = "CREATE TABLE IF NOT EXISTS VOITURE_IMAGES (
-                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                voiture_id INT NOT NULL,
-                image_id INT NOT NULL,
-                FOREIGN KEY (voiture_id) REFERENCES VOITURES(id),
-                FOREIGN KEY (image_id) REFERENCES IMAGES(id)
-            )";
-            
-            $conn->exec($vtiSql);
-            echo 'Table VOITURE_IMAGES crée avec succès<br>';
         } catch (PDOException $e) {
             echo $tvsql . "Connection Raté :" . $e->getMessage();
             exit;

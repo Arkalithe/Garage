@@ -44,6 +44,11 @@ footer {
   margin: 12.5px;
   padding: 12.5px;
 }
+.bouton-delete-alt{
+  background-color: #db3e3e;
+  border-radius: 10px;
+
+}
 .bouton-lien {
   color: #0D21A1;
   text-decoration: none

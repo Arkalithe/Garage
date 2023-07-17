@@ -3,6 +3,9 @@ import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 
 
+
+
+
 export const NewCar = () => {
     const errRef = useRef();
     const nameRef = useRef();
@@ -14,17 +17,19 @@ export const NewCar = () => {
     const numeroRef = useRef();
     const imageRef = useRef();
 
+    const [equipementData, setEquipementData] = useState([]);
+    const [caracteristiqueData, setCaracteristiqueData] = useState([]);
 
-
-
-    const [name, setName] = useState("");
-    const [prenom, setPrenom] = useState("");
-    const [modele, setModele] = useState("");
-    const [prix, setPrix] = useState(0);
-    const [kilometrage, setKilometrage] = useState(0);
-    const [annee, setAnnee] = useState(0);
-    const [numero, setNumero] = useState(0);
-    const [image_url, setImage_url] = useState(null);
+    const [carData, setCarData] = useState({
+        nom: '',
+        prenom: '',
+        modele: '',
+        prix: '',
+        kilometrage: '',
+        annee_circulation: '',
+        numero: '',
+        images: [],
+    });
 
     const [err, setErr] = useState('');
     const [success, setSuccess] = useState(false);
@@ -35,34 +40,44 @@ export const NewCar = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('nom', carData.nom);
+        formData.append('prenom', carData.prenom);
+        formData.append('modele', carData.modele);
+        formData.append('prix', carData.prix);
+        formData.append('kilometrage', carData.kilometrage);
+        formData.append('annee_circulation', carData.annee_circulation);
+        formData.append('numero', carData.numero);
+        formData.append('image', carData.image);
+
+        equipementData.forEach((equipement, index) => {
+            formData.append(`equipement_${index}`, equipement);
+        });
+
+        caracteristiqueData.forEach((caracteristique, index) => {
+            formData.append(`caracteristique_${index}`, caracteristique);
+        });
+
+        carData.images.forEach((image, index) => {
+            formData.append(`image_${index}`, image);
+          });
+
         try {
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('prenom', prenom);
-            formData.append('modele', modele);
-            formData.append('prix', prix);
-            formData.append('kilometrage', kilometrage);
-            formData.append('annee', annee);
-            formData.append('numero', numero);
-            formData.append('image_url', image_url);
-            const response = await axios.post(Car_url, formData, {
+            const response = await axios.post(
+                Car_url,
+                formData, {
                 headers: {
-                    'Content-Type' :'multipart/form-data',
+                    'Content-Type': 'multipart/form-data',
                 },
             });
 
+            console.log(response)
+            console.log(formData)
             console.log(response?.data)
 
-
             setSuccess(true);
-            setName('');
-            setPrenom('');
-            setModele('');
-            setKilometrage(0);
-            setNumero(0);
-            setAnnee(0);
-            setPrix(0);
-            setImage_url(null);
+
 
         } catch (err) {
             if (!err?.response) {
@@ -80,17 +95,71 @@ export const NewCar = () => {
 
     }
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setImage_url(file);
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setCarData({ ...carData, [name]: value });
+    };
+
+    const handleImageUpload = (event) => {
+        const files = event.target.files;
+        const uploadedImages = [];
+      
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          uploadedImages.push(file);
+        }
+      
+        setCarData({ ...carData, images: uploadedImages });
       };
+
+    const handleEquipementChange = (index, event) => {
+        const { value } = event.target;
+        setEquipementData((prevData) => {
+            const updatedData = [...prevData];
+            updatedData[index] = value;
+            return updatedData;
+        });
+    };
+
+    const handleAddEquipementField = () => {
+        setEquipementData((prevData) => [...prevData, '']);
+    };
+
+    const handleRemoveEquipementField = (index) => {
+        setEquipementData((prevData) => {
+            const updatedData = [...prevData];
+            updatedData.splice(index, 1);
+            return updatedData;
+        });
+    };
+
+    const handleCaracteristiqueChange = (index, event) => {
+        const { value } = event.target;
+        setCaracteristiqueData((prevData) => {
+            const updatedData = [...prevData];
+            updatedData[index] = value;
+            return updatedData;
+        });
+    };
+
+    const handleAddCaracteristiqueField = () => {
+        setCaracteristiqueData((prevData) => [...prevData, '']);
+    };
+
+    const handleRemoveCaracteristiqueField = (index) => {
+        setCaracteristiqueData((prevData) => {
+            const updatedData = [...prevData];
+            updatedData.splice(index, 1);
+            return updatedData;
+        });
+    };
 
     return (
         <>{success ? (
             <section className="form-cadre d-flex flex-column align-items-center justify-content-start">
                 <h1 className="d-flex flex-column p-2 m-2">Voiture Ajouté</h1>
                 <p >
-                    <Link to="/" className="bouton lien"> Retour Acceuil  </Link>
+                    <Link to="/adminSpace" className="bouton lien"> Retour Acceuil  </Link>
                 </p>
             </section>
         ) : (
@@ -100,17 +169,19 @@ export const NewCar = () => {
                 </p>
 
                 <h1 className='d-flex flex-column p-1 m-2'> Voiture. </h1>
-                <form className='d-flex flex-column p-2 m-2' onSubmit={handleSubmit}>
+
+                <form className='d-flex flex-column p-2 m-2' onSubmit={handleSubmit} encType="multipart/form-data">
                     <label htmlFor="name">
                         Nom :
                     </label>
                     <input
                         type="text"
-                        id="name"
+                        id="nom"
+                        name="nom"
                         ref={nameRef}
                         autoComplete="off"
-                        onChange={(e) => setName(e.target.value)}
-                        value={name}
+                        onChange={handleChange}
+                        value={carData.nom}
                         required
                     />
                     <label htmlFor="prenom">
@@ -118,11 +189,12 @@ export const NewCar = () => {
                     </label>
                     <input
                         type="text"
-                        id="Prenom"
+                        id="prenom"
+                        name="prenom"
                         ref={prenomRef}
                         autoComplete="off"
-                        onChange={(e) => setPrenom(e.target.value)}
-                        value={prenom}
+                        onChange={handleChange}
+                        value={carData.prenom}
                         required
                     />
                     <label htmlFor="modele">
@@ -133,10 +205,57 @@ export const NewCar = () => {
                         id="modele"
                         ref={modeleRef}
                         autoComplete="off"
-                        onChange={(e) => setModele(e.target.value)}
-                        value={modele}
+                        name="modele"
+                        value={carData.modele}
+                        onChange={handleChange}
                         required
                     />
+                    <div>
+                        <h3>Equipement :</h3>
+                        {equipementData.map((equipement, index) => (
+                            <div key={index}>
+                                <input
+                                    type="text"
+                                    value={equipement}
+                                    onChange={(event) => handleEquipementChange(index, event)}
+                                    placeholder={`Equipement ${index + 1}`}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveEquipementField(index)}
+                                    className='bouton-delete-alt'
+                                >
+                                    Supprimer
+                                </button>
+                            </div>
+                        ))}
+                        <button type="button" className='bouton-alt' onClick={handleAddEquipementField}>
+                            Ajoute Equipement
+                        </button>
+                    </div>
+                    <div>
+                        <h3>Caracteristique :</h3>
+                        {caracteristiqueData.map((caracteristique, index) => (
+                            <div key={index}>
+                                <input
+                                    type="text"
+                                    value={caracteristique}
+                                    onChange={(event) => handleCaracteristiqueChange(index, event)}
+                                    placeholder={`Caracteristique ${index + 1}`}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveCaracteristiqueField(index)}
+                                    className='bouton-delete-alt'
+                                >
+                                    Supprimer
+                                </button>
+                            </div>
+                        ))}
+                        <button type="button" className='bouton-alt' onClick={handleAddCaracteristiqueField}>
+                            Ajoute Caracteristique
+                        </button>
+                    </div>
                     <label htmlFor="prix">
                         Prix :
                     </label>
@@ -145,8 +264,9 @@ export const NewCar = () => {
                         id="prix"
                         ref={prixRef}
                         autoComplete="off"
-                        onChange={(e) => setPrix(e.target.value)}
-                        value={prix}
+                        name="prix"
+                        value={carData.prix}
+                        onChange={handleChange}
                         required
                     />
                     <label htmlFor="kilometrage">
@@ -157,8 +277,9 @@ export const NewCar = () => {
                         id="kilometrage"
                         ref={kilometrageRef}
                         autoComplete="off"
-                        onChange={(e) => setKilometrage(e.target.value)}
-                        value={kilometrage}
+                        name="kilometrage"
+                        value={carData.kilometrage}
+                        onChange={handleChange}
                         required
                     />
                     <label htmlFor="annee">
@@ -166,11 +287,12 @@ export const NewCar = () => {
                     </label>
                     <input
                         type="number"
-                        id="annee"
+                        id="annee_circulation"
                         ref={anneeRef}
                         autoComplete="off"
-                        onChange={(e) => setAnnee(e.target.value)}
-                        value={annee}
+                        name="annee_circulation"
+                        value={carData.annee_circulation}
+                        onChange={handleChange}
                         required
                     />
                     <label htmlFor="numero">
@@ -181,17 +303,20 @@ export const NewCar = () => {
                         id="numero"
                         ref={numeroRef}
                         autoComplete="off"
-                        onChange={(e) => setNumero(e.target.value)}
-                        value={numero}
+                        name='numero'
+                        value={carData.numero}
+                        onChange={handleChange}
                         required
                     />
-                    <label htmlFor="image">Image:</label>
+                    <label htmlFor="image_url">Image :</label>
                     <input
                         type="file"
                         id="image"
+                        name="image"
                         ref={imageRef}
-                        accept="image/*"
-                        onChange={handleImageChange}
+                        accept=".jpeg, .png, .jpg"
+                        onChange={handleImageUpload}
+                        multiple
                         required
                     />
 

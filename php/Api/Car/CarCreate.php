@@ -3,53 +3,111 @@
 header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Methods: GET, POST");
 header('Access-Control-Allow-Credentials: true');
-header('Content-Type: text/plain');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
 
 include_once '../../Database/Connect.php';
 include_once '../../Class/Voiture.php';
-include_once '../../Class/Image.php'; 
-include_once '../../Class/Equipement.php'; 
+include_once '../../Class/Image.php';
+include_once '../../Class/Equipement.php';
+include_once '../../Class/Caracterstique.php';
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
-
 $items = new Voiture($db);
-$images = new Image($db);
-$equipements = new Equipement($db);
-$data = json_decode(file_get_contents("php://input"));
 
-$items->prix = $data->prix;
-$items->kilometrage = $data->kilometrage;
-$items->annee_circulation = $data->annee_circulation;
-$items->caracteristique = $data->caracteristique;
-$items->equipement = $data->equipement;
+$nom = $_POST['nom'];
+$prenom = $_POST['prenom'];
+$modele = $_POST['modele'];
+$prix = $_POST['prix'];
+$kilometrage = $_POST['kilometrage'];
+$annee_circulation = $_POST['annee_circulation'];
+$numero = $_POST['numero'];
 
-if ($_SERVER["REQUEST_METHOD"] != "POST") {
+$equipements = [];
 
-} else {
-    if ($items->createVoiture()) {
-        $voitureId = $db->lastInsertId();
-
-        if (!empty($data->voiture_images)) {
-            foreach ($data->voiture_images as $image_url) {
-                $images->image_url = $image_url;
-                $images->createImage($voitureId);
-            }
-            if (!empty($data->equipements)) {
-                foreach ($data->equipement as $equipement) {
-                    $equipements->equipement = $equipement;
-                    $equipements->createEquipement($voitureId);
-                }
-
-
-        }
-
-
-        echo json_encode(array("message" => "Voiture crée avec succes."));
-    } else {
-
-        echo json_encode(array("message" => "Creation voiture raté."));
+foreach ($_POST as $key => $value) {
+    if (strpos($key, 'equipement_') === 0) {
+        $equipements[] = $value;
     }
 }
+
+$caracteristiques = [];
+
+foreach ($_POST as $key => $value) {
+    if (strpos($key, 'caracteristique_') === 0) {
+        $caracteristiques[] = $value;
+    }
 }
+
+$imageNames = [];
+$imagePaths = [];
+
+foreach ($_FILES as $key => $file) {
+    if (strpos($key, 'image_') === 0) {
+        $imageName = $file['name'];
+        $destinationFolder = realpath(dirname(__FILE__) . '/../../../src/assests/Image/');
+        $imagePath = $destinationFolder . '/' . $imageName;
+
+        if (move_uploaded_file($file['tmp_name'], $imagePath)) {
+            $imageNames[] = $imageName;
+            $imagePaths[] = $imagePath;
+            echo "File uploaded successfully.";
+        } else {
+            echo "Failed to upload file.";
+        }
+    }
+}
+
+$carData = [
+    'nom' => $nom,
+    'prenom' => $prenom,
+    'modele' => $modele,
+    'prix' => $prix,
+    'kilometrage' => $kilometrage,
+    'annee_circulation' => $annee_circulation,
+    'numero' => $numero,
+    'image_names' => $imageNames,
+    'image_paths' => $imagePaths,
+    'equipements' => $equipements
+];
+
+$items->prix = $prix;
+$items->kilometrage = $kilometrage;
+$items->annee_circulation = $annee_circulation;
+$items->modele = $modele;
+$items->nom = $nom;
+$items->prenom = $prenom;
+$items->numero = $numero;
+
+if ($items->createVoiture()) {
+    $carId = $items->getLastInsertedId();
+
+    if (!empty($equipements)) {
+        foreach ($equipements as $equipement) {
+            $equipementObj = new Equipement($db);
+            $equipementObj->equipement = $equipement;
+            $equipementObj->createEquipement($carId);
+        }
+    }
+    if (!empty($caracteristiques)) {
+        foreach ($caracteristiques as $caracteristique) {
+            $caracteristiqueObj = new Caracteristique($db);
+            $caracteristiqueObj->caracteristique = $caracteristique;
+            $caracteristiqueObj->createCaracteristique($carId);
+        }
+    }
+
+    $images = new Image($db);
+
+    foreach ($carData['image_names'] as $index => $imageName) {
+        $images->image_url = $imageName;
+
+        if ($images->createImage($carId)) {
+            echo "Voiture et image ajout réussi pour l'image: $imageName";
+        } else {
+            echo "Problème de création de la voiture et de l'image pour l'image: $imageName";
+        }
+    }
+}
+
+echo json_encode($carData);
