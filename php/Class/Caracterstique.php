@@ -19,14 +19,14 @@ class Caracteristique
                     c.id, c.caracteristique
                 FROM 
                     caracteristique c
-                INNER JOIN cvvoiture vi On i.id = vi.caracteristique_id";
+                INNER JOIN cvvoiture cv On c.id = cv.caracteristique_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $voitureId);
         $stmt->execute();
         return $stmt;
     }
 
-
+    
     public function createCaracteristique($voitureId)
     {
         $sql = "INSERT INTO caracteristique (caracteristique) VALUES (?)";

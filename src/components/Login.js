@@ -37,13 +37,9 @@ const Login = () => {
             const response = await axios.post(login_url,
                 JSON.stringify({ email, password, })
             );
-            console.log(JSON.stringify(response.data));
-            console.log(response.data)            
-
             const accessToken = response.data[0];
             const dcode = jwtDecode(accessToken)
-            const role = dcode.data.role
-            
+            const role = dcode.data.role           
 
             setAuth({ email, password,role, accessToken})
             setEmail('');

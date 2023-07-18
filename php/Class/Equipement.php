@@ -19,7 +19,7 @@ class Equipement
                     e.id, e.equipement
                 FROM 
                     equipement e
-                INNER JOIN evvoiture vi On i.id = vi.equipement_id";
+                INNER JOIN evvoiture ev On e.id = ev.equipement_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $voitureId);
         $stmt->execute();
@@ -50,6 +50,8 @@ class Equipement
         $stmt->execute();
     }
 
+  
+    
     public function deleteEquipement($equipementId)
     {
         $this->unlinkEquipementFromVoiture($equipementId);
@@ -63,7 +65,7 @@ class Equipement
         return false;
     }
 
-    private function unlinkequipEmentFromVoiture($equipementId)
+    private function unlinkEquipementFromVoiture($equipementId)
     {
         $sql = "DELETE FROM evvoiture WHERE equipement_id = ?";
         $stmt = $this->conn->prepare($sql);

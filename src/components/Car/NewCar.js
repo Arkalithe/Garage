@@ -71,13 +71,7 @@ export const NewCar = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
-            console.log(response)
-            console.log(formData)
-            console.log(response?.data)
-
             setSuccess(true);
-
 
         } catch (err) {
             if (!err?.response) {

@@ -15,7 +15,6 @@ const HoraireUpdate = () => {
     try {
       const response = await axios.get(fetch_url);
       setBusinessHours(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -28,8 +27,6 @@ const HoraireUpdate = () => {
         const { id, jour, matin, apresmidi } = hour;
         const data = { id, jour, matin, apresmidi };
         const response = await axios.post(update_url, JSON.stringify(data));
-        console.log(response?.data);
-        console.log(data)
       }
     } catch (error) {
       console.error('Error:', error);

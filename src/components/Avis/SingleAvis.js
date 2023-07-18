@@ -30,8 +30,6 @@ const SingleAvis = () => {
     const handleDelete = async () => {
         try {
             const response = await axios.post(deleteAvis_url, { ids: [idAvis] });
-            console.log(response.data);
-
         } catch (error) {
             console.log(error);
         }
@@ -48,7 +46,6 @@ const SingleAvis = () => {
             };
 
             const response = await axios.post(updateAvis_url, updatedAvis );
-            console.log(response.data);
             setAvis(prevAvis => ({ ...prevAvis, moderate: 1}));
 
         } catch (error) {

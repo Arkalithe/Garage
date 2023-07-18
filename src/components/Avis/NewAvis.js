@@ -29,10 +29,6 @@ export const NewAvis = () => {
     e.preventDefault();
     try {
       const response = await axios.post(avis_url, JSON.stringify({ name, message, note }));
-
-      console.log(response?.data)
-
-
       setSuccess(true);
       setName('');
       setMessage('')

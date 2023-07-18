@@ -41,7 +41,7 @@ class Image
         return false;
     }
 
-    public function linkImageToVoiture($imageId, $voitureId)
+    private function linkImageToVoiture($imageId, $voitureId)
     {
         $sql = "INSERT INTO voiture_images (voiture_id, image_id) VALUES (:voiture_id, :image_id)";
         $stmt = $this->conn->prepare($sql);
@@ -53,7 +53,6 @@ class Image
     public function deleteImage($imageId)
     {
         $this->unlinkImageFromVoiture($imageId);
-
         $sql = "DELETE FROM images WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $imageId);

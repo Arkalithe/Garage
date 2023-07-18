@@ -66,25 +66,41 @@ const SingleCar = () => {
                             </div>
                             <div className="d-flex flex-column align-items-start  my-1">
                                 <h3>Caracteristique :</h3>
-                                <div>{voiture.caracteristique}</div>
+                                {Array.isArray(voiture.caracteristique) ? (
+                                    <div>{voiture.caracteristique.join(" / ")}</div>
+                                ) : (
+                                    <div>{voiture.caracteristique}</div>
+                                )}
                             </div>
                             <div className="d-flex flex-column align-items-start  my-1">
                                 <h3>Equipement :</h3>
-                                <div>{voiture.equipement}</div>
+                                {Array.isArray(voiture.equipement) ? (
+                                    <div>{voiture.equipement.join(' / ')}</div>) :
+                                    (<div>{voiture.equipement}</div>
+                                    )}
+
                             </div>
                         </div>
 
                         <div className="container-fluid d-flex row align-items-center justify-content-end">
-                            <Carousel 
-                            navButtonsAlwaysVisible
+                            <Carousel
+                                navButtonsAlwaysVisible
                             >
                                 {voiture.voiture_images.map((image, index) => (
-                                    <img
-                                        key={index}
-                                        className="img-fluid"
-                                        src={require(`../../assests/Image/${image}`)}
-                                        alt="voiture"
-                                    />
+                                    <div>
+                                        {image.length > 0 ? (
+                                            <img
+                                                key={index}
+                                                className="img-fluid"
+                                                style={{ width: "300px", height: "200px" }}
+                                                src={require(`../../assests/Image/${image}`)}
+                                                alt="voiture"
+                                            />
+
+                                        ) : (
+                                            <div>No Image</div>
+                                        )}</div>
+
                                 ))}
 
                             </Carousel>

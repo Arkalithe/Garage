@@ -16,7 +16,6 @@ export const UpdateEmploye = () => {
   const fetchEmploye = useCallback(async () => {
     try {
       const response = await axios.get(employe_url, { params: { id: idEmploye } });
-      console.log(response.data);
       setId(response.data.id);
       setEmail(response.data.email);
       setPassword(response.data.password);
@@ -42,8 +41,6 @@ export const UpdateEmploye = () => {
     e.preventDefault();
     try {
       const response = await axios.post(employe_update, JSON.stringify({ id, email, password, role }));
-      console.log(response?.data);
-      console.log(email, password, role, id);
     } catch (err) {
       console.log(err);
     }

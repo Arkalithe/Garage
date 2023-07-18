@@ -21,6 +21,8 @@ import Horaire from './components/Heure/Horaire';
 import HoraireUpdate from './components/Heure/HoraireUpdate';
 import ModerateAvis from './components/Avis/ModerateAvis';
 import { NewCar } from './components/Car/NewCar';
+import UpdateCar from './components/Car/UpdateCar';
+import GetUpdateCar from './components/Car/GetUpdateCar';
 
 
 
@@ -45,25 +47,22 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route exact path="/Voiture" element={<Car />} />
           <Route path="/Voiture/:idVoiture" element={<SingleCar />} />
-          <Route path='horaire' element={<HoraireUpdate />} />
-          <Route path='avis' element={<ModerateAvis />} />
-
-
-          <Route path="/signup" element={<Register />} />
-
-          <Route path='/employe' element={<GetEmploye />} />
-          <Route path='/employe/update/:idEmploye' element={<UpdateEmploye />} />
-
           <Route path="/av" element={<GetAvis />} />
-          <Route path="/avis/:idAvis" element={<SingleAvis />} />
 
-          <Route path="creationVoiture" element={<NewCar />} />
           <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
-    
+            <Route path='updateVoiture/:idVoiture' element={<UpdateCar />} />
+            <Route path='updateVoiture' element={<GetUpdateCar />} />
+            <Route path='avis' element={<ModerateAvis />} />
+            <Route path="/avis/:idAvis" element={<SingleAvis />} />
+            <Route path="creationVoiture" element={<NewCar />} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLE.Admin]} />}>
             <Route path="/adminSpace" element={<AdminSpace />} />
+            <Route path='horaire' element={<HoraireUpdate />} />
+            <Route path='/employe' element={<GetEmploye />} />
+            <Route path='/employe/update/:idEmploye' element={<UpdateEmploye />} />
+            <Route path="/signup" element={<Register />} />
           </Route>
         </Route>
 

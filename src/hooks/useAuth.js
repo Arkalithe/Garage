@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 
-
 const useAuth = () => {
   const { auth, setAuth } = useContext(AuthContext);
 
   const setAuthData = (data) => {
+
     setAuth(data);
     localStorage.setItem('accessToken', data.accessToken);
   };

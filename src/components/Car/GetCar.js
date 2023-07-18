@@ -32,7 +32,6 @@ const GetCar = () => {
   const fetchVoiture = async () => {
     try {
       const res = await axios.get(register_url);
-      console.log(res.data)
       setVoiture(res.data);
     } catch (err) {
       console.log(err);
@@ -71,7 +70,11 @@ const GetCar = () => {
 
 
   const cars = uniqueCars.map((car) => {
-    const carImages = car.voiture_images.split(",");
+    let carImages = [];
+    if (car.voiture_images) {
+      carImages = car.voiture_images.split(",");
+    }
+
 
 
     return (
@@ -81,12 +84,16 @@ const GetCar = () => {
         key={car.id}
       >
         <div className="image-container align-self-center p-1">
-          <img
-            src={require(`../../assests/Image/${carImages[0]}`)}
-            alt="cars"
-            className="align-self-center py-3 img-fluid"
-            style={{ width: "300px", height: "200px" }}
-          />
+          {carImages.length > 0 ? (
+            <img
+              src={require(`../../assests/Image/${carImages[0]}`)}
+              alt="cars"
+              className="align-self-center py-3 img-fluid"
+              style={{ width: "300px", height: "200px" }}
+            />
+          ) : (
+            <div>No Image</div>
+          )}
         </div>
         <div className="ps-2">{car.modele}</div>
         <div className="ps-2">Année: {car.annee_circulation}</div>

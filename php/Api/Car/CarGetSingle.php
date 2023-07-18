@@ -13,9 +13,11 @@ include_once '../../Class/Voiture.php';
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
 $items = new Voiture($db);
+
 $items->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 $items->singleVoiture();
+
 
 if($items->prix != null){
     $arr = array(

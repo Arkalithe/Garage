@@ -9,12 +9,13 @@ class Voiture
     public $annee_circulation;
     public $caracteristique;
     public $equipement;
-    public $image;
     public $modele;
     public $nom;
     public $prenom;
     public $numero;
     public $voiture_images;
+    public $evvoiture;
+    public $cvvoitre;
 
     public function __construct($db)
     {
@@ -32,9 +33,9 @@ class Voiture
                     V.nom,
                     V.prenom,
                     V.numero,
-                    C.caracteristique,
-                    E.equipement,
-                    GROUP_CONCAT(I.image_url) AS voiture_images
+                    GROUP_CONCAT(DISTINCT C.caracteristique) as cvvoiture,
+                    GROUP_CONCAT(DISTINCT E.equipement) as evvoiture,
+                    GROUP_CONCAT(DISTINCT I.image_url) AS voiture_images
                 FROM
                     VOITURES V
                 LEFT JOIN
@@ -106,9 +107,9 @@ class Voiture
                     V.nom,
                     V.prenom,
                     V.numero,
-                    C.caracteristique,
-                    E.equipement,
-                    GROUP_CONCAT(I.image_url) AS voiture_images
+                    GROUP_CONCAT(DISTINCT C.caracteristique) as cvvoiture,
+                    GROUP_CONCAT(DISTINCT E.equipement) as evvoiture,
+                    GROUP_CONCAT(DISTINCT I.image_url) AS voiture_images
                 FROM
                     VOITURES V
                 LEFT JOIN
@@ -126,7 +127,7 @@ class Voiture
                 WHERE
                     V.id = :id
                 LIMIT 0,1";
-
+        
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":id", $this->id);
         $stmt->execute();
@@ -140,8 +141,8 @@ class Voiture
         $this->nom = $dataRow['nom'];
         $this->prenom = $dataRow['prenom'];
         $this->numero = $dataRow['numero'];
-        $this->caracteristique = $dataRow['caracteristique'];
-        $this->equipement = $dataRow['equipement'];
+        $this->caracteristique = explode(',',$dataRow['cvvoiture']);
+        $this->equipement = explode(',', $dataRow['evvoiture']);
         $this->voiture_images = explode(',', $dataRow['voiture_images']);
     }
 
@@ -152,7 +153,6 @@ class Voiture
                     prix = :prix,
                     kilometrage = :kilometrage,
                     annee_circulation = :annee_circulation,
-                    image = :image,
                     modele = :modele,
                     nom = :nom,
                     prenom = :prenom,
@@ -165,7 +165,6 @@ class Voiture
         $this->prix = htmlspecialchars(strip_tags($this->prix));
         $this->kilometrage = htmlspecialchars(strip_tags($this->kilometrage));
         $this->annee_circulation = htmlspecialchars(strip_tags($this->annee_circulation));
-        $this->image = htmlspecialchars(strip_tags($this->image));
         $this->modele = htmlspecialchars(strip_tags($this->modele));
         $this->nom = htmlspecialchars(strip_tags($this->nom));
         $this->prenom = htmlspecialchars(strip_tags($this->prenom));
@@ -175,7 +174,6 @@ class Voiture
         $stmt->bindParam(":prix", $this->prix);
         $stmt->bindParam(":kilometrage", $this->kilometrage);
         $stmt->bindParam(":annee_circulation", $this->annee_circulation);
-        $stmt->bindParam(":image", $this->image);
         $stmt->bindParam(":modele", $this->modele);
         $stmt->bindParam(":nom", $this->nom);
         $stmt->bindParam(":prenom", $this->prenom);
