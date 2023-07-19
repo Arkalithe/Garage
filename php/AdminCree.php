@@ -1,5 +1,36 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $motDePasse = $_POST["mot_de_passe"];
+    $email = $_POST["email"];
 
+    if (empty($motDePasse) || empty($email)) {
+        echo "Veuillez remplir tous les champs.";
+    } else {
+        $connexion = $dbs->dbConnectionNamed();
+        if ($connexion) {
+            $requeteAdmin = "SELECT COUNT(*) as count FROM users WHERE role = 'admin'";
+            $statementAdmin = $connexion->prepare($requeteAdmin);
+            $statementAdmin->execute();
+            $resultAdmin = $statementAdmin->fetch(PDO::FETCH_ASSOC);
+            if ($resultAdmin['count'] > 0) {
+                echo "Un administrateur existe déjà. Vous ne pouvez pas créer un nouveau compte administrateur.";
+            } else {
+                $motDePasseHash = password_hash($motDePasse, PASSWORD_DEFAULT);
+                $requete = "INSERT INTO users (mot_de_passe, email, role) VALUES (:motDePasse, :email, 'admin')";
+                $statement = $connexion->prepare($requete);
+                $statement->bindParam(':motDePasse', $motDePasseHash);
+                $statement->bindParam(':email', $email);
+                if ($statement->execute()) {
+                    header("Location: AdminCree.php");
+                } else {
+                    echo "Une erreur s'est produite lors de la création de l'administrateur.";
+                }
+            }
+        } else {
+            echo "Erreur de connexion à la base de données.";
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>

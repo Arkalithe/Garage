@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div>
         <h1>Création d'administrateur</h1>
 
-        <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+        <form method="POST" action="AdminCree.php">
             <label for="mot_de_passe">Mot de passe :</label>
             <input type="password" name="mot_de_passe" required>
 
