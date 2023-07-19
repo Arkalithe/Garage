@@ -21,7 +21,10 @@ class DatabaseConnect
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);       
             
             $grantStatement = "GRANT SELECT, INSERT, UPDATE, DELETE ON garagevparrot.* TO 'ql46xy00vxcox0rc'@'%'";
-            $this->conn->exec($grantStatement);            
+            $this->conn->exec($grantStatement); 
+            
+            $flushStatement = "FLUSH PRIVILEGES";
+            $this->conn->exec($flushStatement);    
         } catch (PDOException $e) {
             echo "Connection Raté : " . $e->getMessage();            
         }
