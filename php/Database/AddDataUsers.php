@@ -1,15 +1,33 @@
 <?php
 include_once 'Connect.php';
 
-class placeholderName {
-    public function placeholderName(){
+class AddDataUsers {
+
+    
+    public function dataUser(){
         $db_connection = new DatabaseConnect();
         $conn = $db_connection->dbConnectionNamed();
-        try {
 
+        try {
+            $users = [
+                ['email' => 'Vincent_parrot@admin.com', 'password' => 'Test123*', 'role' => 'admin'],
+                ['email' => 'employee@example.com', 'password' => 'Empl123*', 'role' => 'employee'],
+                ['email' => 'test@example.com', 'password' => 'EmpltTest0*', 'role' => 'employee'],
+                ['email' => 'mdp@example.com', 'password' => 'tmpMdp0*', 'role' => 'employee'],
+            ];
+
+            foreach ($users as $user) {
+                $hashedPassword = password_hash($user['password'], PASSWORD_DEFAULT);
+                $insertSql = "INSERT INTO USERS (email, password, role) VALUES (?, ?, ?)";
+                $stmt = $conn->prepare($insertSql);
+                $stmt->execute([$user['email'], $hashedPassword, $user['role']]);
+            }
+            echo 'Utilisateur ajouté .<br>';
+            
         }
         catch(PDOException $e) {
-            
+            echo $stmt . "Connection Raté: " . $e->getMessage();
+            exit;
         }
 
     }
