@@ -1,6 +1,16 @@
 <?php
 require_once './Database/Connect.php';
 
+try {
+    require_once './Database/InitDb.php';
+$init = new InitDb();
+$dbInit = $init->initDb();
+} catch(PDOException $e) {
+echo "Erreure : " . $e
+}
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $motDePasse = $_POST["mot_de_passe"];
     $email = $_POST["email"];
