@@ -88,7 +88,6 @@ const Login = () => {
                     <button className='d-flex flex-column p-2 m-2 mt-3 bouton' > Connexion </button>
                 </form>
             </section>
-        <button onClick={logout }>logout</button>
         </div>
     )
 

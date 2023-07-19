@@ -1,5 +1,8 @@
-import Voiture from '../assests/Image/Voiture.png';
+import { Link } from 'react-router-dom';
 import GetAvis from '../components/Avis/GetAvis';
+import Depanage from '../components/Depanage/Depanage';
+import Reparation from '../components/Reparation/Reparation';
+import VoitureOccasion from '../components/Ocasion/VoitureOccasion';
 
 
 const Home = () => {
@@ -9,63 +12,12 @@ const Home = () => {
         <div >
           <h1 >Nos Services</h1>
         </div>
-        <div className="row row-cols-1 row-cols-md-3">
-          <div className="col mb-4 ">
-            <div className="card form-cadre h-100">
-              <div className="pb-2">
-                <h1>Dépannage</h1>
-              </div>
-              <div className="pb-3">
-                <img className="img-fluid" src={Voiture} alt="Dépannage" />
-              </div>
-              <div>
-                <p>
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                </p>
-              </div>
-              <button className="bouton bouton-lien">Plus d'information</button>
-            </div>
-          </div>
-          <div className="col mb-4">
-            <div className="card form-cadre h-100">
-              <div className="pb-2">
-                <h1>Réparation</h1>
-              </div>
-              <div className="pb-3">
-                <img className="img-fluid" src={Voiture} alt="Réparation" />
-              </div>
-              <div className="pb-3">
-                <p>
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                </p>
-              </div>
-              <button className="bouton bouton-lien">Plus d'information</button>
-            </div>
-          </div>
-          <div className="col mb-4">
-            <div className="card form-cadre h-100">
-              <div className="pb-2">
-                <h1>Voiture d'occasion</h1>
-              </div>
-              <div className="pb-3">
-                <img className="img-fluid" src={Voiture} alt="Voiture" />
-              </div>
-              <div className="pb-3">
-                <p>
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                </p>
-              </div>
-              <button className="bouton bouton-lien">Plus d'information</button>
-            </div>
-          </div>
-        </div>    
+
+        <div className="row row-cols-1 row-cols-md-3 flex-grow-1">
+          <Depanage />
+          <Reparation />
+          <VoitureOccasion />
+        </div>
       </section >
       <div className="border my-3"></div>
       <section>

@@ -28,8 +28,6 @@ $kilometrage = $_POST['kilometrage'];
 $annee_circulation = $_POST['annee_circulation'];
 $numero = $_POST['numero'];
 
-var_dump($_POST);
-
 $equipements = [];
 
 foreach ($_POST as $key => $value) {

@@ -40,7 +40,6 @@ export const NewCar = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const formData = new FormData();
         formData.append('nom', carData.nom);
         formData.append('prenom', carData.prenom);

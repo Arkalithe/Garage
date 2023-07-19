@@ -155,7 +155,7 @@ class AddDataCar {
 
         }         
         catch(PDOException $e) {
-            echo "Ajout Data Raté: " . $e->getMessage();
+            echo "Ajout Data Raté: " . $e->getMessage() ;
         }
     }
 }

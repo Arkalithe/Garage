@@ -39,7 +39,7 @@ const SingleCar = () => {
         <section className="container-fluid d-flex row">
             {form ? (
                 <div className="form-cadre d-flex flex-column align-items-center my-3">
-                    <Contact data={voiture} />
+                    <Contact car={voiture} />
                     <button onClick={handleClick} className="bouton-alt mb-3 p-2" style={{ backgroundColor: '#db3e3e' }}>
                         Précedent
                     </button>
@@ -87,10 +87,9 @@ const SingleCar = () => {
                                 navButtonsAlwaysVisible
                             >
                                 {voiture.voiture_images.map((image, index) => (
-                                    <div>
+                                    <div key={index} >
                                         {image.length > 0 ? (
-                                            <img
-                                                key={index}
+                                            <img                                                
                                                 className="img-fluid"
                                                 style={{ width: "300px", height: "200px" }}
                                                 src={require(`../../assests/Image/${image}`)}

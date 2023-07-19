@@ -6,6 +6,7 @@ include_once 'CreationTableDbCar.php';
 include_once 'CreationTableDbAvis.php';
 include_once 'CreationTableDbHoraire.php';
 include_once 'AddDataCar.php';
+include_once 'CreationDatabaseContent.php';
 
 
 $db_create = new DatabaseCreate();
@@ -14,8 +15,7 @@ $db_table_car = new DatabaseTableCreateCar();
 $db_table_avis = new DatabaseTableCreateAvis();
 $db_table_horaire = new DatabaseTableCreateHoraire();
 $add_data_car = new AddDataCar();
-
-
+$db_table_content = new DatabaseContent();
 
 try {
     $db_create->creationDb();
@@ -23,7 +23,9 @@ try {
     $db_table_car->creationTableCar();
     $db_table_avis->creationTableAvis();
     $db_table_horaire->creationTableHoraire();
+    $db_table_content->creationContent();
     $add_data_car->dataCar();
+    
 
 
 } catch (PDOException $e) {

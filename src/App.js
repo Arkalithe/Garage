@@ -4,6 +4,8 @@ import { Routes, Route, } from 'react-router-dom';
 import Home from './page/Home';
 import AdminSpace from './page/AdminSpace';
 import { Car } from './page/Car';
+import Unauthorized from './page/Unauthorized';
+import ContactPage from './page/ContactPage';
 
 import Header from './components/Header';
 import Login from './components/Login';
@@ -11,7 +13,6 @@ import Register from './components/Employe/Register';
 import SingleCar from './components/Car/SingleCar';
 import RequireAuth from './components/RequireAuth';
 import Layout from './components/Layout';
-import Unauthorized from './page/Unauthorized';
 import NewAvis from './components/Avis/NewAvis';
 import GetAvis from './components/Avis/GetAvis';
 import SingleAvis from './components/Avis/SingleAvis';
@@ -23,6 +24,13 @@ import ModerateAvis from './components/Avis/ModerateAvis';
 import { NewCar } from './components/Car/NewCar';
 import UpdateCar from './components/Car/UpdateCar';
 import GetUpdateCar from './components/Car/GetUpdateCar';
+import ReparationDetails from './components/Reparation/ReparationDetails';
+import DepanageDetails from './components/Depanage/DepanageDetails';
+import EditReparation from './components/Reparation/EditReapartion';
+import EditDepanage from './components/Depanage/EditDepanage';
+import EditOcasion from './components/Ocasion/EditOccasion';
+
+
 
 
 
@@ -48,6 +56,11 @@ function App() {
           <Route exact path="/Voiture" element={<Car />} />
           <Route path="/Voiture/:idVoiture" element={<SingleCar />} />
           <Route path="/av" element={<GetAvis />} />
+          <Route path='/contactPage' element={<ContactPage />} />
+          <Route path='/reparation' element={<ReparationDetails />} />
+          <Route path='/depanage' element={<DepanageDetails />} />
+<Route path='editDepanage' element={<EditDepanage />} />
+<Route path='editOcasion' element={<EditOcasion />} />
 
           <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
             <Route path='updateVoiture/:idVoiture' element={<UpdateCar />} />
@@ -63,6 +76,8 @@ function App() {
             <Route path='/employe' element={<GetEmploye />} />
             <Route path='/employe/update/:idEmploye' element={<UpdateEmploye />} />
             <Route path="/signup" element={<Register />} />
+            <Route path='editReparation' element={<EditReparation />} />
+            
           </Route>
         </Route>
 
