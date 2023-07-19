@@ -10,7 +10,6 @@ class AddDataUsers {
 
         try {
             $users = [
-                ['email' => 'Vincent_parrot@admin.com', 'password' => 'Test123*', 'role' => 'admin'],
                 ['email' => 'employee@example.com', 'password' => 'Empl123*', 'role' => 'employee'],
                 ['email' => 'test@example.com', 'password' => 'EmpltTest0*', 'role' => 'employee'],
                 ['email' => 'mdp@example.com', 'password' => 'tmpMdp0*', 'role' => 'employee'],
