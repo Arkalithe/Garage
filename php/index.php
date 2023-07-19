@@ -1,4 +1,5 @@
 <?php
+include_once './Database/Connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $motDePasse = $_POST["mot_de_passe"];
@@ -36,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Création d'administrateur</title>
     <style>
@@ -80,46 +82,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 
-<script>
-    function sendRequest() {
-        fetch('./Database/InitDb.php', {
-            method: 'POST',
-            body: new FormData(document.querySelector('form'))
-        })
-        .then(response => {
-            if (response.ok) {                
-                console.log('Request sent successfully');
-                return response.text();
-            } else {                            
-                throw new Error('Request failed');            }
-        }).then(data => {            
-            console.log(data); 
-            alert('Request successful'); 
-        })
-        .catch(error => {
-            console.log('An error occurred', error);
-            alert('Request failed'); 
-        });
-    }
-</script>
+    <script>
+        function sendRequest() {
+            fetch('./Database/InitDb.php', {
+                    method: 'POST',
+                    body: new FormData(document.querySelector('form'))
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Request sent successfully');
+                        return response.text();
+                    } else {
+                        throw new Error('Request failed');
+                    }
+                }).then(data => {
+                    console.log(data);
+                    alert('Request successful');
+                })
+                .catch(error => {
+                    console.log('An error occurred', error);
+                    alert('Request failed');
+                });
+        }
+    </script>
 
 </head>
+
 <body>
-<div>
-    <h1>Création d'administrateur</h1>
+    <div>
+        <h1>Création d'administrateur</h1>
 
-    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-        <label for="mot_de_passe">Mot de passe :</label>
-        <input type="password" name="mot_de_passe" required>
+        <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+            <label for="mot_de_passe">Mot de passe :</label>
+            <input type="password" name="mot_de_passe" required>
 
-        <label for="email">Email :</label>
-        <input type="email" name="email" required>
+            <label for="email">Email :</label>
+            <input type="email" name="email" required>
 
-        <input type="submit" value="Créer l'administrateur">
+            <input type="submit" value="Créer l'administrateur">
 
-        <input type="button" value="Envoyer une requête" onclick="sendRequest()">
-    </form>
-</div>
+            <input type="button" value="Envoyer une requête" onclick="sendRequest()">
+        </form>
+    </div>
 
 </body>
+
 </html>
