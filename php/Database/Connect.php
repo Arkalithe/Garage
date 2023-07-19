@@ -4,7 +4,7 @@ class DatabaseConnect
 {
     private $dsn = 'mysql:host=i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com;port=3306;dbname=clryze4bwb99689n';
     private $username = 'ql46xy00vxcox0rc';
-    private $password = 'xzeto0sv9h22h0er';
+    private $password = 'vqw7dh2fbvuzcbt0 ';
 
     public $conn;
 
