@@ -6,6 +6,11 @@ header('Access-Control-Allow-Credentials: true');
 header('Content-Type: application/json');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
 
+include_once('./php/Database/InitDb.php');
+
+$init = new InitDb();
+$dbInit = $init->initDb();
+
 
 include_once '../../Database/Connect.php';
 include_once '../../Class/Employe.php';
@@ -24,9 +29,13 @@ foreach ($row as $user) {
     }
 }
 
-$response = [
-    'isAdmin' => $isAdmin
-];
 
-echo json_encode($response);
-echo json_encode($row);
+if ($isAdmin) {
+    header('Location: /');
+
+  } else {
+    include('./php/Index.php');     
+    exit();
+  }
+
+?>

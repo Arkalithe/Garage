@@ -16,7 +16,7 @@ class Employee
 
     public function getUsers()
     {
-        $sql = "SELECT id, email, password FROM users";
+        $sql = "SELECT id, email, password, role FROM users";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt;
