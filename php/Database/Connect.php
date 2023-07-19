@@ -20,7 +20,7 @@ class DatabaseConnect
             $databaseUrl = getenv('JAWSDB_URL');
             if ($databaseUrl) {
                 $urlParts = parse_url($databaseUrl);
-                $this->dsn = 'mysql:host=' . $urlParts['host'] . ';port=' . $urlParts['port'] . ';dbname=' . ltrim($urlParts['path'], '/');
+                $this->dsn = 'mysql:host='.$urlParts['host'].';port='. $urlParts['port'].';dbname='.ltrim($urlParts['path'], '/');
                 $this->username = $urlParts['user'];
                 $this->password = $urlParts['pass'];
             } else {
@@ -45,7 +45,7 @@ class DatabaseConnect
             $databaseUrl = getenv('JAWSDB_URL');
             if ($databaseUrl) {
                 $urlParts = parse_url($databaseUrl);
-                $this->dsn = 'mysql:host=' . $urlParts['host'] . ';port=' . $urlParts['port'] . ';dbname=' . ltrim($urlParts['path'], '/');
+                $this->dsn = 'mysql:host=' . $urlParts['host'].';port='.$urlParts['port'].';dbname='.ltrim($urlParts['path'],'/');
                 $this->username = $urlParts['user'];
                 $this->password = $urlParts['pass'];
             } else {
