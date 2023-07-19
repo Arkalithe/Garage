@@ -88,7 +88,7 @@ export const UpdateCar = ({ carId }) => {
             formData.append(`image_${index}`, image);
         });
         try {
-            const response = await axios.post(car_update, formData, {
+            await axios.post(car_update, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
