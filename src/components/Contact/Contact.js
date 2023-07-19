@@ -33,7 +33,7 @@ export const Contact = ({ car }) => {
             formData.append('prenomProprietaire', car.prenom);
            
 
-           const response = await axios.post(url_email, formData ,{
+            await axios.post(url_email, formData ,{
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
