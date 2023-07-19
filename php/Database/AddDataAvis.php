@@ -19,6 +19,7 @@ class AddDataAvis {
                 $stmt->execute($data);
                 echo 'Avis ajouté .<br>';
             }
+            echo 'Avis ajouté .<br>';
         }
         catch(PDOException $e) {
             

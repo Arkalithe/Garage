@@ -29,7 +29,7 @@ class AddDataContent
 
             foreach ($depanage as $data) {
                 $dtmt->execute([$data['title'], $data['intro'], $data['message'], $data['image']]);
-                echo 'Avis contenu ajouté.<br>';
+                echo 'Depannage contenu ajouté.<br>';
             }
 
             $reparations = [
@@ -52,7 +52,7 @@ class AddDataContent
 
             foreach ($reparations as $data) {
                 $rtmt->execute([$data['title'], $data['intro'], $data['message'], $data['image']]);
-                echo 'Avis contenu ajouté.<br>';
+                echo 'Reparartion contenu ajouté.<br>';
             }
 
             $occasions = [

@@ -1,10 +1,8 @@
 <?php
-
-
-try {
     require_once './Database/Connect.php';
     require_once './Database/InitDb.php';
 
+try {
  $conn = new DatabaseConnect();
  $db = $conn->dbConnection();
     
@@ -23,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($motDePasse) || empty($email)) {
         echo "Veuillez remplir tous les champs.";
     } else {
-        $dbs = new DatabaseConnect();
         $connexion = $dbs->dbConnectionNamed();        
         if ($connexion) {
             $requeteAdmin = "SELECT COUNT(*) as count FROM users WHERE role = 'admin'";
@@ -39,8 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $statement->bindParam(':motDePasse', $motDePasseHash);
                 $statement->bindParam(':email', $email);            
                 if ($statement->execute()) {  
-                    header("Location: AdminCree.php");
-                    exit;
+                    header("Location: AdminCree.php");                    
                 } else {
                     echo "Une erreur s'est produite lors de la création de l'administrateur.";
                 }
