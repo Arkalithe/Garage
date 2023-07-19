@@ -1,8 +1,13 @@
 <?php
-require_once './Database/Connect.php';
+
 
 try {
+    require_once './Database/Connect.php';
     require_once './Database/InitDb.php';
+
+ $conn = new DatabaseConnect();
+ $db = $conn->dbConnection();
+    
 $init = new InitDb();
 $dbInit = $init->initDb();
 } catch(PDOException $e) {
@@ -18,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($motDePasse) || empty($email)) {
         echo "Veuillez remplir tous les champs.";
     } else {
-        $db = new DatabaseConnect();
-        $connexion = $db->dbConnectionNamed();        
+        $dbs = new DatabaseConnect();
+        $connexion = $dbs->dbConnectionNamed();        
         if ($connexion) {
             $requeteAdmin = "SELECT COUNT(*) as count FROM users WHERE role = 'admin'";
             $statementAdmin = $connexion->prepare($requeteAdmin);
