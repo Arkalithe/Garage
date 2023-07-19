@@ -1,18 +1,4 @@
 <?php
-    require_once './Database/Connect.php';
-    require_once './Database/InitDb.php';
-
-try {
- $conn = new DatabaseConnect();
- $db = $conn->dbConnection();
-    
-$init = new InitDb();
-$dbInit = $init->initDb();
-} catch(PDOException $e) {
-echo "Erreure : " . $e;
-}
-
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $motDePasse = $_POST["mot_de_passe"];
@@ -21,22 +7,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($motDePasse) || empty($email)) {
         echo "Veuillez remplir tous les champs.";
     } else {
-        $connexion = $dbs->dbConnectionNamed();        
+        $connexion = $dbs->dbConnectionNamed();
         if ($connexion) {
             $requeteAdmin = "SELECT COUNT(*) as count FROM users WHERE role = 'admin'";
             $statementAdmin = $connexion->prepare($requeteAdmin);
             $statementAdmin->execute();
-            $resultAdmin = $statementAdmin->fetch(PDO::FETCH_ASSOC);            
+            $resultAdmin = $statementAdmin->fetch(PDO::FETCH_ASSOC);
             if ($resultAdmin['count'] > 0) {
                 echo "Un administrateur existe déjà. Vous ne pouvez pas créer un nouveau compte administrateur.";
             } else {
-                $motDePasseHash = password_hash($motDePasse, PASSWORD_DEFAULT);                
+                $motDePasseHash = password_hash($motDePasse, PASSWORD_DEFAULT);
                 $requete = "INSERT INTO users (mot_de_passe, email, role) VALUES (:motDePasse, :email, 'admin')";
-                $statement = $connexion->prepare($requete);   
+                $statement = $connexion->prepare($requete);
                 $statement->bindParam(':motDePasse', $motDePasseHash);
-                $statement->bindParam(':email', $email);            
-                if ($statement->execute()) {  
-                    header("Location: AdminCree.php");                    
+                $statement->bindParam(':email', $email);
+                if ($statement->execute()) {
+                    header("Location: AdminCree.php");
                 } else {
                     echo "Une erreur s'est produite lors de la création de l'administrateur.";
                 }
@@ -93,11 +79,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #45a049;
         }
     </style>
+
+<script>
+    function sendRequest() {
+        fetch('./Database/InitDb.php', {
+            method: 'POST',
+            body: new FormData(document.querySelector('form'))
+        })
+        .then(response => {
+            if (response.ok) {                
+                console.log('Request sent successfully');
+            } else {
+                
+                console.log('Request failed');
+            }
+        })
+        .catch(error => {
+            
+            console.log('An error occurred', error);
+        });
+    }
+</script>
+
 </head>
 <body>
-    <div>
+<div>
     <h1>Création d'administrateur</h1>
-    
+
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
         <label for="mot_de_passe">Mot de passe :</label>
         <input type="password" name="mot_de_passe" required>
@@ -105,7 +113,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="email">Email :</label>
         <input type="email" name="email" required>
 
-        <input type="submit" value="Créer l'administrateur"></div>
+        <input type="submit" value="Créer l'administrateur">
+
+        <input type="button" value="Envoyer une requête" onclick="sendRequest()">
     </form>
+</div>
+
 </body>
 </html>
