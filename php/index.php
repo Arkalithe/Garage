@@ -6,7 +6,7 @@ try {
 $init = new InitDb();
 $dbInit = $init->initDb();
 } catch(PDOException $e) {
-echo "Erreure : " . $e
+echo "Erreure : " . $e;
 }
 
 
