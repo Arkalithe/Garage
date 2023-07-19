@@ -16,15 +16,15 @@ class DatabaseConnect
     public function dbConnection()
     {
         $this->conn = null;
-        try {            
+        try {      
+            $databaseUrl = getenv('JAWSDB_URL');
+            $urlParts = parse_url($databaseUrl);
+            $this->dsn = 'mysql:host=' . $urlParts['host'] . ';port=' . $urlParts['port'] . ';dbname=' . ltrim($urlParts['path'], '/');
+            $this->username = $urlParts['user'];
+            $this->password = $urlParts['pass'];
             $this->conn = new PDO($this->dsn, $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);       
-            
-            $grantStatement = "GRANT SELECT, INSERT, UPDATE, DELETE ON garagevparrot.* TO 'ql46xy00vxcox0rc'@'%'";
-            $this->conn->exec($grantStatement); 
-            
-            $flushStatement = "FLUSH PRIVILEGES";
-            $this->conn->exec($flushStatement);    
+           
         } catch (PDOException $e) {
             echo "Connection Raté : " . $e->getMessage();            
         }
@@ -36,7 +36,8 @@ class DatabaseConnect
         $this->conn = null;
         try {
             $this->conn =  new PDO($this->dsn, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);            
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+          
         } catch (PDOException $e) {
             echo "Connection Raté : " . $e->getMessage();            
         }
