@@ -23,11 +23,13 @@ cd Garage
 3. Installez les dépendances nécessaires pour le front-end (React) :
 
 npm install
+
 composer install
 
 ## Back-End Setup
 
 4. Avant d'exécuter l'application, assurez-vous de configurer les paramètres de connexion à la base de données. 
+
 Ouvrez le fichier `Connect.php` situé dans le répertoire back-end`(php/Database/Connect.php)` et mettez à jour les variables suivantes 
 
 ### Database Configuration
@@ -39,22 +41,31 @@ $password = "";
 $dbName = "garagevparrot";
 ```
 5. Adaptez les valeurs des variables en fonction de votre configuration spécifique de la base de données. 
+
 `serverName` doit être défini sur le nom d'hôte ou l'adresse IP de votre serveur de base de données, 
+
 `userName` et password doivent correspondre aux identifiants de votre utilisateur MySQL,  
+
 `dbName` doit être le nom de la base de données que vous souhaitez utiliser.
+
 Enregistrez les modifications.
 
-6. Lancer Mysql soit avec la commande
-windows = mysqld
-macOs = sudo /usr/local/mysql/bin/mysqld_safe
-Linux = sudo service mysql start
+6. Lancer Mysql soit avec la commande :
+
+windows = mysqld,
+
+macOs = sudo /usr/local/mysql/bin/mysqld_safe,
+
+Linux = sudo service mysql start,
 
 Ou si vous utilisez un package comme XMAPP utilisez l'interface correspondant.
+
 Vérifier que vous avez bien accès à la base de données.
 
-
 7. Démarrez le serveur de développement back-end:
+
 php -S localhost:8000
+
 Ou si vous utilisez un package comme XMAPP utilisez l'interface correspondant.
 
 8. Connecter vous sur http://localhost/Garage/php/Index.php Cela vous permetra de crée le compte administrateure.
