@@ -89,14 +89,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .then(response => {
             if (response.ok) {                
                 console.log('Request sent successfully');
-            } else {
-                
-                console.log('Request failed');
-            }
+                return response.text();
+            } else {                            
+                throw new Error('Request failed');            }
+        }).then(data => {            
+            console.log(data); 
+            alert('Request successful'); 
         })
         .catch(error => {
-            
             console.log('An error occurred', error);
+            alert('Request failed'); 
         });
     }
 </script>
