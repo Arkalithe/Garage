@@ -15,10 +15,7 @@ export const GetUpdateCar = () => {
     const get_car = `/Garage/php/Api/Car/CarRead.php`;
 
     useEffect(() => {
-        fetchVoiture();
-    }, []);
-
-    const fetchVoiture = async () => {
+        const fetchVoiture = async () => {
         try {
             const res = await axios.get(get_car, { params: { id: idVoiture } });
             const car = res.data;
@@ -28,6 +25,10 @@ export const GetUpdateCar = () => {
            
         }
     };
+        fetchVoiture();
+    }, [get_car, idVoiture]);
+
+    
     const uniqueCars = Array.from(new Set(carData.map(car => car.id)))
         .map(id => carData.find(car => car.id === id));
 

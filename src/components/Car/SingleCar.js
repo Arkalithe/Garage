@@ -17,10 +17,7 @@ const SingleCar = () => {
     };
 
     useEffect(() => {
-        fetchVoiture();
-    }, []);
-
-    const fetchVoiture = async () => {
+         const fetchVoiture = async () => {
         try {
             const res = await axios.get(register_url, { params: { id: idVoiture } });
             setVoiture(res.data);            
@@ -28,6 +25,10 @@ const SingleCar = () => {
         } catch (err) {            
         }
     };
+        fetchVoiture();
+    }, [idVoiture]);
+
+   
 
     if (isLoading) {
         return <div>Chargement</div>;

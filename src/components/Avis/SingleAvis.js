@@ -14,10 +14,7 @@ const SingleAvis = () => {
     const { idAvis } = useParams();
 
     useEffect(() => {
-        fetchAvis();
-    }, []);
-
-    const fetchAvis = async () => {
+        const fetchAvis = async () => {
         try {
             const response = await axios.get(avis_url, { params: { id: idAvis } });
             setAvis(response.data);
@@ -26,10 +23,14 @@ const SingleAvis = () => {
            
         }
     };
+        fetchAvis();
+    }, [idAvis]);
+
+    
 
     const handleDelete = async () => {
         try {
-            const response = await axios.post(deleteAvis_url, { ids: [idAvis] });
+        await axios.post(deleteAvis_url, { ids: [idAvis] });
         } catch (error) {
             
         }
@@ -45,7 +46,7 @@ const SingleAvis = () => {
                 name: avis.name
             };
 
-            const response = await axios.post(updateAvis_url, updatedAvis );
+            await axios.post(updateAvis_url, updatedAvis );
             setAvis(prevAvis => ({ ...prevAvis, moderate: 1}));
         } catch (error) {           
         }

@@ -13,8 +13,8 @@ class DatabaseContent
             $trrsql = "CREATE TABLE IF NOT EXISTS reparation (
                 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
-                intro VARCHAR(255) NOT NULL,
-                message VARCHAR(1000) NOT NULL,
+                intro VARCHAR(1000) NOT NULL,
+                message VARCHAR(10000) NOT NULL,
                 image VARCHAR(255) NOT NULL                
             )";         
 
@@ -25,8 +25,8 @@ class DatabaseContent
             $tvsql = "CREATE TABLE IF NOT EXISTS depannage (
                 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
-                intro VARCHAR(255) NOT NULL,
-                message VARCHAR(1000) NOT NULL,
+                intro VARCHAR(1000) NOT NULL,
+                message VARCHAR(10000) NOT NULL,
                 image VARCHAR(255) NOT NULL
                 
             )";         
@@ -38,7 +38,7 @@ class DatabaseContent
             $tvsql = "CREATE TABLE IF NOT EXISTS voitureOccasion (
                 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
-                intro VARCHAR(255) NOT NULL,
+                intro VARCHAR(1000) NOT NULL,
                 image VARCHAR(255) NOT NULL
                 
             )";         

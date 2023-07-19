@@ -37,7 +37,7 @@ export const UpdateEmploye = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(employe_update, JSON.stringify({ id, email, password, role }));
+      await axios.post(employe_update, JSON.stringify({ id, email, password, role }));
     } catch (err) {
 
     }

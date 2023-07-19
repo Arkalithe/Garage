@@ -26,7 +26,7 @@ const HoraireUpdate = () => {
       for (const hour of businessHours) {
         const { id, jour, matin, apresmidi } = hour;
         const data = { id, jour, matin, apresmidi };
-        const response = await axios.post(update_url, JSON.stringify(data));
+        await axios.post(update_url, JSON.stringify(data));
       }
     } catch (error) {
       console.error('Error:', error);

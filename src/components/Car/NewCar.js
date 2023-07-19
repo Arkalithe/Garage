@@ -63,7 +63,7 @@ export const NewCar = () => {
           });
 
         try {
-            const response = await axios.post(
+           await axios.post(
                 Car_url,
                 formData, {
                 headers: {

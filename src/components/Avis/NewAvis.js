@@ -28,7 +28,7 @@ export const NewAvis = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(avis_url, JSON.stringify({ name, message, note }));
+      await axios.post(avis_url, JSON.stringify({ name, message, note }));
       setSuccess(true);
       setName('');
       setMessage('')

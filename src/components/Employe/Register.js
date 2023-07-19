@@ -47,7 +47,7 @@ const Register = () => {
 
   useEffect(() => {
     setErr("")
-  }, [email, password, matchPassword ])
+  }, [email, password, matchPassword])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,16 +58,16 @@ const Register = () => {
       return;
     }
     try {
-      const response = await axios.post(register_url, JSON.stringify({ email, password })); 
+      await axios.post(register_url, JSON.stringify({ email, password }));
       setSuccess(true);
       setEmail('');
       setPassword('')
       setMatchPassword('')
-      
+
     } catch (err) {
       if (!err?.response) {
         setErr('Pas de reponse serveur');
-    
+
       } else if (err.response?.status === 422) {
         setErr("Email déja utilisé")
 
@@ -162,13 +162,13 @@ const Register = () => {
               />
               <p id='confirmationnote' className={matchPasswordFocus && !validMatchPassword ? 'instructions' : 'offscreen'}>
                 Doit correspondre au Mot de Passe précédent.
-              </p>       
+              </p>
 
-              
+
               <button className='d-flex flex-column p-2 m-2 mt-3 bouton' disabled={!validEmail || !validPassword || !validMatchPassword ? true : false}>
                 Ajouté Employé.
               </button>
-              
+
             </form>
 
 

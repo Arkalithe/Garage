@@ -25,7 +25,7 @@ const ContactPage = () => {
       formData.append('phone', mailSetting.phone);
       formData.append('message', mailSetting.message);
 
-      const response = await axios.post(url_email, formData, {
+       await axios.post(url_email, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

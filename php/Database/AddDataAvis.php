@@ -1,8 +1,8 @@
 <?php
 include_once 'Connect.php';
 
-class placeholderName {
-    public function placeholderName(){
+class AddDataAvis {
+    public function dataAvis(){
         $db_connection = new DatabaseConnect();
         $conn = $db_connection->dbConnectionNamed();
         try {
