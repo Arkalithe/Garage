@@ -34,7 +34,7 @@ const GetCar = () => {
       const res = await axios.get(register_url);
       setVoiture(res.data);
     } catch (err) {
-      console.log(err);
+     
     }
   };
 

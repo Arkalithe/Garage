@@ -23,7 +23,7 @@ const GetEmploye = () => {
             const response = await axios.get(employe_url);
             setUser(response.data);
         } catch (error) {
-            console.log(error);
+
         }
     };
 
@@ -38,7 +38,7 @@ const GetEmploye = () => {
             fetchEmploye();
             setSelectedIds([]);
         } catch (error) {
-            console.log(error);
+
         }
     };
 

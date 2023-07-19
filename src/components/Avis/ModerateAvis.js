@@ -18,7 +18,7 @@ const ModerateAvis = () => {
       setAvis(response.data);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      
     }
   };
 

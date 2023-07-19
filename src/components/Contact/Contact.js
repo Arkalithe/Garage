@@ -31,16 +31,13 @@ export const Contact = ({ car }) => {
             formData.append('prix', car.prix);
             formData.append('nomProprietaire', car.nom);
             formData.append('prenomProprietaire', car.prenom);
-            console.log(formData)
+           
 
            const response = await axios.post(url_email, formData ,{
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
-
-           console.log(response.data)
-           console.log(formData)
 
             alert('Email sent successfully!');
         } catch (error) {

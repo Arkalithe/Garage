@@ -2,8 +2,6 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from '../../api/axios';
-import { Link } from 'react-router-dom';
-
 
 const DepanageDetails = () => {
 
@@ -16,8 +14,6 @@ const DepanageDetails = () => {
         try {
             const response = await axios.get(depannage_url)
             setDepanageContent(response.data);
-
-
         } catch (error) {
 
         }

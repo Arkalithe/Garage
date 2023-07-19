@@ -24,7 +24,7 @@ const EditOcasion = () => {
         try {
             const response = await axios.get(ocasion_url);
             setOcasionContent(response.data);
-            console.log(response.data);
+
 
             const Content = response.data[0];
             setFormData({
@@ -34,9 +34,7 @@ const EditOcasion = () => {
                 image: Content.image
             });
         } catch (error) {
-            console.log("Error retrieving data:", error);
-            console.log("Response status:", error.response.status);
-            console.log("Response data:", error.response.data);
+
         }
     };
 
@@ -57,13 +55,10 @@ const EditOcasion = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log("Data updated successfully!");
-            console.log(newFormData)
+
             getData();
         } catch (error) {
-            console.log("Error updating data:", error);
-            console.log("Response status:", error.response.status);
-            console.log("Response data:", error.response.data);
+
         }
     };
 

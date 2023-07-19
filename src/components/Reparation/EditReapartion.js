@@ -25,8 +25,6 @@ const EditReparation = () => {
         try {
             const response = await axios.get(reparation_url);
             setReparationContent(response.data);
-            console.log(response.data);
-
             const Content = response.data[0];
             setFormData({
                 id: Content.id,
@@ -36,9 +34,6 @@ const EditReparation = () => {
                 image: Content.image
             });
         } catch (error) {
-            console.log("Error retrieving data:", error);
-            console.log("Response status:", error.response.status);
-            console.log("Response data:", error.response.data);
         }
     };
 
@@ -58,15 +53,10 @@ const EditReparation = () => {
             await axios.post(reparation_edit_url, newFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                },
-            });
-            console.log("Data updated successfully!");
-            console.log(newFormData)
+                },            });
             getData();
         } catch (error) {
-            console.log("Error updating data:", error);
-            console.log("Response status:", error.response.status);
-            console.log("Response data:", error.response.data);
+
         }
     };
 

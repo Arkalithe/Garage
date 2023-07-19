@@ -67,13 +67,13 @@ const Register = () => {
     } catch (err) {
       if (!err?.response) {
         setErr('Pas de reponse serveur');
-        console.log(err.response?.data)
+    
       } else if (err.response?.status === 422) {
         setErr("Email déja utilisé")
-        console.log(err.response?.data)
+
       } else {
         setErr('Problème Ajoute employé')
-        console.log(err.response?.data)
+
       }
       errReff.current.focus()
     }

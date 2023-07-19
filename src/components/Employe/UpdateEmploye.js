@@ -23,12 +23,9 @@ export const UpdateEmploye = () => {
       setLoading(false);
     } catch (err) {
       if (err.response) {
-        console.log(err.response.data);
-        console.log(err.response.status);
       } else if (err.request) {
-        console.log(err.request);
       } else {
-        console.log('Problème', err.message);
+
       }
     }
   }, [employe_url, idEmploye]);
@@ -42,7 +39,7 @@ export const UpdateEmploye = () => {
     try {
       const response = await axios.post(employe_update, JSON.stringify({ id, email, password, role }));
     } catch (err) {
-      console.log(err);
+
     }
   };
 

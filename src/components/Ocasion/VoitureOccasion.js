@@ -17,12 +17,10 @@ export const VoitureOccasion = () => {
     try {
       const response = await axios.get(voiture_url)
       setVoitureContent(response.data);
-      console.log(response.data)
+
 
     } catch (error) {
-      console.log("Error retrieving data:", error);
-      console.log("Response status:", error.response.status);
-      console.log("Response data:", error.response.data);
+
     }
   }
 

@@ -29,6 +29,8 @@ import DepanageDetails from './components/Depanage/DepanageDetails';
 import EditReparation from './components/Reparation/EditReapartion';
 import EditDepanage from './components/Depanage/EditDepanage';
 import EditOcasion from './components/Ocasion/EditOccasion';
+import ContentSpace from './page/ContentSpace';
+import EmployeSpace from './page/EmployeSpace';
 
 
 
@@ -59,25 +61,28 @@ function App() {
           <Route path='/contactPage' element={<ContactPage />} />
           <Route path='/reparation' element={<ReparationDetails />} />
           <Route path='/depanage' element={<DepanageDetails />} />
-<Route path='editDepanage' element={<EditDepanage />} />
-<Route path='editOcasion' element={<EditOcasion />} />
+
 
           <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
             <Route path='updateVoiture/:idVoiture' element={<UpdateCar />} />
             <Route path='updateVoiture' element={<GetUpdateCar />} />
             <Route path='avis' element={<ModerateAvis />} />
             <Route path="/avis/:idAvis" element={<SingleAvis />} />
-            <Route path="creationVoiture" element={<NewCar />} />
+            <Route path="creationVoiture" element={<NewCar />} />  
+            <Route path="/employeSpace" element={<EmployeSpace />} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLE.Admin]} />}>
-            <Route path="/adminSpace" element={<AdminSpace />} />
+          <Route path="/adminSpace" element={<AdminSpace />} />
+          <Route path="/contentSpace" element={<ContentSpace />} />
+        
             <Route path='horaire' element={<HoraireUpdate />} />
             <Route path='/employe' element={<GetEmploye />} />
             <Route path='/employe/update/:idEmploye' element={<UpdateEmploye />} />
             <Route path="/signup" element={<Register />} />
-            <Route path='editReparation' element={<EditReparation />} />
-            
+            <Route path='/editReparation' element={<EditReparation />} />
+            <Route path='/editDepanage' element={<EditDepanage />} />
+            <Route path='/editOcasion' element={<EditOcasion />} />
           </Route>
         </Route>
 

@@ -18,8 +18,7 @@ const GetAvis = () => {
           const shuffledData = filteredData.sort(() => Math.random() - 0.5);
       
           setAvis(shuffledData.slice(0, 4));
-        } catch (error) {
-          console.log(error);
+        } catch (error) {          
         }
       };
 

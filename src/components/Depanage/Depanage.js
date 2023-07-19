@@ -17,9 +17,7 @@ const Depanage = () => {
       const response = await axios.get(depannage_url)
       setDepanageContent(response.data);
     } catch (error) {
-      console.log("Error retrieving data:", error);
-      console.log("Response status:", error.response.status);
-      console.log("Response data:", error.response.data);
+
     }
   }
 

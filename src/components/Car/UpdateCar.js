@@ -50,7 +50,7 @@ export const UpdateCar = ({ carId }) => {
             setVoiture(fetchedVoiture);
             setLoading(false);
         } catch (err) {
-            console.log(err);
+           
         }
     };
 
@@ -93,19 +93,18 @@ export const UpdateCar = ({ carId }) => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log(response)
-            console.log(response.data)
+
             setSuccess(true);
         } catch (err) {
             if (!err?.response) {
                 setErr('No response from the server');
-                console.log(err.response?.data);
+
             } else if (err.response?.status === 422) {
                 setErr('Validation error occurred');
-                console.log(err.response?.data);
+         
             } else {
                 setErr('An error occurred while updating the car');
-                console.log(err.response?.data);
+      
             }
             errRef.current.focus();
         }

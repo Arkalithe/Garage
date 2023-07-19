@@ -23,7 +23,7 @@ const SingleAvis = () => {
             setAvis(response.data);
             setLoading(false);
         } catch (error) {
-            console.log(error);
+           
         }
     };
 
@@ -31,7 +31,7 @@ const SingleAvis = () => {
         try {
             const response = await axios.post(deleteAvis_url, { ids: [idAvis] });
         } catch (error) {
-            console.log(error);
+            
         }
     };
 
@@ -47,9 +47,7 @@ const SingleAvis = () => {
 
             const response = await axios.post(updateAvis_url, updatedAvis );
             setAvis(prevAvis => ({ ...prevAvis, moderate: 1}));
-
-        } catch (error) {
-            console.log(error);
+        } catch (error) {           
         }
     };
 

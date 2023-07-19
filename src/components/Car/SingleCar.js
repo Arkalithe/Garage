@@ -23,11 +23,9 @@ const SingleCar = () => {
     const fetchVoiture = async () => {
         try {
             const res = await axios.get(register_url, { params: { id: idVoiture } });
-            setVoiture(res.data);
-            console.log(res.data)
+            setVoiture(res.data);            
             setLoading(false);
-        } catch (err) {
-            console.log(err);
+        } catch (err) {            
         }
     };
 

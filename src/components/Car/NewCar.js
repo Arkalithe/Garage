@@ -75,13 +75,13 @@ export const NewCar = () => {
         } catch (err) {
             if (!err?.response) {
                 setErr('Pas de reponse serveur');
-                console.log(err.response?.data)
+                
             } else if (err.response?.status === 422) {
                 setErr()
-                console.log(err.response?.data)
+               
             } else {
                 setErr()
-                console.log(err.response?.data)
+                
             }
             errRef.current.focus()
         }
