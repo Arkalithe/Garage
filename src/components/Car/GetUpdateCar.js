@@ -25,7 +25,7 @@ export const GetUpdateCar = () => {
             setCarData(car);
             setLoading(false);
         } catch (err) {
-            console.log(err);
+           
         }
     };
     const uniqueCars = Array.from(new Set(carData.map(car => car.id)))
@@ -38,7 +38,10 @@ export const GetUpdateCar = () => {
          if(car.voiture_images) {
             carImages = car.voiture_images.split(",");
          }
-         
+         if (isLoading(true)){
+            <div>Chargement de la page ...</div>
+         }
+
 
 
         return (

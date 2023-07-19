@@ -16,12 +16,10 @@ const DepanageDetails = () => {
         try {
             const response = await axios.get(depannage_url)
             setDepanageContent(response.data);
-            console.log(response.data)
+
 
         } catch (error) {
-            console.log("Error retrieving data:", error);
-            console.log("Response status:", error.response.status);
-            console.log("Response data:", error.response.data);
+
         }
     }
 
@@ -33,16 +31,16 @@ const DepanageDetails = () => {
                 <h1>{Content.title}</h1>
             </div>
             <div className="pb-3">
-            {Content.image.length > 0 ? (
-                <img
-                    className="img-fluid"
-                    src={require(`../../assests/Image/${Content.image}`)}
-                    alt="Depanage"
-                    style={{maxWidth: '300px', maxHeight: '300px'}}
-                />
-            ) : (
-                <div>No Image</div>
-            )}
+                {Content.image.length > 0 ? (
+                    <img
+                        className="img-fluid"
+                        src={require(`../../assests/Image/${Content.image}`)}
+                        alt="Depanage"
+                        style={{ maxWidth: '300px', maxHeight: '300px' }}
+                    />
+                ) : (
+                    <div>No Image</div>
+                )}
             </div>
             <div className="pb-3">
 

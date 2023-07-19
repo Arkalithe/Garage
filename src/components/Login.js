@@ -9,7 +9,7 @@ const login_url = '/Garage/php/Api/Login.php'
 
 const Login = () => {
 
-    const { setAuth, logout } = useAuth();
+    const { setAuth } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -45,8 +45,7 @@ const Login = () => {
             setEmail('');
             setPassword('');
             navigate(from, { replace: true });
-        } catch (err) {
-            console.log(err)
+        } catch (err) {            
             if (!err?.response) {
                 setErr('Pas de reponse serveur');              
 
