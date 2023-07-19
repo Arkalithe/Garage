@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,5 +12,9 @@
     
     <p>Vous pouvez maintenant vous connecter au front-end en tant qu'administrateur.</p>
     <p>Accédez à <a href="http://localhost:3000">Acceuil Front-end </a> pour vous connecter.</p>
+
+    <form action="http://your-heroku-react-app-url" method="GET">
+        <button type="submit">Accéder au front-end Heroku</button>
+    </form>
 </body>
 </html>
