@@ -16,10 +16,12 @@ class DatabaseConnect
     public function dbConnection()
     {
         $this->conn = null;
-        try {
+        try {            
             $this->conn = new PDO($this->dsn, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);            
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);       
             
+            $grantStatement = "GRANT SELECT, INSERT, UPDATE, DELETE ON garagevparrot.* TO 'ql46xy00vxcox0rc'@'%'";
+            $this->conn->exec($grantStatement);            
         } catch (PDOException $e) {
             echo "Connection Raté : " . $e->getMessage();            
         }
