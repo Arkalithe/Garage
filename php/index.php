@@ -95,9 +95,9 @@
         function handleSubmit(event) {
             event.preventDefault();
             var formData = new FormData(event.target);
-            var motDePasse = formData.get("mot_de_passe");
+            var password = formData.get("password");
             var email = formData.get("email");
-            if (!motDePasse || !email) {
+            if (!password || !email) {
                 alert("Veuillez remplir tous les champs.");
                 return;
             }
