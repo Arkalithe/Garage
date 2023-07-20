@@ -1,38 +1,4 @@
 <?php
-include_once './Database/Connect.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $motDePasse = $_POST["mot_de_passe"];
-    $email = $_POST["email"];
-
-    if (empty($motDePasse) || empty($email)) {
-        echo "Veuillez remplir tous les champs.";
-    } else {
-        $connexion = $dbs->dbConnectionNamed();
-        if ($connexion) {
-            $requeteAdmin = "SELECT COUNT(*) as count FROM users WHERE role = 'admin'";
-            $statementAdmin = $connexion->prepare($requeteAdmin);
-            $statementAdmin->execute();
-            $resultAdmin = $statementAdmin->fetch(PDO::FETCH_ASSOC);
-            if ($resultAdmin['count'] > 0) {
-                echo "Un administrateur existe déjà. Vous ne pouvez pas créer un nouveau compte administrateur.";
-            } else {
-                $motDePasseHash = password_hash($motDePasse, PASSWORD_DEFAULT);
-                $requete = "INSERT INTO users (mot_de_passe, email, role) VALUES (:motDePasse, :email, 'admin')";
-                $statement = $connexion->prepare($requete);
-                $statement->bindParam(':motDePasse', $motDePasseHash);
-                $statement->bindParam(':email', $email);
-                if ($statement->execute()) {
-                    header("Location: AdminCree.php");
-                } else {
-                    echo "Une erreur s'est produite lors de la création de l'administrateur.";
-                }
-            }
-        } else {
-            echo "Erreur de connexion à la base de données.";
-        }
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -104,6 +70,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     alert('Request failed');
                 });
         }
+        function sendRequestbis() {
+    fetch("./AdminCree.php", {
+      method: "POST",
+      body: new FormData(document.querySelector("form")),
+    })
+      .then(function (response) {
+        if (response.ok) {
+          console.log("Request sent successfully");
+          return response.text();
+        } else {
+          throw new Error("Request failed");
+        }
+      })
+      .then(function (data) {
+        console.log(data);
+        alert("Request successful");
+      })
+      .catch(function (error) {
+        console.log("An error occurred", error);
+        alert("Request failed");
+      });
+  }
+        function handleSubmit(event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            var motDePasse = formData.get("mot_de_passe");
+            var email = formData.get("email");
+            if (!motDePasse || !email) {
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+            sendRequestbis();
+        }
     </script>
 
 </head>
@@ -112,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div>
         <h1>Création d'administrateur</h1>
 
-        <form method="POST" action="AdminCree.php">
+        <form onsubmit="handleSubmit(event)">
             <label for="mot_de_passe">Mot de passe :</label>
             <input type="password" name="mot_de_passe" required>
 
