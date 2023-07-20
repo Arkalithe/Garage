@@ -30,10 +30,10 @@ const Reparation = () => {
       <div className="pb-2 card-title">
         <h1>{Content.title}</h1>
       </div>
-      <div className="pb-3 m-2">
+      <div className="pb-3 m-2 image-container d-flex justify-content-center align-items-center">
         {Content.image.length > 0 ? (
           <div
-            className="image-container"
+            className=""
             style={{
               maxWidth: "300px",
               maxHeight: "300px",
