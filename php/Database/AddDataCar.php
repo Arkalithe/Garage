@@ -116,10 +116,10 @@ class AddDataCar {
 
         
             $imagesData = [
-                [1, 'Voiture.jpg'],
-                [2, 'Voiture5.jpg'],
-                [3, 'Voiture1.jpg'],
-                [4, 'Voiture2.jpg'],
+                [1, 'Voiture.png'],
+                [2, 'Voiture5.png'],
+                [3, 'Voiture1.png'],
+                [4, 'Voiture2.png'],
             ];
             
             $imagesStmt = $conn->prepare("INSERT INTO IMAGES (id, image_url) VALUES (?, ?)");

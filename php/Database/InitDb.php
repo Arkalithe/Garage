@@ -39,6 +39,7 @@ try {
     $add_data_avis->dataAvis();
     $add_data_users->dataUser();
     $add_data_car->dataCar();
+    
 } catch (PDOException $e) {
     echo "Connection Raté : <br>" . $e->getMessage();
     exit;
