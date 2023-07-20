@@ -112,8 +112,8 @@
         <h1>Création d'administrateur</h1>
 
         <form onsubmit="handleSubmit(event)">
-            <label for="mot_de_passe">Mot de passe :</label>
-            <input type="password" name="mot_de_passe" required>
+            <label for="password">Mot de passe :</label>
+            <input type="password" name="password" required>
 
             <label for="email">Email :</label>
             <input type="email" name="email" required>

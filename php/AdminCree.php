@@ -9,10 +9,10 @@ include_once './Database/Connect.php';
 $dbs = new DatabaseConnect();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $motDePasse = $_POST["mot_de_passe"];
+    $password = $_POST["password"];
     $email = $_POST["email"];
 
-    if (empty($motDePasse) || empty($email)) {
+    if (empty($password) || empty($email)) {
         echo "Veuillez remplir tous les champs.";
     } else {
         $connexion = $dbs->dbConnectionNamed();
@@ -24,10 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($resultAdmin['count'] > 0) {
                 echo "Un administrateur existe déjà. Vous ne pouvez pas créer un nouveau compte administrateur.";
             } else {
-                $motDePasseHash = password_hash($motDePasse, PASSWORD_DEFAULT);
-                $requete = "INSERT INTO users (mot_de_passe, email, role) VALUES (:motDePasse, :email, 'admin')";
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                $requete = "INSERT INTO users (password, email, role) VALUES (:password, :email, 'admin')";
                 $statement = $connexion->prepare($requete);
-                $statement->bindParam(':motDePasse', $motDePasseHash);
+                $statement->bindParam(':password', $passwordHash);
                 $statement->bindParam(':email', $email);
                 if ($statement->execute()) {
                     header("Location: AdminCree.php");
