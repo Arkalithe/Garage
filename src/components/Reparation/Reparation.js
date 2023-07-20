@@ -23,9 +23,9 @@ const Reparation = () => {
     }
   };
 
-  const firstReparation = reparationContent.length > 0 ? reparationContent[0] : null;
 
-  const contents = firstReparation.map((Content) => (
+  
+  const contents = reparationContent.map((Content) => (
 
     <div className="card form-cadre h-100" key={Content.id}>
       <div className="pb-2 card-title">

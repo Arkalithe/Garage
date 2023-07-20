@@ -55,12 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p>Accédez à <a href="*">Acceuil Front-end </a> pour vous connecter en localhost:3000.</p>
 
    
-        <button if="redirectButton">Accéder au front-end Heroku</button>
+        <button if="redirectButton">Accéder au front-end Netlify</button>
     
 
     <script>
         document.getElementById('redirectButton').addEventListener('click', function() {
-            window.location.href = "https://garagevparrotstudi-15b74863d868.herokuapp.com//build/index.html"; 
+            window.location.href = "https://imaginative-lollipop-cdaa75.netlify.app/"; 
         });
     </script>
 </body>
