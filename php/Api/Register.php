@@ -1,6 +1,6 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: https://imaginative-lollipop-cdaa75.netlify.app");
 header("Access-Control-Allow-Methods: GET,POST");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Headers: access");
