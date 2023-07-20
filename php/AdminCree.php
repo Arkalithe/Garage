@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: ");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET,POST,");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p>L'administrateur a été ajouté à la base de données.</p>
     
     <p>Vous pouvez maintenant vous connecter au front-end en tant qu'administrateur.</p>
-    <p>Accédez à <a href="https://main--imaginative-lollipop-cdaa75.netlify.app/">Acceuil Front-end </a> pour vous connecter en localhost:3000.</p>
+    <p>Accédez à <a href="*">Acceuil Front-end </a> pour vous connecter en localhost:3000.</p>
 
    
         <button if="redirectButton">Accéder au front-end Heroku</button>
