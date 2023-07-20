@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import axios from '../../api/axios';
+import config from '../../api/axios';
 import { Link, useParams } from 'react-router-dom';
 
 
@@ -32,7 +32,7 @@ export const UpdateCar = ({ carId }) => {
 
     const fetchVoiture = async () => {
         try {
-            const res = await axios.get(get_car, { params: { id: idVoiture } });
+            const res = await config.herokuTesting.get(get_car, { params: { id: idVoiture } });
             const fetchedVoiture = res.data;
             if (Array.isArray(fetchedVoiture.caracteristique)) {
                 fetchedVoiture.caracteristique = [...fetchedVoiture.caracteristique];
@@ -88,7 +88,7 @@ export const UpdateCar = ({ carId }) => {
             formData.append(`image_${index}`, image);
         });
         try {
-            await axios.post(car_update, formData, {
+            await config.herokuTesting.post(car_update, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

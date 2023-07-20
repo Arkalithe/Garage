@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import axios from '../../api/axios';
+import config from '../../api/axios';
 import { Link, useParams } from 'react-router-dom';
 
 
@@ -17,7 +17,7 @@ export const GetUpdateCar = () => {
     useEffect(() => {
         const fetchVoiture = async () => {
         try {
-            const res = await axios.get(get_car, { params: { id: idVoiture } });
+            const res = await config.herokuTesting.get(get_car, { params: { id: idVoiture } });
             const car = res.data;
             setCarData(car);
             setLoading(false);

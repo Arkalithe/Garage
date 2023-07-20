@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 import { Rating } from "@mui/material";
 
 const SingleAvis = () => {
@@ -16,7 +16,7 @@ const SingleAvis = () => {
     useEffect(() => {
         const fetchAvis = async () => {
         try {
-            const response = await axios.get(avis_url, { params: { id: idAvis } });
+            const response = await config.herokuTesting.get(avis_url, { params: { id: idAvis } });
             setAvis(response.data);
             setLoading(false);
         } catch (error) {
@@ -30,7 +30,7 @@ const SingleAvis = () => {
 
     const handleDelete = async () => {
         try {
-        await axios.post(deleteAvis_url, { ids: [idAvis] });
+        await config.herokuTesting.post(deleteAvis_url, { ids: [idAvis] });
         } catch (error) {
             
         }
@@ -46,7 +46,7 @@ const SingleAvis = () => {
                 name: avis.name
             };
 
-            await axios.post(updateAvis_url, updatedAvis );
+            await config.herokuTesting.post(updateAvis_url, updatedAvis );
             setAvis(prevAvis => ({ ...prevAvis, moderate: 1}));
         } catch (error) {           
         }

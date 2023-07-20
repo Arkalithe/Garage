@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from '../../api/axios';
+import config from '../../api/axios';
 import { useState } from 'react';
 
 export const VoitureOccasion = () => {
@@ -15,7 +15,7 @@ export const VoitureOccasion = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get(voiture_url)
+      const response = await config.herokuTesting.get(voiture_url)
       setVoitureContent(response.data);
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -22,7 +22,7 @@ const EditOcasion = () => {
 
     const getData = async () => {
         try {
-            const response = await axios.get(ocasion_url);
+            const response = await config.herokuTesting.get(ocasion_url);
             setOcasionContent(response.data);
 
 
@@ -50,7 +50,7 @@ const EditOcasion = () => {
 
         try {
 
-            await axios.post(ocasion_edit_url, newFormData, {
+            await config.herokuTesting.post(ocasion_edit_url, newFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

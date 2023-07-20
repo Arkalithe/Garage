@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 import { Contact } from "../Contact/Contact";
 import Carousel from "react-material-ui-carousel";
 
@@ -19,7 +19,7 @@ const SingleCar = () => {
     useEffect(() => {
          const fetchVoiture = async () => {
         try {
-            const res = await axios.get(register_url, { params: { id: idVoiture } });
+            const res = await config.herokuTesting.get(register_url, { params: { id: idVoiture } });
             setVoiture(res.data);            
             setLoading(false);
         } catch (err) {            

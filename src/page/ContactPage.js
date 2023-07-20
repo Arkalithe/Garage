@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import axios from '../api/axios';
+import config from '../api/axios';
 
 const ContactPage = () => {
   const nameRef = useRef();
@@ -25,7 +25,7 @@ const ContactPage = () => {
       formData.append('phone', mailSetting.phone);
       formData.append('message', mailSetting.message);
 
-       await axios.post(url_email, formData, {
+       await config.localTestingUrl.post(url_email, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 import { Link } from "react-router-dom";
 import { Rating } from "@mui/material";
 
@@ -14,7 +14,7 @@ const ModerateAvis = () => {
 
   const fetchAvis = async () => {
     try {
-      const response = await axios.get(register_url);
+      const response = await config.herokuTesting.get(register_url);
       setAvis(response.data);
       setLoading(false);
     } catch (error) {

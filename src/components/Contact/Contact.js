@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from '../../api/axios';
+import config from '../../api/axios';
 
 export const Contact = ({ car }) => {
 
@@ -33,7 +33,7 @@ export const Contact = ({ car }) => {
             formData.append('prenomProprietaire', car.prenom);
            
 
-            await axios.post(url_email, formData ,{
+            await config.herokuTesting.post(url_email, formData ,{
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

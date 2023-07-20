@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -14,7 +14,7 @@ const ReparationDetails = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get(reparation_url);
+      const response = await config.config.herokuTesting.get(reparation_url);
       setReparationContent(response.data);
     } catch (error) {
     }

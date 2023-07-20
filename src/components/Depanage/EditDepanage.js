@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -23,7 +23,7 @@ const EditDepanage = () => {
 
     const getData = async () => {
         try {
-            const response = await axios.get(depanage_url);
+            const response = await config.herokuTesting.get(depanage_url);
             setDepanageContent(response.data);
   
 
@@ -52,7 +52,7 @@ const EditDepanage = () => {
 
         try {
 
-            await axios.post(depanage_edit_url, newFormData, {
+            await config.herokuTesting.post(depanage_edit_url, newFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

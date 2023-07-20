@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import axios from '../../api/axios';
+import config from '../../api/axios';
 import { useParams } from 'react-router';
 
 export const UpdateEmploye = () => {
@@ -15,7 +15,7 @@ export const UpdateEmploye = () => {
 
   const fetchEmploye = useCallback(async () => {
     try {
-      const response = await axios.get(employe_url, { params: { id: idEmploye } });
+      const response = await config.herokuTesting.get(employe_url, { params: { id: idEmploye } });
       setId(response.data.id);
       setEmail(response.data.email);
       setPassword(response.data.password);
@@ -37,7 +37,7 @@ export const UpdateEmploye = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(employe_update, JSON.stringify({ id, email, password, role }));
+      await config.herokuTesting.post(employe_update, JSON.stringify({ id, email, password, role }));
     } catch (err) {
 
     }

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import React from 'react'
 import { Link } from "react-router-dom";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 
 const email_regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#€%*]).{7,24}$/;
@@ -58,7 +58,7 @@ const Register = () => {
       return;
     }
     try {
-      await axios.post(register_url, JSON.stringify({ email, password }));
+      await config.herokuTesting.post(register_url, JSON.stringify({ email, password }));
       setSuccess(true);
       setEmail('');
       setPassword('')

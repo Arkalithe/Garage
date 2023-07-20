@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -23,7 +23,7 @@ const EditReparation = () => {
 
     const getData = async () => {
         try {
-            const response = await axios.get(reparation_url);
+            const response = await config.localTestingUrl.get(reparation_url);
             setReparationContent(response.data);
             const Content = response.data[0];
             setFormData({
@@ -50,7 +50,7 @@ const EditReparation = () => {
 
         try {
 
-            await axios.post(reparation_edit_url, newFormData, {
+            await config.localTestingUrl.post(reparation_edit_url, newFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },            });

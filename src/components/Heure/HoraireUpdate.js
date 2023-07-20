@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../api/axios';
+import config from '../../api/axios';
 
 const HoraireUpdate = () => {
   const update_url = '/Garage/php/Api/Horaire/HoraireUpdate.php';
@@ -13,7 +13,7 @@ const HoraireUpdate = () => {
 
   const fetchBusinessHours = async (e) => {
     try {
-      const response = await axios.get(fetch_url);
+      const response = await config.herokuTesting.get(fetch_url);
       setBusinessHours(response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -26,7 +26,7 @@ const HoraireUpdate = () => {
       for (const hour of businessHours) {
         const { id, jour, matin, apresmidi } = hour;
         const data = { id, jour, matin, apresmidi };
-        await axios.post(update_url, JSON.stringify(data));
+        await config.herokuTesting.post(update_url, JSON.stringify(data));
       }
     } catch (error) {
       console.error('Error:', error);
