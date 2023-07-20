@@ -27,7 +27,7 @@ class AddDataHoraire
                 echo 'Horaire ajouté .<br>';
             }
         } catch (PDOException $e) {
-            echo $stmt . "Connection Raté: " . $e->getMessage();
+            echo "Connection Raté: " . $e->getMessage();
             exit;
         }
     }
