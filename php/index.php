@@ -17,9 +17,6 @@ foreach ($row as $user) {
     }
 }
 
-if ($isAdminExists) {
-
-}
 ?>
 
 <!DOCTYPE html>

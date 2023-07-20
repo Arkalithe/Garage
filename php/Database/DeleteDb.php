@@ -10,7 +10,7 @@ try {
         'DELETE FROM Users;',
         'DELETE FROM voitureOccasion;',
         'DELETE FROM horaires;',
-        'DELETE FROM reaparation;',
+        'DELETE FROM reparation;',
         'DELETE FROM depannage;',
         'DELETE FROM CVVOITURE;',
         'DELETE FROM EVVOITURE;',
