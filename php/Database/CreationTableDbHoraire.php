@@ -15,7 +15,7 @@ class DatabaseTableCreateHoraire
                     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     jour VARCHAR(255) NOT NULL,
                     matin VARCHAR(255) NOT NULL,
-                    apresmidi VARCHAR(255) NOT NULL
+                    apresmidi VARCHAR(255)
                     )";           
 
             $conn->exec($tsql);
