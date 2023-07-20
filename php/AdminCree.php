@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 
 include_once './Database/Connect.php';
 
-$dps = new DatabaseConnect();
+$dbs = new DatabaseConnect();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $motDePasse = $_POST["mot_de_passe"];
