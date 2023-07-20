@@ -23,7 +23,7 @@ class AddDataCar {
             ];
 
             $voituresStmt = $conn->prepare("INSERT INTO VOITURES (id, prix, kilometrage, annee_circulation, modele, nom, prenom, numero)
-                VALUES (?, ?, ?, ?, ?, ?, ?)");
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
             foreach ($voituresData as $data) {
                 $voituresStmt->execute($data);
