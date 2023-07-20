@@ -8,9 +8,10 @@ $employe = new Employee($db);
 $stmt = $employe->getUsers();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
 $isAdminExists = false;
 foreach ($row as $user) {
-    if ($user['admin'] == 1) {
+    if ($user['role'] === 'admin') {
         $isAdminExists = true;
         break;
     }
