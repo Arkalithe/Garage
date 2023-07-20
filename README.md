@@ -9,6 +9,9 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
 - [Git](https://git-scm.com) (version 2.4.1.0windows.1)
 
 ## Instructions
+Si vous voulez accedez a la version a ligne :
+Front : `https://imaginative-lollipop-cdaa75.netlify.app/`
+Back : `https://garagevparrotstudi-15b74863d868.herokuapp.com/`
 
 Suivez ces étapes pour exécuter le projet en local :
 
@@ -73,9 +76,9 @@ php -S localhost:8000
 
 Ou si vous utilisez un package comme XMAPP utilisez l'interface correspondant.
 
-9. Connecter vous sur http://localhost/Garage/php/Index.php Cela vous permetra Lancez le fichier `InitDb.php` grace au bouton crée Database, cela va créer les différentes tables et ajouter les données à l'intérieur. 
+9. Connecter vous sur http://localhost/Garage/php/Database/InitDb.php Cela vous permetra Lancez le fichier `InitDb.php`et  cela va créer les différentes tables et ajouter des données à l'intérieur. 
 
-10. Une fois la base de donnée crée vous vous crée votre comptre administateure.
+10. Une fois la base de donnée crée vous vous pouvez crée votre compte administateure sur `http://localhost/Garage/php/Index.php`.
 
 11. Démarrez le serveur de développement front-end:
 npm start
