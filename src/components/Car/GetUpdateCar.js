@@ -12,7 +12,7 @@ export const GetUpdateCar = () => {
 
     const [err, setErr] = useState('');
     const [success, setSuccess] = useState(false);
-    const get_car = `/Garage/php/Api/Car/CarRead.php`;
+    const get_car = `/Api/Car/CarRead.php`;
 
     useEffect(() => {
         const fetchVoiture = async () => {

@@ -5,7 +5,7 @@ import config from "../../api/axios";
 
 const email_regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#€%*]).{7,24}$/;
-const register_url = '/Garage/php/Api/Register.php'
+const register_url = '/Api/Register.php'
 
 
 const Register = () => {

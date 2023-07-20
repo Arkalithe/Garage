@@ -14,7 +14,10 @@ Suivez ces étapes pour exécuter le projet en local :
 
 1. Clonez le dépot en utilisant la commande suivante :
 
-git clone https://github.com/Arkalithe/Garage
+git clone -b alternate-api https://github.com/Arkalithe/Garage
+
+On vous pouvez allez sur ce lien`https://github.com/Arkalithe/Garage` choisire la branche `alternate-api` cliquer sur le bouton `Code`
+Puis  `Download ZIP`
 
 2. Accédez au répertoire du projet :
 

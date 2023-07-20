@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Reparation = () => {
   const [reparationContent, setReparationContent] = useState([]);
 
-  const reparation_url = "/Garage/php/Api/Reparation/ReparationRead.php"
+  const reparation_url = "/Api/Reparation/ReparationRead.php"
 
   useEffect(() => {
     getData()

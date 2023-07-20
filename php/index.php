@@ -18,8 +18,7 @@ foreach ($row as $user) {
 }
 
 if ($isAdminExists) {
-    header("Location: ../public/index.html");
-    exit;
+
 }
 ?>
 
@@ -145,6 +144,19 @@ if ($isAdminExists) {
         </form>
         
         <input type="button" value="Envoyer une requête" onclick="sendRequest()">
+    </div>
+    <div>
+<?php
+
+if ($isAdminExists) {
+
+  echo '<div> Un Admin existe déja </div>';
+}
+
+?>
+
+
+
     </div>
 
 </body>

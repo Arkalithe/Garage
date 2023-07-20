@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Checkbox } from "@mui/material";
 
 const GetEmploye = () => {
-    const employe_url = "/Garage/php/Api/User/UserRead.php";
-    const delete_url = "/Garage/php/Api/User/UserDelete.php";
+    const employe_url = "/Api/User/UserRead.php";
+    const delete_url = "/Api/User/UserDelete.php";
     
     const [user, setUser] = useState([]);
     const [selectedIds, setSelectedIds] = useState([]);

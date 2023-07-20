@@ -12,7 +12,7 @@ const ContactPage = () => {
     message: '',
   });
 
-  const url_email = '/Garage/php/Api/Email.php';
+  const url_email = '/Api/Email.php';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ const ContactPage = () => {
       formData.append('phone', mailSetting.phone);
       formData.append('message', mailSetting.message);
 
-       await config.localTestingUrl.post(url_email, formData, {
+       await config.herokuTesting.post(url_email, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

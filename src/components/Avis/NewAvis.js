@@ -21,7 +21,7 @@ export const NewAvis = () => {
   const [err, setErr] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const avis_url = '/Garage/php/Api/Avis/AvisCreate.php'
+  const avis_url = '/Api/Avis/AvisCreate.php'
 
 
 

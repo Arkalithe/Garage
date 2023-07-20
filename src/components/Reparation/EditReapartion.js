@@ -15,8 +15,8 @@ const EditReparation = () => {
         image: null,
     });
 
-    const reparation_url = "/Garage/php/Api/Reparation/ReparationRead.php"
-    const reparation_edit_url = "/Garage/php/Api/Reparation/ReparationUpdate.php"
+    const reparation_url = "/Api/Reparation/ReparationRead.php"
+    const reparation_edit_url = "/Api/Reparation/ReparationUpdate.php"
     useEffect(() => {
         getData()
     }, [])

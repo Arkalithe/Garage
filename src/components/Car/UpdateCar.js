@@ -23,8 +23,8 @@ export const UpdateCar = ({ carId }) => {
     const [err, setErr] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const car_update = `/Garage/php/Api/Car/CarUpdate.php`;
-    const get_car = `/Garage/php/Api/Car/CarGetSingle.php`;
+    const car_update = `/Api/Car/CarUpdate.php`;
+    const get_car = `/Api/Car/CarGetSingle.php`;
 
     useEffect(() => {
         fetchVoiture();

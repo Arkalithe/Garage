@@ -3,7 +3,7 @@ import config from "../../api/axios";
 import  {Rating}  from "@mui/material";
 
 const GetAvis = () => {
-    const register_url = '/Garage/php/Api/Avis/AvisRead.php';
+    const register_url = '/Api/Avis/AvisRead.php';
     const [avis, setAvis] = useState([]);
 
 

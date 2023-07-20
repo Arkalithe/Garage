@@ -3,8 +3,8 @@ import config from '../../api/axios';
 import { useParams } from 'react-router';
 
 export const UpdateEmploye = () => {
-  const employe_url = '/Garage/php/Api/User/UserGetSingle.php';
-  const employe_update = '/Garage/php/Api/User/UserUpdate.php';
+  const employe_url = '/Api/User/UserGetSingle.php';
+  const employe_update = '/Api/User/UserUpdate.php';
   const [isLoading, setLoading] = useState(true);
   const [form, setForm] = useState(false);
   const [id, setId] = useState("");

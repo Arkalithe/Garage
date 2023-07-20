@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import config from '../../api/axios';
 
 const HoraireUpdate = () => {
-  const update_url = '/Garage/php/Api/Horaire/HoraireUpdate.php';
-  const fetch_url = '/Garage/php/Api/Horaire/HoraireRead.php';
+  const update_url = '/Api/Horaire/HoraireUpdate.php';
+  const fetch_url = '/Api/Horaire/HoraireRead.php';
 
   const [businessHours, setBusinessHours] = useState([]);
 

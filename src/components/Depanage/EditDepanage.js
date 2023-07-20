@@ -15,8 +15,8 @@ const EditDepanage = () => {
         image: null,
     });
 
-    const depanage_url = "/Garage/php/Api/Depanage/DepanageRead.php"
-    const depanage_edit_url = "/Garage/php/Api/Depanage/DepanageUpdate.php"
+    const depanage_url = "/Api/Depanage/DepanageRead.php"
+    const depanage_edit_url = "/Api/Depanage/DepanageUpdate.php"
     useEffect(() => {
         getData()
     }, [])

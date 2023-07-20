@@ -1,6 +1,6 @@
 <?php
 
-header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Origin: https://main--imaginative-lollipop-cdaa75.netlify.app/");
 header("Access-Control-Allow-Methods: GET,POST,");
 header('Access-Control-Allow-Credentials: true');
 header('Content-Type: application/json');
@@ -15,18 +15,6 @@ $db = $database->dbConnectionNamed();
 $items = new Employee($db);
 $stmt = $items->getUsers();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$isAdmin = false;  
 
-foreach ($row as $user) {
-    if ($user['role'] === 'admin') {  
-        $isAdmin = true;
-        break;  
-    }
-}
 
-$response = [
-    'isAdmin' => $isAdmin
-];
-
-echo json_encode($response);
 echo json_encode($row);

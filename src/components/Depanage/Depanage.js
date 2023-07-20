@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const Depanage = () => {
 
   const [depanageContent, setDepanageContent] = useState([]);
-  const depannage_url = "/Garage/php/Api/Depanage/DepanageRead.php"
+  const depannage_url = "/Api/Depanage/DepanageRead.php"
   useEffect(() => {
     getData()
   }, [])

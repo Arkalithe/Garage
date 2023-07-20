@@ -14,8 +14,8 @@ const EditOcasion = () => {
         image: null,
     });
 
-    const ocasion_url = "/Garage/php/Api/Ocasion/OcasionRead.php"
-    const ocasion_edit_url = "/Garage/php/Api/Ocasion/OcasionUpdate.php"
+    const ocasion_url = "/Api/Ocasion/OcasionRead.php"
+    const ocasion_edit_url = "/Api/Ocasion/OcasionUpdate.php"
     useEffect(() => {
         getData()
     }, [])

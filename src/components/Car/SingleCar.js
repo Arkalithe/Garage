@@ -5,7 +5,7 @@ import { Contact } from "../Contact/Contact";
 import Carousel from "react-material-ui-carousel";
 
 const SingleCar = () => {
-    const register_url = '/Garage/php/Api/Car/CarGetSingle.php';
+    const register_url = '/Api/Car/CarGetSingle.php';
 
     const [isLoading, setLoading] = useState(true);
     const [form, setForm] = useState(false);

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Slider } from "@mui/material";
 
 const GetCar = () => {
-  const register_url = "/Garage/php/Api/Car/CarRead.php";
+  const register_url = "/Api/Car/CarRead.php";
   const [voiture, setVoiture] = useState([]);
   const maxYear = new Date().getFullYear();
   const minmum = 0;

@@ -34,7 +34,7 @@ export const NewCar = () => {
     const [err, setErr] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const Car_url = '/Garage/php/Api/Car/CarCreate.php'
+    const Car_url = '/Api/Car/CarCreate.php'
 
 
 

@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import config from '../api/axios';
 import jwtDecode from 'jwt-decode';
 
-const login_url = '/Garage/php/Api/Login.php'
+const login_url = '/Api/Login.php'
 
 const Login = () => {
 
@@ -34,7 +34,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await config.localTestingUrl.post(login_url,
+            const response = await config.herokuTesting.post(login_url,
                 JSON.stringify({ email, password, })
             );
             const accessToken = response.data[0];

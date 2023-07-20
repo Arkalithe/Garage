@@ -7,7 +7,7 @@ import { useState } from 'react';
 export const VoitureOccasion = () => {
 
   const [voitureContent, setVoitureContent] = useState([]);
-  const voiture_url = "/Garage/php/Api/Ocasion/OcasionRead.php"
+  const voiture_url = "/Api/Ocasion/OcasionRead.php"
 
   useEffect(() => {
     getData()

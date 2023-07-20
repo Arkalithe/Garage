@@ -15,7 +15,7 @@ export const Contact = ({ car }) => {
         prenomProprietaire: '',
     });
 
-    const url_email = '/Garage/php/Api/Email.php'
+    const url_email = '/Api/Email.php'
 
     const handleSubmit = async (e) => {
         e.preventDefault();

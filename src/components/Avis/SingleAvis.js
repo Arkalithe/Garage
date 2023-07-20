@@ -4,9 +4,9 @@ import config from "../../api/axios";
 import { Rating } from "@mui/material";
 
 const SingleAvis = () => {
-    const avis_url = "/Garage/php/Api/Avis/AvisGetSingle.php";
-    const deleteAvis_url = "/Garage/php/Api/Avis/AvisDelete.php";
-    const updateAvis_url = "/Garage/php/Api/Avis/AvisUpdate.php";
+    const avis_url = "/Api/Avis/AvisGetSingle.php";
+    const deleteAvis_url = "/Api/Avis/AvisDelete.php";
+    const updateAvis_url = "/Api/Avis/AvisUpdate.php";
 
 
     const [isLoading, setLoading] = useState(true);
