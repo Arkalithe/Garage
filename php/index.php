@@ -86,6 +86,7 @@
       .then(function (data) {
         console.log(data);
         alert("Request successful");
+        window.location.href = './AdminCree.php'
       })
       .catch(function (error) {
         console.log("An error occurred", error);
