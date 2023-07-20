@@ -11,7 +11,7 @@ class DatabaseCreate
 
         try {
 
-            $sql = "CREATE DATABASE IF NOT EXISTS clryze4bwb99689n";
+            $sql = "CREATE DATABASE IF NOT EXISTS garagevparrot";
             $conn->exec($sql);
             echo "Création base de donné reussi<br>";
         } catch (PDOException $e) {
