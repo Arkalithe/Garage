@@ -17,18 +17,19 @@ const SingleCar = () => {
     };
 
     useEffect(() => {
-         const fetchVoiture = async () => {
+
+        fetchVoiture();
+    }, []);
+
+    const fetchVoiture = async () => {
         try {
             const res = await config.herokuTesting.get(register_url, { params: { id: idVoiture } });
-            setVoiture(res.data);            
+            setVoiture(res.data);
             setLoading(false);
-        } catch (err) {            
+        } catch (err) {
         }
     };
-        fetchVoiture();
-    }, [idVoiture]);
 
-   
 
     if (isLoading) {
         return <div>Chargement</div>;
@@ -88,7 +89,7 @@ const SingleCar = () => {
                                 {voiture.voiture_images.map((image, index) => (
                                     <div key={index} >
                                         {image.length > 0 ? (
-                                            <img                                                
+                                            <img
                                                 className="img-fluid"
                                                 style={{ width: "300px", height: "200px" }}
                                                 src={require(`../../assests/Image/${image}`)}

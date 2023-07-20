@@ -53,7 +53,8 @@ const EditReparation = () => {
             await config.localTestingUrl.post(reparation_edit_url, newFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                },            });
+                },
+            });
             getData();
         } catch (error) {
 
@@ -81,7 +82,7 @@ const EditReparation = () => {
                     className="img-fluid"
                     src={require(`../../assests/Image/${Content.image}`)}
                     alt="Reparation"
-                    style={{maxWidth: '300px', maxHeight: '300px'}}
+                    style={{ maxWidth: '300px', maxHeight: '300px' }}
                 />
             ) : (
                 <div>No Image</div>

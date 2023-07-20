@@ -14,7 +14,11 @@ const SingleAvis = () => {
     const { idAvis } = useParams();
 
     useEffect(() => {
-        const fetchAvis = async () => {
+       
+        fetchAvis();
+    }, []);
+
+     const fetchAvis = async () => {
         try {
             const response = await config.herokuTesting.get(avis_url, { params: { id: idAvis } });
             setAvis(response.data);
@@ -23,10 +27,6 @@ const SingleAvis = () => {
            
         }
     };
-        fetchAvis();
-    }, [idAvis]);
-
-    
 
     const handleDelete = async () => {
         try {
