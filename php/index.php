@@ -118,10 +118,10 @@
             <label for="email">Email :</label>
             <input type="email" name="email" required>
 
-            <input type="submit" value="Créer l'administrateur">
-
-            <input type="button" value="Envoyer une requête" onclick="sendRequest()">
+            <input type="submit" value="Créer l'administrateur">            
         </form>
+        
+        <input type="button" value="Envoyer une requête" onclick="sendRequest()">
     </div>
 
 </body>

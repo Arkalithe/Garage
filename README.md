@@ -50,7 +50,9 @@ $dbName = "garagevparrot";
 
 Enregistrez les modifications.
 
-6. Lancer Mysql soit avec la commande :
+6. Ouvrez le fichier `CreationDb.php` situé dans le répertoire back-end`(php/Database/CreationDb.php` et mettez à jour le nom de base de donnée si vous l'avez changer
+
+7. Lancer Mysql soit avec la commande :
 
 windows = mysqld,
 
@@ -62,17 +64,17 @@ Ou si vous utilisez un package comme XMAPP utilisez l'interface correspondant.
 
 Vérifier que vous avez bien accès à la base de données.
 
-7. Démarrez le serveur de développement back-end:
+8. Démarrez le serveur de développement back-end:
 
 php -S localhost:8000
 
 Ou si vous utilisez un package comme XMAPP utilisez l'interface correspondant.
 
-8. Connecter vous sur http://localhost/Garage/php/Index.php Cela vous permetra de crée le compte administrateure.
+9. Connecter vous sur http://localhost/Garage/php/Index.php Cela vous permetra Lancez le fichier `InitDb.php` grace au bouton crée Database, cela va créer les différentes tables et ajouter les données à l'intérieur. 
 
-9. Lancez le fichier `InitDb.php`, cela va créer les différentes tables et ajouter les données à l'intérieur.
+10. Une fois la base de donnée crée vous vous crée votre comptre administateure.
 
-10. Démarrez le serveur de développement front-end:
+11. Démarrez le serveur de développement front-end:
 npm start
 
 11. Ouvrez votre navigateur et accédez à l'URL suivante : `http://localhost:3000`, où `3000` est le port utilisé par l'application.
