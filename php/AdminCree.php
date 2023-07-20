@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p>Accédez à <a href="*">Acceuil Front-end </a> pour vous connecter en localhost:3000.</p>
 
    
-        <button if="redirectButton">Accéder au front-end Netlify</button>
+        <button id="redirectButton">Accéder au front-end Netlify</button>
     
 
     <script>
@@ -65,4 +65,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 </body>
 </html>
-g
