@@ -24,7 +24,7 @@ const Reparation = () => {
   };
 
 
-  
+
   const contents = reparationContent.map((Content) => (
 
     <div className="card form-cadre h-100" key={Content.id}>

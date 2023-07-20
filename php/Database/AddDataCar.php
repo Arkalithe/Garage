@@ -9,20 +9,20 @@ class AddDataCar {
         $conn = $db_connection->dbConnectionNamed();
 
         try {
- $voituresData = [
-                [15000, 50000, 2019, 'Model X', 'John', 'Doe', '1234567890'],
-                [12000, 40000, 2018, 'Model Y', 'Jane', 'Smith', '9876543210'],
-                [18000, 60000, 2020, 'Model Z', 'Robert', 'Johnson', '4567890123'],
-                [20000, 55000, 2017, 'Model A', 'Michael', 'Brown', '7890123456'],
-                [14000, 45000, 2019, 'Model B', 'Emily', 'Davis', '5678901234'],
-                [16000, 55000, 2018, 'Model C', 'David', 'Miller', '8901234567'],
-                [13000, 50000, 2019, 'Model D', 'Emma', 'Wilson', '3456789012'],
-                [17000, 45000, 2017, 'Model E', 'Andrew', 'Taylor', '6789012345'],
-                [19000, 60000, 2020, 'Model F', 'Olivia', 'Anderson', '0123456789'],
-                [11000, 40000, 2018, 'Model G', 'Daniel', 'Thomas', '9012345678']
+            $voituresData = [
+                [1, 15000, 50000, 2019, 'Model X', 'John', 'Doe', '1234567890'],
+                [2, 12000, 40000, 2018, 'Model Y', 'Jane', 'Smith', '9876543210'],
+                [3, 18000, 60000, 2020, 'Model Z', 'Robert', 'Johnson', '4567890123'],
+                [4, 20000, 55000, 2017, 'Model A', 'Michael', 'Brown', '7890123456'],
+                [5, 14000, 45000, 2019, 'Model B', 'Emily', 'Davis', '5678901234'],
+                [6, 16000, 55000, 2018, 'Model C', 'David', 'Miller', '8901234567'],
+                [7, 13000, 50000, 2019, 'Model D', 'Emma', 'Wilson', '3456789012'],
+                [8, 17000, 45000, 2017, 'Model E', 'Andrew', 'Taylor', '6789012345'],
+                [9, 19000, 60000, 2020, 'Model F', 'Olivia', 'Anderson', '0123456789'],
+                [10, 11000, 40000, 2018, 'Model G', 'Daniel', 'Thomas', '9012345678']
             ];
 
-            $voituresStmt = $conn->prepare("INSERT INTO VOITURES (prix, kilometrage, annee_circulation, modele, nom, prenom, numero)
+            $voituresStmt = $conn->prepare("INSERT INTO VOITURES (id, prix, kilometrage, annee_circulation, modele, nom, prenom, numero)
                 VALUES (?, ?, ?, ?, ?, ?, ?)");
 
             foreach ($voituresData as $data) {
@@ -70,6 +70,7 @@ class AddDataCar {
             }
 
             echo "Data ajouter dans la table EQUIPEMENT avec succes.<br>";
+
             $cvvoitureData = [
                 [1, 1],
                 [1, 2],

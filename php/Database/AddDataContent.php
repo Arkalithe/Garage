@@ -57,7 +57,7 @@ class AddDataContent
 
             $occasions = [
                 [
-                    'title' => 'occasion',
+                    'title' => 'Occasion',
                     'intro' => 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
                                 Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ',
                     'image' => 'Voiture.png'
