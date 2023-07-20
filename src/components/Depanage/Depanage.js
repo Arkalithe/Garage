@@ -28,10 +28,9 @@ const Depanage = () => {
       <div className="pb-2 card-title">
         <h1>{Content.title}</h1>
       </div>
-      <div className="pb-3 m-2">
+      <div className="pb-3 m-2 m-2 image-container d-flex justify-content-center align-items-center">
         {Content.image.length > 0 ? (
-                    <div
-                    className="image-container"
+                    <div                   
                     style={{
                       maxWidth: "300px",
                       maxHeight: "300px",

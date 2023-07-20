@@ -32,8 +32,7 @@ const Reparation = () => {
       </div>
       <div className="pb-3 m-2 image-container d-flex justify-content-center align-items-center">
         {Content.image.length > 0 ? (
-          <div
-            className=""
+          <div            
             style={{
               maxWidth: "300px",
               maxHeight: "300px",
