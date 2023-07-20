@@ -1,9 +1,10 @@
 <?php
 include_once 'Connect.php';
-$db_create = new DatabaseCreate();
+
+$db_connection = new DatabaseConnect();
 
 try {
-    $conn = $db_connection->dbConnectionNamed();
+    $conn = $db_connection->dbConnection();
 
     $deleteQueries = [
         'DELETE FROM Users;',
