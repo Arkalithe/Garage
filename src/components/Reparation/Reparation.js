@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const Reparation = () => {
   const [reparationContent, setReparationContent] = useState([]);
-
   const reparation_url = "/Api/Reparation/ReparationRead.php"
 
   useEffect(() => {
@@ -15,7 +14,7 @@ const Reparation = () => {
 
   const getData = async () => {
     try {
-      const response = await config.config.herokuTesting.get(reparation_url);
+      const response = await config.herokuTesting.get(reparation_url);
       setReparationContent(response.data);
 
     } catch (error) {
