@@ -30,7 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $statement->bindParam(':password', $passwordHash);
                 $statement->bindParam(':email', $email);
                 if ($statement->execute()) {
-                    header("Location: AdminCree.php");
+                    $frontendURL = "https://garagevparrotstudi-15b74863d868.herokuapp.com/";
+                    header("Location: $frontendURL");
                 } else {
                     echo "Une erreur s'est produite lors de la création de l'administrateur.";
                 }
@@ -51,10 +52,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p>L'administrateur a été ajouté à la base de données.</p>
     
     <p>Vous pouvez maintenant vous connecter au front-end en tant qu'administrateur.</p>
-    <p>Accédez à <a href="http://localhost:3000">Acceuil Front-end </a> pour vous connecter.</p>
+    <p>Accédez à <a href="http://localhost:3000">Acceuil Front-end </a> pour vous connecter en localhost:3000.</p>
 
-    <form action="http://your-heroku-react-app-url" method="GET">
-        <button type="submit">Accéder au front-end Heroku</button>
-    </form>
+   
+        <button if="redirectButton">Accéder au front-end Heroku</button>
+    
+
+    <script>
+        document.getElementById('redirectButton').addEventListener('click', function() {
+            window.location.href = "https://garagevparrotstudi-15b74863d868.herokuapp.com//build/index.html"; 
+        });
+    </script>
 </body>
 </html>
+g

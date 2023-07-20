@@ -1,4 +1,26 @@
 <?php
+
+include_once './Database/Connect.php';
+include_once './Class/Employe.php';
+
+$database = new DatabaseConnect();
+$db = $database->dbConnectionNamed();
+$employe = new Employee($db);
+$stmt = $employe->getUsers();
+$row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$isAdminExists = false;
+foreach ($row as $user) {
+    if ($user['admin'] == 1) {
+        $isAdminExists = true;
+        break;
+    }
+}
+
+if ($isAdminExists) {
+    header("Location: /build/index.html");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
