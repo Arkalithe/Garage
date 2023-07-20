@@ -1,5 +1,4 @@
 <?php
-
 include_once './Database/Connect.php';
 include_once './Class/Employe.php';
 
@@ -18,7 +17,7 @@ foreach ($row as $user) {
 }
 
 if ($isAdminExists) {
-    header("Location: /build/index.html");
+    header("Location: ../public/index.html");
     exit;
 }
 ?>
