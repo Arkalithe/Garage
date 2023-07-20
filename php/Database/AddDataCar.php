@@ -30,20 +30,21 @@ class AddDataCar {
             }
 
             echo "Data ajouter dans la table VOITURES avec succes.<br>";
+
             $caracteristiqueData = [
-                ['Caracterisique 1'],
-                ['Caracterisique 2'],
-                ['Caracterisique 3'],
-                ['Caracterisique 4'],
-                ['Caracterisique 5'],
-                ['Caracterisique 6'],
-                ['Caracterisique 7'],
-                ['Caracterisique 8'],
-                ['Caracterisique 9'],
-                ['Caracterisique 10']
+                [1, 'Caracterisique 1'],
+                [2, 'Caracterisique 2'],
+                [3, 'Caracterisique 3'],
+                [4, 'Caracterisique 4'],
+                [5, 'Caracterisique 5'],
+                [6, 'Caracterisique 6'],
+                [7, 'Caracterisique 7'],
+                [8, 'Caracterisique 8'],
+                [9, 'Caracterisique 9'],
+                [10, 'Caracterisique 10']
             ];
 
-            $caracteristiqueStmt = $conn->prepare("INSERT INTO CARACTERISTIQUE (caracteristique) VALUES (?)");
+            $caracteristiqueStmt = $conn->prepare("INSERT INTO CARACTERISTIQUE (id, caracteristique) VALUES (?, ?)");
 
             foreach ($caracteristiqueData as $data) {
                 $caracteristiqueStmt->execute($data);
@@ -51,19 +52,19 @@ class AddDataCar {
 
             echo "Data ajouter dans la table CARACTERISTIQUE avec succes.<br>";
             $equipementData = [
-                ['Equipment 1'],
-                ['option 2'],
-                ['Equipment 3'],
-                ['option 4'],
-                ['Equipment 5'],
-                ['option 6'],
-                ['Equipment 7'],
-                ['option 8'],
-                ['Equipment 9'],
-                ['option 10']
+                [1,'Equipment 1'],
+                [2,'option 2'],
+                [3,'Equipment 3'],
+                [4,'option 4'],
+                [5,'Equipment 5'],
+                [6,'option 6'],
+                [7,'Equipment 7'],
+                [8,'option 8'],
+                [9,'Equipment 9'],
+                [10,'option 10']
             ];
 
-            $equipementStmt = $conn->prepare("INSERT INTO EQUIPEMENT (equipement) VALUES (?)");
+            $equipementStmt = $conn->prepare("INSERT INTO EQUIPEMENT (id, equipement) VALUES (? ,?)");
 
             foreach ($equipementData as $data) {
                 $equipementStmt->execute($data);
