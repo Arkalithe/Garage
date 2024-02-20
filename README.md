@@ -72,12 +72,10 @@ Ou si vous utilisez un package comme XMAPP utilisez l'interface correspondant.
 
 9. Connecter vous sur http://localhost/Garage/php/Index.php Cela vous permetra Lancez le fichier `InitDb.php` grace au bouton crée Database, cela va créer les différentes tables et ajouter les données à l'intérieur. 
 
-10. Une fois la base de donnée crée vous vous crée votre comptre administateure.
-
 11. Démarrez le serveur de développement front-end:
 npm start
 
 11. Ouvrez votre navigateur et accédez à l'URL suivante : `http://localhost:3000`, où `3000` est le port utilisé par l'application.
 
-
+12. l'email = momo@momo.momo et le mot de passe = Momomo0*
 
