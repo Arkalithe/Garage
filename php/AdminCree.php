@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: https://imaginative-lollipop-cdaa75.netlify.app");
+header("Access-Control-Allow-Origin: https://ecfgarage.netlify.app");
 header("Access-Control-Allow-Methods: GET,POST,");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script>
         document.getElementById('redirectButton').addEventListener('click', function() {
-            window.location.href = "https://imaginative-lollipop-cdaa75.netlify.app/"; 
+            window.location.href = "https://ecfgarage.netlify.app/"; 
         });
     </script>
 </body>
