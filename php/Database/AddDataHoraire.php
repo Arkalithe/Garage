@@ -16,14 +16,15 @@ class AddDataHoraire
                 ['jour' => 'Mercredi', 'matin' => '08:45 - 12:00',  'apresmidi' => '14:00 - 18:00'],
                 ['jour' => 'Jeudi', 'matin' => '08:45 - 12:00',  'apresmidi' => '14:00 - 18:00'],
                 ['jour' => 'Vendredi', 'matin' => '08:45 - 12:00', 'apresmidi' => '14:00 - 18:00'],
-                ['jour' => 'Dimanche', 'matin' => 'Fermé', "'apresmidi" => '']
+                ['jour' => 'Dimanche', 'matin' => 'Fermé', "apresmidi" => '']
             ];
 
             $stmt = $conn->prepare("INSERT INTO HORAIRES (jour, matin, apresmidi)
                 VALUES (?, ?, ?)");
 
             foreach ($horaires as $data) {
-                $stmt->execute($data);
+                
+                $stmt->execute([$data['jour'], $data['matin'], $data['apresmidi']]);
                 echo 'Horaire ajouté .<br>';
             }
         } catch (PDOException $e) {
