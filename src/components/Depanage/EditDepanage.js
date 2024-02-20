@@ -21,7 +21,7 @@ const EditDepanage = () => {
 
   const getData = async () => {
     try {
-      const response = await config.localTestingUrl.get(depanage_url);
+      const response = await config.herokuTesting.get(depanage_url);
       setDepanageContent(response.data);
 
       const Content = response.data[0];
@@ -47,7 +47,7 @@ const EditDepanage = () => {
     }
 
     try {
-      await config.localTestingUrl.post(depanage_edit_url, newFormData, {
+      await config.herokuTesting.post(depanage_edit_url, newFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

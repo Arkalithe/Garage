@@ -14,7 +14,7 @@ const HoraireUpdate = () => {
 
   const fetchBusinessHours = async () => {
     try {
-      const response = await config.localTestingUrl.get(fetch_url);
+      const response = await config.herokuTesting.get(fetch_url);
       setBusinessHours(response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -27,7 +27,7 @@ const HoraireUpdate = () => {
       for (const hour of businessHours) {
         const { id, jour, matin, apresmidi } = hour;
         const data = { id, jour, matin, apresmidi };
-        await config.localTestingUrl.post(update_url, JSON.stringify(data));
+        await config.herokuTesting.post(update_url, JSON.stringify(data));
       }
     } catch (error) {
       console.error('Error:', error);

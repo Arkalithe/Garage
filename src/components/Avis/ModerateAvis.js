@@ -14,7 +14,7 @@ const ModerateAvis = () => {
 
   const fetchAvis = async () => {
     try {
-      const response = await config.localTestingUrl.get(register_url);
+      const response = await config.herokuTesting.get(register_url);
       setAvis(response.data);
       setLoading(false);
     } catch (error) {

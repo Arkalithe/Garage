@@ -36,7 +36,7 @@ const Register = () => {
       return;
     }
     try {
-      await config.localTestingUrl.post(register_url, JSON.stringify({ email, password }));
+      await config.herokuTesting.post(register_url, JSON.stringify({ email, password }));
       setSuccess(true);
       setEmail('');
       setPassword('');

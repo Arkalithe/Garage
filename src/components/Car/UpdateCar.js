@@ -32,7 +32,7 @@ export const UpdateCar = ({ carId }) => {
 
     const fetchVoiture = async () => {
         try {
-            const res = await config.localTestingUrl.get(get_car, { params: { id: idVoiture } });
+            const res = await config.herokuTesting.get(get_car, { params: { id: idVoiture } });
             const fetchedVoiture = res.data;
             if (Array.isArray(fetchedVoiture.caracteristique)) {
                 fetchedVoiture.caracteristique = [...fetchedVoiture.caracteristique];
@@ -88,7 +88,7 @@ export const UpdateCar = ({ carId }) => {
             formData.append(`image_${index}`, image);
         });
         try {
-            await config.localTestingUrl.post(car_update, formData, {
+            await config.herokuTesting.post(car_update, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

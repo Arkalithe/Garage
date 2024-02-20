@@ -17,7 +17,7 @@ export const GetUpdateCar = () => {
     useEffect(() => {
         const fetchVoiture = async () => {
             try {
-                const res = await config.localTestingUrl.get(get_car, { params: { id: idVoiture } });
+                const res = await config.herokuTesting.get(get_car, { params: { id: idVoiture } });
                 const car = res.data;
                 setCarData(car);
                 setLoading(false);

@@ -26,7 +26,7 @@ const ContactPage = () => {
       formData.append('phone', mailSetting.phone);
       formData.append('message', mailSetting.message);
 
-      await config.localTestingUrl.post(url_email, formData, {
+      await config.herokuTesting.post(url_email, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -21,7 +21,7 @@ const EditOcasion = () => {
 
   const getData = async () => {
     try {
-      const response = await config.localTestingUrl.get(ocasion_url);
+      const response = await config.herokuTesting.get(ocasion_url);
       setOcasionContent(response.data);
 
       const content = response.data[0];
@@ -45,7 +45,7 @@ const EditOcasion = () => {
     }
 
     try {
-      await config.localTestingUrl.post(ocasion_edit_url, newFormData, {
+      await config.herokuTesting.post(ocasion_edit_url, newFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

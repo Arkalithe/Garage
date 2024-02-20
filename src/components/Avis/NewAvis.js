@@ -28,7 +28,7 @@ export const NewAvis = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await config.localTestingUrl.post(avis_url, JSON.stringify({ name, message, note }));
+      await config.herokuTesting.post(avis_url, JSON.stringify({ name, message, note }));
       setSuccess(true);
       setName('');
       setMessage('')

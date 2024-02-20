@@ -21,7 +21,7 @@ const GetEmploye = () => {
 
   const fetchEmploye = async () => {
     try {
-      const response = await config.localTestingUrl.get(employe_url);
+      const response = await config.herokuTesting.get(employe_url);
       setUser(response.data);
     } catch (error) {}
   };
@@ -33,7 +33,7 @@ const GetEmploye = () => {
         return employe.role !== "Admin";
       });
 
-      await config.localTestingUrl.post(delete_url, { ids: filteredIds });
+      await config.herokuTesting.post(delete_url, { ids: filteredIds });
       fetchEmploye();
       setSelectedIds([]);
     } catch (error) {}

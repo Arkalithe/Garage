@@ -28,7 +28,7 @@ export const Contact = ({ car }) => {
             formData.append('nomProprietaire', car.nom);
             formData.append('prenomProprietaire', car.prenom);
 
-            await config.localTestingUrl.post(url_email, formData, {
+            await config.herokuTesting.post(url_email, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

@@ -12,7 +12,7 @@ const DepanageDetails = () => {
 
     const getData = async () => {
         try {
-            const response = await config.localTestingUrl.get(depannage_url);
+            const response = await config.herokuTesting.get(depannage_url);
             setDepanageContent(response.data);
         } catch (error) {}
     };

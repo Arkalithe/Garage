@@ -20,7 +20,7 @@ const SingleCar = () => {
     useEffect(() => {
         const fetchVoiture = async () => {
             try {
-                const res = await config.localTestingUrl.get(register_url, { params: { id: idVoiture } });
+                const res = await config.herokuTesting.get(register_url, { params: { id: idVoiture } });
                 setVoiture(res.data);            
                 setLoading(false);
             } catch (err) {            

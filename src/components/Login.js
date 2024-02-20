@@ -34,7 +34,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await config.localTestingUrl.post(login_url,
+            const response = await config.herokuTesting.post(login_url,
                 JSON.stringify({ email, password, })
             );
             const accessToken = response.data[0];

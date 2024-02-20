@@ -14,7 +14,7 @@ const Reparation = () => {
 
   const getData = async () => {
     try {
-      const response = await config.localTestingUrl.get(reparation_url);
+      const response = await config.herokuTesting.get(reparation_url);
       setReparationContent(response.data);
     } catch (error) {
       console.error("Error fetching data: ", error);

@@ -31,7 +31,7 @@ const GetCar = () => {
 
   const fetchVoiture = async () => {
     try {
-      const res = await config.localTestingUrl.get(register_url);
+      const res = await config.herokuTesting.get(register_url);
       setVoiture(res.data);
     } catch (err) {
      

@@ -58,7 +58,7 @@ export const NewCar = () => {
         });
 
         try {
-            await config.localTestingUrl.post(
+            await config.herokuTesting.post(
                 Car_url,
                 formData, {
                 headers: {

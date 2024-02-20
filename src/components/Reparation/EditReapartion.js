@@ -21,7 +21,7 @@ const EditReparation = () => {
 
     const getData = async () => {
         try {
-            const response = await config.localTestingUrl.get(reparation_url);
+            const response = await config.herokuTesting.get(reparation_url);
             setReparationContent(response.data);
             const Content = response.data[0];
             setFormData({
@@ -46,7 +46,7 @@ const EditReparation = () => {
         }
 
         try {
-            await config.localTestingUrl.post(reparation_edit_url, newFormData, {
+            await config.herokuTesting.post(reparation_edit_url, newFormData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

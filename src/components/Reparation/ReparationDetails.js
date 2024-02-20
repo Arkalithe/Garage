@@ -13,7 +13,7 @@ export const VoitureOccasion = () => {
 
   const getData = async () => {
     try {
-      const response = await config.localTestingUrl.get(voiture_url);
+      const response = await config.herokuTesting.get(voiture_url);
       setVoitureContent(response.data);
     } catch (error) {}
   };
