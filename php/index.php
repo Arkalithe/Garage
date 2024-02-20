@@ -17,6 +17,10 @@ foreach ($row as $user) {
     }
 }
 
+if ($isAdminExists) {
+    header("Location: ../public/index.html");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -67,68 +71,67 @@ foreach ($row as $user) {
     </style>
 
     <script>
-        function sendRequestbis() {
-            fetch("./AdminCree.php", {
-                    method: "POST",
-                    body: new FormData(document.querySelector("form")),
+        function sendRequest() {
+            fetch('./Database/InitDb.php', {
+                    method: 'POST',
+                    body: new FormData(document.querySelector('form'))
                 })
-                .then(function(response) {
+                .then(response => {
                     if (response.ok) {
-                        console.log("Request sent successfully");
+                        console.log('Request sent successfully');
                         return response.text();
                     } else {
-                        throw new Error("Request failed");
+                        throw new Error('Request failed');
                     }
-                })
-                .then(function(data) {
+                }).then(data => {
                     console.log(data);
-                    alert("Request successful");
-                    window.location.href = './AdminCree.php'
+                    alert('Request successful');
                 })
-                .catch(function(error) {
-                    console.log("An error occurred", error);
-                    alert("Request failed");
+                .catch(error => {
+                    console.log('An error occurred', error);
+                    alert('Request failed');
                 });
         }
-
+        function sendRequestbis() {
+    fetch("./AdminCree.php", {
+      method: "POST",
+      body: new FormData(document.querySelector("form")),
+    })
+      .then(function (response) {
+        if (response.ok) {
+          console.log("Request sent successfully");
+          return response.text();
+        } else {
+          throw new Error("Request failed");
+        }
+      })
+      .then(function (data) {
+        console.log(data);
+        alert("Request successful");
+        window.location.href = './AdminCree.php'
+      })
+      .catch(function (error) {
+        console.log("An error occurred", error);
+        alert("Request failed");
+      });
+  }
         function handleSubmit(event) {
-    event.preventDefault();
-    var formData = new FormData(event.target);
-    var password = formData.get("password");
-    var email = formData.get("email");
-    
-    if (!password || !email) {
-        alert("Veuillez remplir tous les champs.");
-        return;
-    }
-    
-
-    if (!isPasswordStrong(password)) {
-        alert("Le mot de passe est trop faible. Il doit contenir au moins 8 caractères, dont au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.");
-        return;
-    }
-    
-    sendRequestbis();
-}
-
-function isPasswordStrong(password) {
-    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])");
-    return strongRegex.test(password) && password.length >= 8;
-}
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            var password = formData.get("password");
+            var email = formData.get("email");
+            if (!password || !email) {
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+            sendRequestbis();
+        }
     </script>
 
 </head>
 
 <body>
     <div>
-        <?php
-
-        if ($isAdminExists) {
-
-            echo '<div> Un Admin existe déja </div>';
-        }
-
-        ?>
         <h1>Création d'administrateur</h1>
 
         <form onsubmit="handleSubmit(event)">
@@ -138,15 +141,10 @@ function isPasswordStrong(password) {
             <label for="email">Email :</label>
             <input type="email" name="email" required>
 
-            <input type="submit" value="Créer l'administrateur">
+            <input type="submit" value="Créer l'administrateur">            
         </form>
-
-    </div>
-    <div>
-
-
-
-
+        
+        <input type="button" value="Envoyer une requête" onclick="sendRequest()">
     </div>
 
 </body>
