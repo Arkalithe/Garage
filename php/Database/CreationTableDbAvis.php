@@ -13,8 +13,8 @@ class DatabaseTableCreateAvis
                 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 message VARCHAR(255) NOT NULL,
-                note INT NOT NULL
-                
+                note INT NOT NULL,
+                moderate INT NOT NULL                
             )";         
 
             $conn->exec($tvsql);

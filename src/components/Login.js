@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-import axios from '../api/axios';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
+import config from '../api/axios';
 import jwtDecode from 'jwt-decode';
 
 const login_url = '/Garage/php/Api/Login.php'
@@ -34,7 +34,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(login_url,
+            const response = await config.localTestingUrl.post(login_url,
                 JSON.stringify({ email, password, })
             );
             const accessToken = response.data[0];
@@ -61,36 +61,39 @@ const Login = () => {
     }
 
     return (
-        <div className='d-flex flex-column container-fluid align-items-center m-auto' >
+        <Container className='d-flex flex-column align-items-center m-auto'>
 
             <section className="form-cadre d-flex flex-column align-items-center justify-content-start m-auto">
-                <p ref={errRef} className={err ? "errmsg" : 'offscreen'} aria-live='assertive'> {err} </p>
+                <Alert ref={errRef} variant="danger" className={err ? '' : 'offscreen'} aria-live='assertive'> {err} </Alert>
                 <h1 className='d-flex flex-column p-2 m-2'>Connexion</h1>
-                <form className='d-flex flex-column p-2 m-2' onSubmit={handleSubmit}>
-                    <label htmlFor='email' >Email:</label>
-                    <input type='text'
-                        id='email'
-                        ref={emailRef}
-                        autoComplete='off'
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        required
-                    />
+                <Form className='d-flex flex-column p-2 m-2' onSubmit={handleSubmit}>
+                    <Form.Group controlId='email'>
+                        <Form.Label>Email:</Form.Label>
+                        <Form.Control
+                            type='text'
+                            ref={emailRef}
+                            autoComplete='off'
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            required
+                        />
+                    </Form.Group>
 
-                    <label htmlFor='password' >Password:</label>
-                    <input type='password'
-                        id='password'
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                        required
-                    />
-                    <button className='d-flex flex-column p-2 m-2 mt-3 bouton' > Connexion </button>
-                </form>
+                    <Form.Group controlId='password'>
+                        <Form.Label>Password:</Form.Label>
+                        <Form.Control
+                            type='password'                            
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            required
+                        />
+                    </Form.Group>
+
+                    <Button className='d-flex flex-column p-2 m-2 mt-3 bouton' type='submit'> Connexion </Button>
+                </Form>
             </section>
-        </div>
+        </Container>
     )
-
-
 }
 
 export default Login;

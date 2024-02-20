@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 import { Link } from "react-router-dom";
 import { Slider } from "@mui/material";
 
@@ -31,7 +31,7 @@ const GetCar = () => {
 
   const fetchVoiture = async () => {
     try {
-      const res = await axios.get(register_url);
+      const res = await config.localTestingUrl.get(register_url);
       setVoiture(res.data);
     } catch (err) {
      

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
-import axios from '../../api/axios';
+import config from '../../api/axios';
 import { Link, useParams } from 'react-router-dom';
-
+import { Button } from 'react-bootstrap';
 
 export const GetUpdateCar = () => {
     const { idVoiture } = useParams();
@@ -16,34 +16,31 @@ export const GetUpdateCar = () => {
 
     useEffect(() => {
         const fetchVoiture = async () => {
-        try {
-            const res = await axios.get(get_car, { params: { id: idVoiture } });
-            const car = res.data;
-            setCarData(car);
-            setLoading(false);
-        } catch (err) {
-           
-        }
-    };
+            try {
+                const res = await config.localTestingUrl.get(get_car, { params: { id: idVoiture } });
+                const car = res.data;
+                setCarData(car);
+                setLoading(false);
+            } catch (err) {
+                setLoading(false);
+            }
+        };
         fetchVoiture();
     }, [get_car, idVoiture]);
 
-    
+
     const uniqueCars = Array.from(new Set(carData.map(car => car.id)))
         .map(id => carData.find(car => car.id === id));
 
-   
+    if (isLoading) {
+        return <div>Chargement de la page ...</div>;
+    }
 
     const cars = uniqueCars.map((car) => {
-         let carImages = [];
-         if(car.voiture_images) {
+        let carImages = [];
+        if (car.voiture_images) {
             carImages = car.voiture_images.split(",");
-         }
-         if (isLoading(true)){
-            <div>Chargement de la page ...</div>
-         }
-
-
+        }
 
         return (
             <div
@@ -73,8 +70,8 @@ export const GetUpdateCar = () => {
                     Plus d'information
                 </Link>
             </div>
-        )
-    })
+        );
+    });
 
     return (
         <>
