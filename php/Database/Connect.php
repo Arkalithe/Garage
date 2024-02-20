@@ -24,9 +24,9 @@ class DatabaseConnect
                 $this->username = $urlParts['user'];
                 $this->password = $urlParts['pass'];
             } else {
-                $this->dsn = 'mysql:host=i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com;port=3306;dbname=clryze4bwb99689n';
-                $this->username = 'ql46xy00vxcox0rc';
-                $this->password = 'vqw7dh2fbvuzcbt0';
+                $this->dsn = 'mysql:host=n2o93bb1bwmn0zle.chr7pe7iynqr.eu-west-1.rds.amazonaws.com;port=3306;dbname=a1p9h2isz2mzvwh6';
+                $this->username = 'xzkhgcmcy63r8x2j';
+                $this->password = 'o5l6c9ijombyr4f9 ';
             }
 
             $this->conn = new PDO($this->dsn, $this->username, $this->password);
