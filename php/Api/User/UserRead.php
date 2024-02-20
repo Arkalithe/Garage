@@ -17,10 +17,4 @@ $stmt = $items->getUsers();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $isAdmin = false;  
 
-foreach ($row as $user) {
-    if ($user['role'] === 'admin') {  
-        $isAdmin = true;
-        break;  
-    }
-}
 echo json_encode($row);
