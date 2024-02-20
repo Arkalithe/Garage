@@ -1,9 +1,9 @@
 <?php
-
-if (!file_exists(__DIR__ . '/../build/index.html')) {
-    header('HTTP/1.1 404 Not Found');
-    echo '404 Not Found';
-    exit();
+$indexPath = __DIR__ . '/../build/index.html';
+if (file_exists($indexPath)) {
+    require_once($indexPath);
+} else {
+    // Gérer l'erreur si le fichier n'existe pas
+   echo header('HTTP/1.0 404 Not Found');
+   
 }
-
-require __DIR__ . '/../build/index.html';
