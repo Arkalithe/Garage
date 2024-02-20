@@ -1,9 +1,10 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
 
 const Footer = ({ horaire }) => {
   return (
     <footer className="mt-auto">
-      <div className="container-fluid">
+      <Container>
         <div className="col-md-4 d-flex align-items-center pt-2">
           <a className="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" href="/">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-clock" viewBox="0 0 16 16">
@@ -33,7 +34,7 @@ const Footer = ({ horaire }) => {
             </ul>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };

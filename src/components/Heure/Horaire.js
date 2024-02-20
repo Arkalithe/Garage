@@ -14,7 +14,7 @@ const Horaire = () => {
 
   const fetchData = async (e) => {
     try {
-      const response = await config.herokuTesting.get(fetch_url);
+      const response = await config.localTestingUrl.get(fetch_url);
       setBusinessHours(response.data)
     } catch (e) {
       console.error('Problème : ', e)

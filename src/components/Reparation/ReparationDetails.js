@@ -1,55 +1,54 @@
-import React from "react";
-import config from "../../api/axios";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { Card} from 'react-bootstrap';
+import config from '../../api/axios';
 
-const ReparationDetails = () => {
-  const [reparationContent, setReparationContent] = useState([]);
+export const VoitureOccasion = () => {
 
-  const reparation_url = "/Api/Reparation/ReparationRead.php"
+  const [voitureContent, setVoitureContent] = useState([]);
+  const voiture_url = "/Garage/php/Api/Ocasion/OcasionRead.php";
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
   const getData = async () => {
     try {
-      const response = await config.config.herokuTesting.get(reparation_url);
-      setReparationContent(response.data);
-    } catch (error) {
-    }
+      const response = await config.localTestingUrl.get(voiture_url);
+      setVoitureContent(response.data);
+    } catch (error) {}
   };
-  const contents = reparationContent.map((Content) => (
-    <div className="" key={Content.id}>
-      <div className="pb-2 ">
-        <h1>{Content.title}</h1>
-      </div>
-      <div className="pb-3">
-        {Content.image.length > 0 ? (
-          <img
-            className="img-fluid"
-            src={require(`../../assests/Image/${Content.image}`)}
-            alt="Reparation"
-            style={{ maxWidth: '300px', maxHeight: '300px' }}
-          />
-        ) : (
-          <div>No Image</div>
-        )}
-      </div>
-      <div className="pb-3">
-        <p>{Content.intro}</p>
-      </div>
-      <div className="pb-3">
-        <p>{Content.message}</p>
-      </div>
 
-    </div>
-  ))
+  const contents = voitureContent.map((Content) => (
+    <Card className="card form-cadre h-100" key={Content.id}>
+      <Card.Body>
+        <Card.Title>{Content.title}</Card.Title>
+        <div className="pb-3 m-2">
+          {Content.image.length > 0 ? (
 
+              <Card.Img
+                className="img-fluid"
+                src={require(`../../assests/Image/${Content.image}`)}
+                alt="Reparation"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  maxWidth: "300px",
+                  maxHeight: "300px",
+                  overflow: "hidden",
+                  objectFit: "contain",
+                }}
+              />
+          
+          ) : (
+            <div>No Image</div>
+          )}
+        </div>
+        <Card.Text>{Content.intro}</Card.Text>   
+      </Card.Body>
+    </Card>
+  ));
 
-  return (
-    <div className="col mb-4 voit">{contents}</div>
-  );
+  return <div className="col mb-4">{contents}</div>;
 };
 
-export default ReparationDetails;
+export default VoitureOccasion;

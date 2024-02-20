@@ -20,7 +20,7 @@ const SingleAvis = () => {
 
      const fetchAvis = async () => {
         try {
-            const response = await config.herokuTesting.get(avis_url, { params: { id: idAvis } });
+            const response = await config.localTestingUrl.get(avis_url, { params: { id: idAvis } });
             setAvis(response.data);
             setLoading(false);
         } catch (error) {
@@ -30,7 +30,7 @@ const SingleAvis = () => {
 
     const handleDelete = async () => {
         try {
-        await config.herokuTesting.post(deleteAvis_url, { ids: [idAvis] });
+        await config.localTestingUrl.post(deleteAvis_url, { ids: [idAvis] });
         } catch (error) {
             
         }
@@ -46,7 +46,7 @@ const SingleAvis = () => {
                 name: avis.name
             };
 
-            await config.herokuTesting.post(updateAvis_url, updatedAvis );
+            await config.localTestingUrl.post(updateAvis_url, updatedAvis );
             setAvis(prevAvis => ({ ...prevAvis, moderate: 1}));
         } catch (error) {           
         }

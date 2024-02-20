@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import Logo from '../assests/Image/Logo.png';
 import useAuth from '../hooks/useAuth';
 
@@ -11,82 +12,43 @@ const Header = () => {
     };
 
     return (
-        <nav className="border-bottom navbar navbar-expand-lg">
-            <div className="container-fluid">
-                <div className="navbar-brand">
+        <Navbar bg="light" expand="lg" className="border-bottom">
+            <Container>
+                <Navbar.Brand>
                     <h1 className="align-items-center text-decoration-none lien">
                         <Link to="/" className="lien">
                             <img src={Logo} alt="Logo" className="Logo" />
                         </Link>
                     </h1>
-                </div>
+                </Navbar.Brand>
 
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navmenu"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+                <Navbar.Toggle aria-controls="navmenu" />
 
-                <nav className="collapse navbar-collapse " id="navmenu">
-                    <ul className="navbar-nav ms-auto">
-                        <li className="nav-item">
-                            <Link to="/" className="bouton nav-link">
-                                Accueil
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/contactPage" className="bouton nav-link">
-                                Contact
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/newavis" className="bouton nav-link">
-                                Avis
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/voiture" className="bouton nav-link">
-                                Voiture
-                            </Link>
-                        </li>
+                <Navbar.Collapse id="navmenu">
+                    <Nav className="ms-auto">
+                        <Nav.Link as={Link} to="/" className="bouton nav-link">Accueil</Nav.Link>
+                        <Nav.Link as={Link} to="/contactPage" className="bouton nav-link">Contact</Nav.Link>
+                        <Nav.Link as={Link} to="/newavis" className="bouton nav-link">Avis</Nav.Link>
+                        <Nav.Link as={Link} to="/voiture" className="bouton nav-link">Voiture</Nav.Link>
 
-                        {auth.accessToken && auth.role === 'Admin' && (
-                            <li className="nav-item">
-                                <Link to="/adminSpace" className="bouton nav-link">
-                                   Espace Admin
-                                </Link>
-                            </li>
+                        {auth.accessToken && auth.role === 'admin' && (
+                            <Nav.Link as={Link} to="/adminSpace" className="bouton nav-link">Espace Admin</Nav.Link>
                         )}
 
-                        {auth.accessToken && auth.role === 'Employe' && (
-                            <li className="nav-item">
-                                <Link to="/employeSpace" className="bouton nav-link">
-                                    Espace Employe
-                                </Link>
-                            </li>
+                        {auth.accessToken && auth.role === 'employee' && (
+                            <Nav.Link as={Link} to="/employeSpace" className="bouton nav-link">Espace Employe</Nav.Link>
                         )}
 
                         {!auth.accessToken && (
-                            <li className="nav-item">
-                                <Link to="/login" className="bouton nav-link">
-                                    Connexion
-                                </Link>
-                            </li>
+                            <Nav.Link as={Link} to="/login" className="bouton nav-link">Connexion</Nav.Link>
                         )}
                         {auth.accessToken && (
-                            <li className="nav-item">
-                                <button className="bouton nav-link" onClick={handleLogout}>
-                                    Deconnexion
-                                </button>
-                            </li>
+                            <Button className="bouton nav-link" onClick={handleLogout}>Déconnexion</Button>
                         )}
-                    </ul>
-                </nav>
-            </div>
-        </nav>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 };
 

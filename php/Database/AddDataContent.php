@@ -69,7 +69,7 @@ class AddDataContent
 
             foreach ($occasions as $data) {
                 $vtmt->execute([$data['title'], $data['intro'], $data['image']]);
-                echo 'Voiture contenu ajouté.<br>';
+                echo 'Ocasion contenu ajouté.<br>';
             }
         } catch (PDOException $e) {
             echo "Une erreur s'est produite : " . $e->getMessage();

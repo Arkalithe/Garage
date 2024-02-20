@@ -16,5 +16,4 @@ $items = new Employee($db);
 $stmt = $items->getUsers();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
 echo json_encode($row);

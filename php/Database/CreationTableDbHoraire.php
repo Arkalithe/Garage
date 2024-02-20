@@ -13,7 +13,7 @@ class DatabaseTableCreateHoraire
 
             $tsql = "CREATE TABLE IF NOT EXISTS HORAIRES (
                     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                    jour VARCHAR(255) NOT NULL,
+                    jour VARCHAR(255) NOT NULL UNIQUE,
                     matin VARCHAR(255) NOT NULL,
                     apresmidi VARCHAR(255)
                     )";           

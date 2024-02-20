@@ -22,10 +22,11 @@ class AddDataHoraire
             $stmt = $conn->prepare("INSERT INTO HORAIRES (jour, matin, apresmidi)
                 VALUES (?, ?, ?)");
 
-foreach ($horaires as $data) {
-    $stmt->execute([$data['jour'], $data['matin'], $data['apresmidi']]);
-    echo 'Horaire ajouté .<br>';
-}
+            foreach ($horaires as $data) {
+                
+                $stmt->execute([$data['jour'], $data['matin'], $data['apresmidi']]);
+                echo 'Horaire ajouté .<br>';
+            }
         } catch (PDOException $e) {
             echo "Connection Raté: " . $e->getMessage();
             exit;

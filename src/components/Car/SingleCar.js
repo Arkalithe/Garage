@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import config from "../../api/axios";
 import { Contact } from "../Contact/Contact";
 import Carousel from "react-material-ui-carousel";
+import { Button, Container, Row, Col, Card } from "react-bootstrap";
 
 const SingleCar = () => {
     const register_url = '/Api/Car/CarGetSingle.php';
@@ -17,75 +18,68 @@ const SingleCar = () => {
     };
 
     useEffect(() => {
-
+        const fetchVoiture = async () => {
+            try {
+                const res = await config.localTestingUrl.get(register_url, { params: { id: idVoiture } });
+                setVoiture(res.data);            
+                setLoading(false);
+            } catch (err) {            
+                console.error('Error fetching car:', err);
+            }
+        };
         fetchVoiture();
-    }, []);
-
-    const fetchVoiture = async () => {
-        try {
-            const res = await config.herokuTesting.get(register_url, { params: { id: idVoiture } });
-            setVoiture(res.data);
-            setLoading(false);
-        } catch (err) {
-        }
-    };
-
+    }, [idVoiture]);
 
     if (isLoading) {
         return <div>Chargement</div>;
     }
 
     return (
-        <section className="container-fluid d-flex row">
+        <Container fluid className="d-flex row">
             {form ? (
-                <div className="form-cadre d-flex flex-column align-items-center my-3">
+                <Card className="form-cadre d-flex flex-column align-items-center my-3">
                     <Contact car={voiture} />
-                    <button onClick={handleClick} className="bouton-alt mb-3 p-2" style={{ backgroundColor: '#db3e3e' }}>
+                    <Button onClick={handleClick} variant="danger" className="mb-3 p-2">
                         Précedent
-                    </button>
-                </div>
+                    </Button>
+                </Card>
             ) : (
-                <div className="voit">
+                <Card className="voit">
                     <h1>
                         <div>{voiture.modele}</div>
                     </h1>
-
-                    <div className="container-lg d-flex">
-                        <div className="row">
-                            <div className="d-flex flex-column align-items-start my-1">
+                    <Container fluid className="d-flex">
+                        <Row>
+                            <Col className="d-flex flex-column align-items-start my-1">
                                 <h3>Prix :</h3>
                                 <div>{voiture.prix}</div>
-                            </div >
-                            <div className="d-flex flex-column align-items-start  my-1">
+                            </Col>
+                            <Col className="d-flex flex-column align-items-start my-1">
                                 <h3>Kilometrage :</h3>
                                 <div>{voiture.kilometrage}</div>
-                            </div>
-                            <div className="d-flex flex-column align-items-start  my-1">
+                            </Col>
+                            <Col className="d-flex flex-column align-items-start my-1">
                                 <h3>Année de mise en circulation :</h3>
                                 <div>{voiture.annee_circulation}</div>
-                            </div>
-                            <div className="d-flex flex-column align-items-start  my-1">
+                            </Col>
+                            <Col className="d-flex flex-column align-items-start my-1">
                                 <h3>Caracteristique :</h3>
                                 {Array.isArray(voiture.caracteristique) ? (
                                     <div>{voiture.caracteristique.join(" / ")}</div>
                                 ) : (
                                     <div>{voiture.caracteristique}</div>
                                 )}
-                            </div>
-                            <div className="d-flex flex-column align-items-start  my-1">
+                            </Col>
+                            <Col className="d-flex flex-column align-items-start my-1">
                                 <h3>Equipement :</h3>
                                 {Array.isArray(voiture.equipement) ? (
                                     <div>{voiture.equipement.join(' / ')}</div>) :
                                     (<div>{voiture.equipement}</div>
-                                    )}
-
-                            </div>
-                        </div>
-
-                        <div className="container-fluid d-flex row align-items-center justify-content-end">
-                            <Carousel
-                                navButtonsAlwaysVisible
-                            >
+                                )}
+                            </Col>
+                        </Row>
+                        <Row className="container-fluid d-flex row align-items-center justify-content-end">
+                            <Carousel navButtonsAlwaysVisible>
                                 {voiture.voiture_images.map((image, index) => (
                                     <div key={index} >
                                         {image.length > 0 ? (
@@ -95,22 +89,18 @@ const SingleCar = () => {
                                                 src={require(`../../assests/Image/${image}`)}
                                                 alt="voiture"
                                             />
-
                                         ) : (
                                             <div>No Image</div>
-                                        )}</div>
-
+                                        )}
+                                    </div>
                                 ))}
-
                             </Carousel>
-                        </div>
-
-                    </div>
-
-                    <button onClick={handleClick} className="bouton">Contact</button>
-                </div>
+                        </Row>
+                    </Container>
+                    <Button onClick={handleClick} className="bouton">Contact</Button>
+                </Card>
             )}
-        </section>
+        </Container>
     );
 };
 

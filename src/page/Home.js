@@ -1,33 +1,29 @@
+import React from 'react';
+import { Container, Row } from 'react-bootstrap';
 import GetAvis from '../components/Avis/GetAvis';
 import Depanage from '../components/Depanage/Depanage';
 import Reparation from '../components/Reparation/Reparation';
 import VoitureOccasion from '../components/Ocasion/VoitureOccasion';
 
-
 const Home = () => {
   return (
-    <div className="container">
+    <Container>
       <section>
-        <div >
-          <h1 >Nos Services</h1>
-        </div>
-
-        <div className="row row-cols-1 row-cols-md-3 flex-grow-1">
+        <h1>Nos Services</h1>
+        <Row className="flex-grow-1">
           <Depanage />
           <Reparation />
           <VoitureOccasion />
-        </div>
-      </section >
+        </Row>
+      </section>
       <div className="border my-3"></div>
       <section>
-        <div>
-          <h1>Témoignage</h1>
-        </div>
-        <div className="container">
+        <h1>Témoignage</h1>
+        <Container>
           <GetAvis />
-        </div>
+        </Container>
       </section>
-    </div >
+    </Container>
   );
 };
 

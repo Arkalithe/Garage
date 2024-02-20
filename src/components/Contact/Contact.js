@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import config from '../../api/axios';
+import { Form, Button } from 'react-bootstrap';
 
 export const Contact = ({ car }) => {
-
     const [mailSetting, setMailSetting] = useState({
         nom: '',
         prenom: '',
         email: '',
         phone: '',
         message: '',
-        modele: '',
-        prix: '',
-        nomProprietaire: '',
-        prenomProprietaire: '',
     });
 
-    const url_email = '/Api/Email.php'
+    const url_email = '/Garage/php/Api/Email.php';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,13 +27,12 @@ export const Contact = ({ car }) => {
             formData.append('prix', car.prix);
             formData.append('nomProprietaire', car.nom);
             formData.append('prenomProprietaire', car.prenom);
-           
 
-            await config.herokuTesting.post(url_email, formData ,{
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+            await config.localTestingUrl.post(url_email, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
 
             alert('Email sent successfully!');
         } catch (error) {
@@ -45,6 +40,7 @@ export const Contact = ({ car }) => {
             alert('Failed to send email. Please try again later.');
         }
     };
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setMailSetting({ ...mailSetting, [name]: value });
@@ -52,114 +48,71 @@ export const Contact = ({ car }) => {
 
     return (
         <div className="container">
-            <div className="row">
-                <div className="">
-                    <form
-                        className="p-2 m-2"
-                        onSubmit={handleSubmit}
-                    >
-                        <div className="form-group">
-                            <label htmlFor="nom">Nom:</label>
-                            <input
+            <div className="row justify-content-center">
+                <div className="col-md-6">
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="nom">
+                            <Form.Label>Nom:</Form.Label>
+                            <Form.Control
                                 type="text"
-                                id="nom"
-                                name='nom'
-                                className="form-control"
-                                autoComplete="off"
-                                onChange={handleChange}
+                                name="nom"
                                 value={mailSetting.nom}
+                                onChange={handleChange}
                                 required
                             />
-                        </div>
+                        </Form.Group>
 
-                        <div className="form-group">
-                            <label htmlFor="prenom">Prenom:</label>
-                            <input
+                        <Form.Group controlId="prenom">
+                            <Form.Label>Prénom:</Form.Label>
+                            <Form.Control
                                 type="text"
-                                id="prenom"
-                                name='prenom'
-                                className="form-control"
-                                autoComplete="off"
-                                onChange={handleChange}
+                                name="prenom"
                                 value={mailSetting.prenom}
+                                onChange={handleChange}
                                 required
                             />
-                        </div>
+                        </Form.Group>
 
-                        <div className="form-group">
-                            <label htmlFor="email">Adresse-mail:</label>
-                            <input
+                        <Form.Group controlId="email">
+                            <Form.Label>Adresse-mail:</Form.Label>
+                            <Form.Control
                                 type="email"
-                                id="email"
-                                name='email'
-                                className="form-control"
-                                autoComplete="off"
-                                onChange={handleChange}
+                                name="email"
                                 value={mailSetting.email}
+                                onChange={handleChange}
                                 required
                             />
-                        </div>
+                        </Form.Group>
 
-                        <div className="form-group">
-                            <label htmlFor="phone">Numéro de téléphone:</label>
-                            <input
+                        <Form.Group controlId="phone">
+                            <Form.Label>Numéro de téléphone:</Form.Label>
+                            <Form.Control
                                 type="tel"
-                                id="phone"
-                                name='phone'
-                                className="form-control"
-                                autoComplete="off"
-                                onChange={handleChange}
+                                name="phone"
                                 value={mailSetting.phone}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="message">Message:</label>
-                            <textarea
-                                id="message"
-                                name='message'
-                                className="form-control"
-                                autoComplete="off"
                                 onChange={handleChange}
-                                value={mailSetting.message}
                                 required
                             />
-                        </div>
+                        </Form.Group>
 
-                        <div className="car-information p-2 m-2 d-flex flex-column align-items-center">
-                            <label htmlFor="idCar">
-                                <input type="hidden" id="idCar" value={car.id} required />
-                                <h3>Car Information:</h3>
-                            </label>
+                        <Form.Group controlId="message">
+                            <Form.Label>Message:</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                name="message"
+                                rows={3}
+                                value={mailSetting.message}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
 
-                            <div className='d-flex'>
-                                <p>Model:</p>
-                                <div className='mx-1' name="modele" >{car.modele}
-                                </div>
-                            </div>
-                            <div className='d-flex'>
-                                <p>Price:</p>
-                                <div className='mx-1' name="prix">{car.prix}
-                                </div>
-                            </div>
-                            <div className='d-flex'>
-                                <p>Proprietaire:
-                                </p>
-                                <div className='mx-1' name="nomProprietaire"> {car.nom}
-                                </div>
-                                <div name="prenomProprietaire">{car.prenom}
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div className="form-group">
-                            <button type="submit" className="bouton">
-                                Envoyez Email
-                            </button>
-                        </div>
-                    </form>
+                        <Form.Group>
+                            <Button variant="primary" type="submit">
+                                Envoyer Email
+                            </Button>
+                        </Form.Group>
+                    </Form>
                 </div>
             </div>
         </div>

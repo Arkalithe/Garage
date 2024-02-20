@@ -40,8 +40,8 @@ function App() {
 
 
   const ROLE = {
-    'Admin': 'Admin',
-    'Employe': 'Employe'
+    'admin': 'admin',
+    'employee': 'employee'
   }
 
 
@@ -63,7 +63,7 @@ function App() {
           <Route path='/depanage' element={<DepanageDetails />} />
 
 
-          <Route element={<RequireAuth allowedRoles={[ROLE.Employe, ROLE.Admin]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLE.employee, ROLE.admin]} />}>
             <Route path='updateVoiture/:idVoiture' element={<UpdateCar />} />
             <Route path='updateVoiture' element={<GetUpdateCar />} />
             <Route path='avis' element={<ModerateAvis />} />
@@ -72,7 +72,7 @@ function App() {
             <Route path="/employeSpace" element={<EmployeSpace />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLE.Admin]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLE.admin]} />}>
           <Route path="/adminSpace" element={<AdminSpace />} />
           <Route path="/contentSpace" element={<ContentSpace />} />
         

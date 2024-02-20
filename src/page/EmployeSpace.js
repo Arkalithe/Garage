@@ -1,35 +1,35 @@
 import React from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 
 const EmployeSpace = () => {
   return (
-    <div className=' form-cadre p-1'>
-      <div className=' d-flex flex-column container '>
-        
-        <div className='row justify-content-center'>
-          <div className='d-flex flex-column col-lg-5 col-md-5 col-sm-12 align-items-center cadre-admin m-1'>
+    <Container className="form-cadre p-1">
+      <div className="d-flex flex-column container">
+        <Row className="justify-content-center">
+          <Col lg={5} md={5} sm={12} className="m-1">
             <h3>Moderation avis</h3>
-            <Link to='/avis' className='bouton bouton-lien'>Modifié</Link>
-          </div>
-
-          <div className='d-flex flex-column col-lg-5 col-md-5 col-sm-12 align-items-center cadre-admin m-1'>
+            <Link to='/avis'>
+              <Button className='bouton bouton-lien'>Modifié</Button>
+            </Link>
+          </Col>
+          <Col lg={5} md={5} sm={12} className="m-1">
             <h3>Creation Voiture</h3>
-            <Link to='/creationVoiture' className='bouton bouton-lien'>Modifié</Link>
-          </div>
-        </div>
-
-        <div className='row justify-content-center'>
-          <div className='d-flex flex-column col-lg-5 col-md-5 col-sm-12 align-items-center cadre-admin m-1'>
+            <Link to='/creationVoiture'>
+              <Button className='bouton bouton-lien'>Modifié</Button>
+            </Link>
+          </Col>
+        </Row>
+        <Row className="justify-content-center">
+          <Col lg={5} md={5} sm={12} className="m-1">
             <h3>Moderation Voiture</h3>
-            <Link to='/updateVoiture' className='bouton bouton-lien'>Modifié</Link>
-          </div>        
-        
-        </div>
-
-
+            <Link to='/updateVoiture'>
+              <Button className='bouton bouton-lien'>Modifié</Button>
+            </Link>
+          </Col>
+        </Row>
       </div>
-    </div>
+    </Container>
   );
 };
 

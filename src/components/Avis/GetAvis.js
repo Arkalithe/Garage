@@ -13,7 +13,7 @@ const GetAvis = () => {
 
     const fetchAvis = async () => {
         try {
-          const response = await config.herokuTesting.get(register_url);     
+          const response = await config.localTestingUrl.get(register_url);     
           const filteredData = response.data.filter(aviss => aviss.moderate === 1);
           const shuffledData = filteredData.sort(() => Math.random() - 0.5);
       

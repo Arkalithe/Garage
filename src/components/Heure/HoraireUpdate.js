@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import config from '../../api/axios';
 
 const HoraireUpdate = () => {
@@ -11,9 +12,9 @@ const HoraireUpdate = () => {
     fetchBusinessHours();
   }, []);
 
-  const fetchBusinessHours = async (e) => {
+  const fetchBusinessHours = async () => {
     try {
-      const response = await config.herokuTesting.get(fetch_url);
+      const response = await config.localTestingUrl.get(fetch_url);
       setBusinessHours(response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -26,7 +27,7 @@ const HoraireUpdate = () => {
       for (const hour of businessHours) {
         const { id, jour, matin, apresmidi } = hour;
         const data = { id, jour, matin, apresmidi };
-        await config.herokuTesting.post(update_url, JSON.stringify(data));
+        await config.localTestingUrl.post(update_url, JSON.stringify(data));
       }
     } catch (error) {
       console.error('Error:', error);
@@ -45,13 +46,13 @@ const HoraireUpdate = () => {
   return (
     <div className='container-fluid p-1 my-3 form-cadre'>
       <h3>Modifé Horaire</h3>
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         {businessHours.map((hour, index) => (
           <div className="container-fluid mb-3" key={hour.id}>
             <div className="row align-items-center">
               <div className="col-3">
                 <div className="d-flex align-items-center">
-                  <label className="mb-0">{hour.jour}:</label>
+                  <Form.Label className="mb-0">{hour.jour}:</Form.Label>
                 </div>
               </div>
               <div className="col">
@@ -60,9 +61,8 @@ const HoraireUpdate = () => {
                     <p className="pl-1">Matin:</p>
                   </div>
                   <div className="col">
-                    <input
+                    <Form.Control
                       type='text'
-                      className="form-control"
                       value={hour.matin}
                       onChange={(e) => handleInputChange(e, index, 'matin')}
                     />
@@ -73,9 +73,8 @@ const HoraireUpdate = () => {
                     <p>Apresmidi:</p>
                   </div>
                   <div className="col">
-                    <input
+                    <Form.Control
                       type='text'
-                      className="form-control"
                       value={hour.apresmidi}
                       onChange={(e) => handleInputChange(e, index, 'apresmidi')}
                     />
@@ -85,8 +84,8 @@ const HoraireUpdate = () => {
             </div>
           </div>
         ))}
-        <button className='bouton'>Envoyez</button>
-      </form>
+        <Button className='bouton' type="submit">Envoyez</Button>
+      </Form>
     </div>
   );
 };
