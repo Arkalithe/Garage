@@ -1,8 +1,9 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import axios from '../../api/axios';
+import config from '../../api/axios';
 import { Link } from 'react-router-dom';
+import { Button, Card } from 'react-bootstrap';
 
 
 const Depanage = () => {
@@ -14,7 +15,7 @@ const Depanage = () => {
   }, [])
   const getData = async () => {
     try {
-      const response = await axios.get(depannage_url)
+      const response = await config.localTestingUrl.get(depannage_url)
       setDepanageContent(response.data);
     } catch (error) {
 
@@ -24,49 +25,41 @@ const Depanage = () => {
   const contents = depanageContent.map((Content) => (
 
 
-    <div className="card form-cadre h-100">
-      <div className="pb-2 card-title">
-        <h1>{Content.title}</h1>
-      </div>
-      <div className="pb-3 m-2">
-        {Content.image.length > 0 ? (
-                    <div
-                    className="image-container"
-                    style={{
-                      maxWidth: "300px",
-                      maxHeight: "300px",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <img
-                      className="img-fluid"
-                      src={require(`../../assests/Image/${Content.image}`)}
-                      alt="Reparation"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <div>No Image</div>
-                )}
-      </div>
-      <div className="pb-3">
+    <Card className="card form-cadre h-100" key={Content.id}>
+      <Card.Body>
+        <Card.Title style={{ fontSize: "40px", textAlign: "center" }}>{Content.title}</Card.Title>
+        <div className="pb-3 m-2">
+          {Content.image.length > 0 ? (
+              <Card.Img
+                className="img-fluid"
+                src={require(`../../assests/Image/${Content.image}`)}
+                alt="Reparation"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  maxWidth: "300px",
+                  maxHeight: "300px",
+                  overflow: "hidden",
+                  objectFit: "contain",
+                }}
+              />
 
-        <p>{Content.intro}</p>
+          ) : (
+            <div>No Image</div>
+          )}
+        </div>
+        <Card.Text>{Content.intro}</Card.Text>
+        
+        <div className="d-flex justify-content-center">
+        <Link to={"/depanage"} className="mt-auto">
+          <Button className="bouton bouton-lien align-items-center">Plus d'information</Button>
+        </Link>
       </div>
-      <Link to={"/depanage"} className="d-flex justify-content-center mt-auto bouton bouton-lien">
-        Plus d'information
-      </Link>
-    </div>
-  ))
+      </Card.Body>
+    </Card>
+  ));
 
-
-  return (
-    <div className="col mb-4">{contents}</div>
-  );
+  return <div className="col mb-4">{contents}</div>;
 };
 
 

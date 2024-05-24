@@ -1,59 +1,47 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import axios from '../../api/axios';
+import React, { useEffect, useState } from 'react';
+import { Card } from 'react-bootstrap';
+import config from '../../api/axios';
 
 const DepanageDetails = () => {
-
     const [depanageContent, setDepanageContent] = useState([]);
-    const depannage_url = "/Garage/php/Api/Depanage/DepanageRead.php"
+    const depannage_url = "/Garage/php/Api/Depanage/DepanageRead.php";
+
     useEffect(() => {
-        getData()
-    }, [])
+        getData();
+    }, []);
+
     const getData = async () => {
         try {
-            const response = await axios.get(depannage_url)
+            const response = await config.localTestingUrl.get(depannage_url);
             setDepanageContent(response.data);
-        } catch (error) {
+        } catch (error) {}
+    };
 
-        }
-    }
-
-    const contents = depanageContent.map((Content) => (
-
-
-        <div className="card form-cadre h-100">
-            <div className="pb-2 card-title">
-                <h1>{Content.title}</h1>
-            </div>
-            <div className="pb-3">
-                {Content.image.length > 0 ? (
-                    <img
-                        className="img-fluid"
-                        src={require(`../../assests/Image/${Content.image}`)}
-                        alt="Depanage"
-                        style={{ maxWidth: '300px', maxHeight: '300px' }}
-                    />
-                ) : (
-                    <div>No Image</div>
-                )}
-            </div>
-            <div className="pb-3">
-
-                <p>{Content.intro}</p>
-            </div>
-            <div className="pb-3">
-                <p>{Content.message}</p>
-            </div>
-
+    const contents = depanageContent.map((Content, index) => (
+        <div className="col mb-4" key={index}>
+            <Card className="form-cadre h-100">
+                <Card.Body>
+                    <Card.Title>{Content.title}</Card.Title>
+                    <Card.Text>
+                        {Content.image.length > 0 ? (
+                            <img
+                                className="img-fluid"
+                                src={require(`../../assests/Image/${Content.image}`)}
+                                alt="Depanage"
+                                style={{ maxWidth: '300px', maxHeight: '300px' }}
+                            />
+                        ) : (
+                            <div>No Image</div>
+                        )}
+                        <p>{Content.intro}</p>
+                        <p>{Content.message}</p>
+                    </Card.Text>
+                </Card.Body>
+            </Card>
         </div>
-    ))
+    ));
 
-
-    return (
-        <div className="col mb-4">{contents}</div>
-    );
+    return <div className="row">{contents}</div>;
 };
-
 
 export default DepanageDetails;

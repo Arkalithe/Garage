@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
-import axios from '../../api/axios';
+import config from '../../api/axios';
 import { Link, useParams } from 'react-router-dom';
-
+import { Form, Button } from 'react-bootstrap';
 
 export const UpdateCar = ({ carId }) => {
     const errRef = useRef();
@@ -32,7 +32,7 @@ export const UpdateCar = ({ carId }) => {
 
     const fetchVoiture = async () => {
         try {
-            const res = await axios.get(get_car, { params: { id: idVoiture } });
+            const res = await config.localTestingUrl.get(get_car, { params: { id: idVoiture } });
             const fetchedVoiture = res.data;
             if (Array.isArray(fetchedVoiture.caracteristique)) {
                 fetchedVoiture.caracteristique = [...fetchedVoiture.caracteristique];
@@ -88,7 +88,7 @@ export const UpdateCar = ({ carId }) => {
             formData.append(`image_${index}`, image);
         });
         try {
-            await axios.post(car_update, formData, {
+            await config.localTestingUrl.post(car_update, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -213,140 +213,148 @@ export const UpdateCar = ({ carId }) => {
                     <h1 className="d-flex flex-column p-1 m-2">Update Car</h1>
                     <div className='container-fluid d-flex'>
                         <div>
-                            <form className="d-flex flex-column p-2 m-2" onSubmit={handleSubmit} encType="multipart/form-data">
-                                <label htmlFor="name">Nom:</label>
-                                <input
-                                    type="text"
-                                    id="nom"
-                                    name="nom"
-                                    ref={nameRef}
-                                    autoComplete="off"
-                                    onChange={handleChange}
-                                    value={voiture.nom}
-                                    required
-                                />
+                            <Form className="d-flex flex-column p-2 m-2" onSubmit={handleSubmit} encType="multipart/form-data">
+                                <Form.Group controlId="nom">
+                                    <Form.Label>Nom:</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="nom"
+                                        ref={nameRef}
+                                        autoComplete="off"
+                                        onChange={handleChange}
+                                        value={voiture.nom}
+                                        required
+                                    />
+                                </Form.Group>
 
-                                <label htmlFor="prenom">Prenom:</label>
-                                <input
-                                    type="text"
-                                    id="prenom"
-                                    name="prenom"
-                                    ref={prenomRef}
-                                    autoComplete="off"
-                                    onChange={handleChange}
-                                    value={voiture.prenom}
-                                    required
-                                />
+                                <Form.Group controlId="prenom">
+                                    <Form.Label>Prenom:</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="prenom"
+                                        ref={prenomRef}
+                                        autoComplete="off"
+                                        onChange={handleChange}
+                                        value={voiture.prenom}
+                                        required
+                                    />
+                                </Form.Group>
 
-                                <label htmlFor="modele">Modele:</label>
-                                <input
-                                    type="text"
-                                    id="modele"
-                                    ref={modeleRef}
-                                    autoComplete="off"
-                                    name="modele"
-                                    value={voiture.modele}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <Form.Group controlId="modele">
+                                    <Form.Label>Modele:</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="modele"
+                                        ref={modeleRef}
+                                        autoComplete="off"
+                                        value={voiture.modele}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </Form.Group>
 
-                                <label htmlFor="prix">Prix:</label>
-                                <input
-                                    type="number"
-                                    id="prix"
-                                    ref={prixRef}
-                                    autoComplete="off"
-                                    name="prix"
-                                    value={voiture.prix}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <Form.Group controlId="prix">
+                                    <Form.Label>Prix:</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        name="prix"
+                                        ref={prixRef}
+                                        autoComplete="off"
+                                        value={voiture.prix}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </Form.Group>
 
-                                <label htmlFor="kilometrage">Kilometrage:</label>
-                                <input
-                                    type="number"
-                                    id="kilometrage"
-                                    ref={kilometrageRef}
-                                    autoComplete="off"
-                                    name="kilometrage"
-                                    value={voiture.kilometrage}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <Form.Group controlId="kilometrage">
+                                    <Form.Label>Kilometrage:</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        name="kilometrage"
+                                        ref={kilometrageRef}
+                                        autoComplete="off"
+                                        value={voiture.kilometrage}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </Form.Group>
 
-                                <label htmlFor="annee">Annee mise en circulation:</label>
-                                <input
-                                    type="number"
-                                    id="annee_circulation"
-                                    ref={anneeRef}
-                                    autoComplete="off"
-                                    name="annee_circulation"
-                                    value={voiture.annee_circulation}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <Form.Group controlId="annee_circulation">
+                                    <Form.Label>Annee mise en circulation:</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        name="annee_circulation"
+                                        ref={anneeRef}
+                                        autoComplete="off"
+                                        value={voiture.annee_circulation}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </Form.Group>
 
-                                <label htmlFor="numero">Numero de telephone:</label>
-                                <input
-                                    type="tel"
-                                    id="numero"
-                                    ref={numeroRef}
-                                    autoComplete="off"
-                                    name="numero"
-                                    value={voiture.numero}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <Form.Group controlId="numero">
+                                    <Form.Label>Numero de telephone:</Form.Label>
+                                    <Form.Control
+                                        type="tel"
+                                        name="numero"
+                                        ref={numeroRef}
+                                        autoComplete="off"
+                                        value={voiture.numero}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </Form.Group>
 
-                                <label htmlFor="image_url">Image:</label>
-                                <input
-                                    type="file"
-                                    id="image"
-                                    name="image"
-                                    ref={imageRef}
-                                    accept=".jpeg, .png, .jpg"
-                                    onChange={handleImageUpload}
-                                    multiple
-                                />
+                                <Form.Group controlId="image">
+                                    <Form.Label>Image:</Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        name="image"
+                                        ref={imageRef}
+                                        accept=".jpeg, .png, .jpg"
+                                        onChange={handleImageUpload}
+                                        multiple
+                                    />
+                                </Form.Group>
 
                                 <div>
                                     <h3>Equipement:</h3>
                                     {Array.isArray(voiture.equipement) ? (
                                         voiture.equipement.map((equipement, index) => (
                                             <div key={index}>
-                                                <input
+                                                <Form.Control
                                                     type="text"
                                                     name={`equipement_${index}`}
                                                     value={equipement}
                                                     placeholder={`Equipement ${index + 1}`}
                                                     onChange={handleChange}
                                                 />
-                                                <button
+                                                <Button
                                                     type="button"
                                                     onClick={() => handleRemoveEquipement(index)}
-                                                    className="bouton-delete-alt"
+                                                    variant="danger"
                                                 >
                                                     Supprimer
-                                                </button>
+                                                </Button>
                                             </div>
                                         ))
                                     ) : (
                                         <div>
-                                            <input
+                                            <Form.Control
                                                 type="text"
                                                 name="equipement"
                                                 value={voiture.equipement}
                                                 placeholder="Equipement"
                                                 onChange={handleChange}
                                             />
-                                            <button type="button" className="bouton-delete-alt">
+                                            <Button type="button" variant="danger">
                                                 Supprimer
-                                            </button>
+                                            </Button>
                                         </div>
                                     )}
-                                    <button type="button" onClick={handleAddEquipement} className="bouton-alt">
+                                    <Button type="button" onClick={handleAddEquipement} variant="success">
                                         Ajouter Equipement
-                                    </button>
+                                    </Button>
                                 </div>
 
 
@@ -355,52 +363,51 @@ export const UpdateCar = ({ carId }) => {
                                     {Array.isArray(voiture.caracteristique) ? (
                                         voiture.caracteristique.map((caracteristique, index) => (
                                             <div key={index}>
-                                                <input
+                                                <Form.Control
                                                     type="text"
                                                     name={`caracteristique_${index}`}
                                                     value={caracteristique}
                                                     placeholder={`caracteristique ${index + 1}`}
                                                     onChange={handleChange}
                                                 />
-                                                <button
+                                                <Button
                                                     type="button"
                                                     onClick={() => handleRemoveCaracteristique(index)}
-                                                    className="bouton-delete-alt"
+                                                    variant="danger"
                                                 >
                                                     Supprimer
-                                                </button>
+                                                </Button>
                                             </div>
                                         ))
                                     ) : (
                                         <div>
-                                            <input
+                                            <Form.Control
                                                 type="text"
                                                 name="caracteristique"
                                                 value={voiture.caracteristique}
                                                 placeholder="caracteristique"
                                                 onChange={handleChange}
                                             />
-                                            <button type="button" className="bouton-delete-alt">
+                                            <Button type="button" variant="danger">
                                                 Supprimer
-                                            </button>
+                                            </Button>
                                         </div>
                                     )}
-                                    <button type="button" onClick={handleAddCaracteristique} className="bouton-alt">
+                                    <Button type="button" onClick={handleAddCaracteristique} variant="success">
                                         Ajouter caracteristique
-                                    </button>
+                                    </Button>
                                 </div>
-                                <button className="d-flex flex-column p-2 m-2 mt-3 bouton" type="submit">
+                                <Button className="d-flex flex-column p-2 m-2 mt-3" type="submit">
                                     Modification.
-                                </button>
-                            </form>
+                                </Button>
+                            </Form>
                         </div>
 
                         <div className='container-fluid d-flex row align-items-center justify-content-end'>
                             {voiture.voiture_images.map((image, index) => (
-                                <div>
+                                <div key={index}>
                                     {image.length > 0 ? (
                                         <img
-                                            key={index}
                                             className="img-fluid"
                                             style={{ width: "300px", height: "200px" }}
                                             src={require(`../../assests/Image/${image}`)}
@@ -411,9 +418,9 @@ export const UpdateCar = ({ carId }) => {
                                         <div>No Image</div>
                                     )}
 
-                                    <button type="button" onClick={handleRemoveImage} className="bouton-delete-alt">
+                                    <Button type="button" onClick={handleRemoveImage} variant="danger">
                                         Supprimer
-                                    </button>
+                                    </Button>
                                 </div>
                             ))}
 

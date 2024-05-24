@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../api/axios";
+import config from "../../api/axios";
 import  {Rating}  from "@mui/material";
 
 const GetAvis = () => {
@@ -13,7 +13,7 @@ const GetAvis = () => {
 
     const fetchAvis = async () => {
         try {
-          const response = await axios.get(register_url);     
+          const response = await config.localTestingUrl.get(register_url);     
           const filteredData = response.data.filter(aviss => aviss.moderate === 1);
           const shuffledData = filteredData.sort(() => Math.random() - 0.5);
       

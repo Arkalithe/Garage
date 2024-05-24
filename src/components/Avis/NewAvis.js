@@ -1,6 +1,6 @@
 import { Rating } from '@mui/material';
 import React, { useRef, useState } from 'react'
-import axios from '../../api/axios';
+import config from '../../api/axios';
 import { Link } from 'react-router-dom';
 
 
@@ -28,7 +28,7 @@ export const NewAvis = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(avis_url, JSON.stringify({ name, message, note }));
+      await config.localTestingUrl.post(avis_url, JSON.stringify({ name, message, note }));
       setSuccess(true);
       setName('');
       setMessage('')

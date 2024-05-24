@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import axios from '../../api/axios';
+import { Form, Button } from 'react-bootstrap';
+import config from '../../api/axios';
 import { useParams } from 'react-router';
 
 export const UpdateEmploye = () => {
@@ -15,7 +16,7 @@ export const UpdateEmploye = () => {
 
   const fetchEmploye = useCallback(async () => {
     try {
-      const response = await axios.get(employe_url, { params: { id: idEmploye } });
+      const response = await config.localTestingUrl.get(employe_url, { params: { id: idEmploye } });
       setId(response.data.id);
       setEmail(response.data.email);
       setPassword(response.data.password);
@@ -37,7 +38,7 @@ export const UpdateEmploye = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(employe_update, JSON.stringify({ id, email, password, role }));
+      await config.localTestingUrl.post(employe_update, JSON.stringify({ id, email, password, role }));
     } catch (err) {
 
     }
@@ -55,20 +56,24 @@ export const UpdateEmploye = () => {
     <section>
       {form ? (
         <div className="form-cadre d-flex flex-column align-items-center">
-          <button onClick={handleClick}>Précedent</button>
+          <Button onClick={handleClick}>Précedent</Button>
         </div>
       ) : (
-        <form className="container form-cadre d-flex flex-column align-items-center" onSubmit={handleSubmit}>
-          <label>Email:</label>
-          <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Form className="container form-cadre d-flex flex-column align-items-center" onSubmit={handleSubmit}>
+          <Form.Group controlId="email">
+            <Form.Label>Email:</Form.Label>
+            <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </Form.Group>
 
-          <label>Password</label>
-          <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
-          <button type="submit">Envoyez</button>
-        </form>
+          <Form.Group controlId="password">
+            <Form.Label>New Password</Form.Label>
+            <Form.Control type="password" onChange={(e) => setPassword(e.target.value)} />
+          </Form.Group>
+
+          <Button type="submit">Envoyez</Button>
+        </Form>
       )}
 
-      <button onClick={handleClick}>Contact</button>
     </section>
   );
 };

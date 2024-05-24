@@ -10,9 +10,10 @@ class AddDataUsers {
 
         try {
             $users = [
-                ['email' => 'employee@example.com', 'password' => 'Empl123*', 'role' => 'Employe'],
-                ['email' => 'test@example.com', 'password' => 'EmpltTest0*', 'role' => 'Employe'],
-                ['email' => 'mdp@example.com', 'password' => 'tmpMdp0*', 'role' => 'Employe'],
+                ['email' => 'employee@example.com', 'password' => 'Empl123*', 'role' => 'employee'],
+                ['email' => 'test@example.com', 'password' => 'EmpltTest0*', 'role' => 'employee'],
+                ['email' => 'mdp@example.com', 'password' => 'tmpMdp0*', 'role' => 'employee'],
+                ['email' => 'momo@momo.momo', 'password' => 'Momomo0*', 'role' => 'admin'],
             ];
 
             foreach ($users as $user) {

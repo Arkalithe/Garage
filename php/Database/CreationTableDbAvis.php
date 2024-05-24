@@ -14,8 +14,7 @@ class DatabaseTableCreateAvis
                 name VARCHAR(255) NOT NULL,
                 message VARCHAR(255) NOT NULL,
                 note INT NOT NULL,
-                moderate int(1) not null
-                
+                moderate INT NOT NULL                
             )";         
 
             $conn->exec($tvsql);

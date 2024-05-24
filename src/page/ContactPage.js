@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
-import axios from '../api/axios';
+import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import config from '../api/axios';
 
 const ContactPage = () => {
   const nameRef = useRef();
@@ -25,16 +26,16 @@ const ContactPage = () => {
       formData.append('phone', mailSetting.phone);
       formData.append('message', mailSetting.message);
 
-       await axios.post(url_email, formData, {
+      await config.localTestingUrl.post(url_email, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      alert('Email sent successfully!');
+      alert('Email envoyé avec succès !');
     } catch (error) {
-      console.error('Error sending email:', error);
-      alert('Failed to send email. Please try again later.');
+      console.error('Erreur lors de l\'envoi de l\'email :', error);
+      alert('Échec de l\'envoi de l\'email. Veuillez réessayer plus tard.');
     }
   };
 
@@ -44,105 +45,92 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="container voit">
-      <div>
-        <h3>Contactez-nous</h3>
-      </div>
-      <div className="row">
-        <div className="col-md-6 d-flex align-items-center">
-          <form className="p-2 m-2" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="nom">Nom:</label>
-              <input
+    <Container className="voit">
+      <Row>
+        <Col md={6} className="d-flex align-items-center">
+          <Form className="p-2 m-2" onSubmit={handleSubmit}>
+            <Form.Group controlId="nom">
+              <Form.Label>Nom :</Form.Label>
+              <Form.Control
                 type="text"
-                id="nom"
                 name="nom"
                 ref={nameRef}
-                className="form-control"
                 autoComplete="off"
                 onChange={handleChange}
                 value={mailSetting.nom}
                 required
               />
-            </div>
+            </Form.Group>
 
-            <div className="form-group">
-              <label htmlFor="prenom">Prenom:</label>
-              <input
+            <Form.Group controlId="prenom">
+              <Form.Label>Prénom :</Form.Label>
+              <Form.Control
                 type="text"
-                id="prenom"
                 name="prenom"
-                className="form-control"
                 autoComplete="off"
                 onChange={handleChange}
                 value={mailSetting.prenom}
                 required
               />
-            </div>
+            </Form.Group>
 
-            <div className="form-group">
-              <label htmlFor="email">Adresse e-mail:</label>
-              <input
+            <Form.Group controlId="email">
+              <Form.Label>Adresse e-mail :</Form.Label>
+              <Form.Control
                 type="email"
-                id="email"
                 name="email"
-                className="form-control"
                 autoComplete="off"
                 onChange={handleChange}
                 value={mailSetting.email}
                 required
               />
-            </div>
+            </Form.Group>
 
-            <div className="form-group">
-              <label htmlFor="phone">Numéro de téléphone:</label>
-              <input
+            <Form.Group controlId="phone">
+              <Form.Label>Numéro de téléphone :</Form.Label>
+              <Form.Control
                 type="tel"
-                id="phone"
                 name="phone"
-                className="form-control"
                 autoComplete="off"
                 onChange={handleChange}
                 value={mailSetting.phone}
                 required
               />
-            </div>
+            </Form.Group>
 
-            <div className="form-group">
-              <label htmlFor="message">Message:</label>
-              <textarea
-                id="message"
+            <Form.Group controlId="message">
+              <Form.Label>Message :</Form.Label>
+              <Form.Control
+                as="textarea"
                 name="message"
-                className="form-control"
                 autoComplete="off"
                 onChange={handleChange}
                 value={mailSetting.message}
                 required
               />
-            </div>
+            </Form.Group>
 
-            <div className="form-group">
-              <button type="submit" className="bouton">
-                Envoyer Email
-              </button>
-            </div>
-          </form>
-        </div>
-        <div className="col-md-6 d-flex align-items-center justify-content-center">
-          <div className="card cadre-admin  ">
-            <div className="card-body text-center">
-              <h5 className="card-title ">Informations de contact</h5>
-              <p className="card-text">
-                Numéro de téléphone: <strong>07-77-56-78-90</strong>
-              </p>
-              <p className="card-text">
-                Adresse: <strong>26 Rue Richard Wagner,Toulouse, France</strong>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <Button variant="primary" type="submit">
+              Envoyer Email
+            </Button>
+          </Form>
+        </Col>
+
+        <Col md={6} className="d-flex align-items-center justify-content-center">
+          <Card className="cadre-admin">
+            <Card.Body className="text-center">
+              <Card.Title>Informations de contact</Card.Title>
+              <Card.Text>
+                Numéro de téléphone : <strong>07-77-56-78-90</strong>
+              </Card.Text>
+              <Card.Text>
+                Adresse : <strong>26 Rue Richard Wagner, Toulouse, France</strong>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
