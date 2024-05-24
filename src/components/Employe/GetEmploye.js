@@ -46,21 +46,25 @@ const GetEmploye = () => {
         fetchEmploye();
     }, []);
 
-    const employes = user.map((employe) => (
-        <div className="voit container d-flex flex-row align-items-start m-3 " key={employe.id}>
-            <div className="d-flex flex-row">
-                <Checkbox
-                    className=""
-                    checked={selectedIds.includes(employe.id)}
-                    onChange={(e) => handleCheckboxChange(e, employe.id)}
-                />
-                <Link className="align-self-center d-flex lien flex-row" to={`/employe/update/${employe.id}`}>
-                    <div className="ps-2">Id: {employe.id}</div>
-                    <div className="ps-2">Email: {employe.email}</div>
-                </Link>
+    const employes = user.length > 0 ? (
+        user.map((employe) => (
+            <div className="voit container d-flex flex-row align-items-start m-3 " key={employe.id}>
+                <div className="d-flex flex-row">
+                    <Checkbox
+                        className=""
+                        checked={selectedIds.includes(employe.id)}
+                        onChange={(e) => handleCheckboxChange(e, employe.id)}
+                    />
+                    <Link className="align-self-center d-flex lien flex-row" to={`/employe/update/${employe.id}`}>
+                        <div className="ps-2">Id: {employe.id}</div>
+                        <div className="ps-2">Email: {employe.email}</div>
+                    </Link>
+                </div>
             </div>
-        </div>
-    ));
+        ))
+    ) : (
+        <div>No employes found.</div>
+    );
 
     return (
         <section className="container">

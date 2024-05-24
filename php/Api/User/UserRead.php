@@ -15,18 +15,5 @@ $db = $database->dbConnectionNamed();
 $items = new Employee($db);
 $stmt = $items->getUsers();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$isAdmin = false;  
 
-foreach ($row as $user) {
-    if ($user['role'] === 'admin') {  
-        $isAdmin = true;
-        break;  
-    }
-}
-
-$response = [
-    'isAdmin' => $isAdmin
-];
-
-echo json_encode($response);
 echo json_encode($row);

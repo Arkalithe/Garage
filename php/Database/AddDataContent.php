@@ -60,7 +60,7 @@ class AddDataContent
                     'title' => 'occasion',
                     'intro' => 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
                                 Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ',
-                    'image' => 'voiture.jpg'
+                    'image' => 'Voiture.png'
                 ]
             ];
 

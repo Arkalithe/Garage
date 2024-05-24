@@ -26,8 +26,12 @@ const ModerateAvis = () => {
     return <div>Chargement...</div>;
   }
 
+  if (!Array.isArray(avis)) {
+    return <div> Pas d'avis trouvé </div>
+  }
+
   const avist = avis.map((aviss) => {
-    if (aviss.moderate === 0) {
+    if (avis.moderate === 0) {
       return (
         <div className="voit d-flex flex-column container col-5 align-items-center my-3" key={aviss.id}>
           <div className="container pt-2  m-auto">{aviss.name}</div>
