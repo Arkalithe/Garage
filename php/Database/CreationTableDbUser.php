@@ -28,3 +28,4 @@ class DatabaseTableCreateUser
     }
 }
 $conn = null;
+?>

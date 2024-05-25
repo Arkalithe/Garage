@@ -15,20 +15,24 @@ const Depanage = () => {
   }, [])
   const getData = async () => {
     try {
-      const response = await config.localTestingUrl.get(depannage_url)
-      setDepanageContent(response.data);
+      const response = await config.localTestingUrl.get(depannage_url, {withCredentials: true})
+      if (Array.isArray(response.data)) {
+        setDepanageContent(response.data);      
+      } else {
+        setDepanageContent([])
+      }
     } catch (error) {
-
+      console.error('Error fetching data:', error);
     }
   }
 
-  const contents = depanageContent.map((Content) => (
+  const contents = depanageContent.length > 0 ? 
+  (depanageContent.map((Content) => (
 
-
-    <Card className="card form-cadre h-100" key={Content.id}>
-      <Card.Body>
+    <Card className="card form-cadre h-100 d-flex flex-column" key={Content.id}>
+      <Card.Body className="d-flex flex-column">
         <Card.Title style={{ fontSize: "40px", textAlign: "center" }}>{Content.title}</Card.Title>
-        <div className="pb-3 m-2">
+        <div className="pb-3 m-2 flex-grow-1">
           {Content.image.length > 0 ? (
               <Card.Img
                 className="img-fluid"
@@ -50,14 +54,19 @@ const Depanage = () => {
         </div>
         <Card.Text>{Content.intro}</Card.Text>
         
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center mt-auto" >
         <Link to={"/depanage"} className="mt-auto">
           <Button className="bouton bouton-lien align-items-center">Plus d'information</Button>
         </Link>
       </div>
       </Card.Body>
     </Card>
-  ));
+  ))
+)  :(
+  <div className='text-center'>
+    <h3>Pas de depannage disponible</h3>
+  </div>
+)
 
   return <div className="col mb-4">{contents}</div>;
 };

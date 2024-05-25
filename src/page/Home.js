@@ -18,10 +18,8 @@ const Home = () => {
       </section>
       <div className="border my-3"></div>
       <section>
-        <h1>Témoignage</h1>
-        <Container>
-          <GetAvis />
-        </Container>
+        <h1>Témoignages</h1>        
+          <GetAvis />        
       </section>
     </Container>
   );

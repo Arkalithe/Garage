@@ -1,6 +1,6 @@
 <?php
-include_once './Database/Connect.php';
-include_once './Class/Employe.php';
+require_once './Database/Connect.php';
+require_once './Class/Employe.php';
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
@@ -8,19 +8,15 @@ $employe = new Employee($db);
 $stmt = $employe->getUsers();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
-$isAdminExists = false;
-foreach ($row as $user) {
-    if ($user['role'] === 'admin') {
-        $isAdminExists = true;
-        break;
-    }
-}
+$isAdminExists = array_reduce($row, function ($carry, $user) {
+    return $carry || $user['role'] === 'admin';
+}, false);
 
 if ($isAdminExists) {
     header("Location: ../public/index.html");
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -69,10 +65,9 @@ if ($isAdminExists) {
             background-color: #45a049;
         }
     </style>
-
     <script>
-        function sendRequest() {
-            fetch('./Database/InitDb.php', {
+        function sendRequest(url) {
+            fetch(url, {
                     method: 'POST',
                     body: new FormData(document.querySelector('form'))
                 })
@@ -83,38 +78,18 @@ if ($isAdminExists) {
                     } else {
                         throw new Error('Request failed');
                     }
-                }).then(data => {
+                })
+                .then(data => {
                     console.log(data);
                     alert('Request successful');
+                    window.location.href = './AdminCree.php';
                 })
                 .catch(error => {
                     console.log('An error occurred', error);
                     alert('Request failed');
                 });
         }
-        function sendRequestbis() {
-    fetch("./AdminCree.php", {
-      method: "POST",
-      body: new FormData(document.querySelector("form")),
-    })
-      .then(function (response) {
-        if (response.ok) {
-          console.log("Request sent successfully");
-          return response.text();
-        } else {
-          throw new Error("Request failed");
-        }
-      })
-      .then(function (data) {
-        console.log(data);
-        alert("Request successful");
-        window.location.href = './AdminCree.php'
-      })
-      .catch(function (error) {
-        console.log("An error occurred", error);
-        alert("Request failed");
-      });
-  }
+
         function handleSubmit(event) {
             event.preventDefault();
             var formData = new FormData(event.target);
@@ -124,10 +99,9 @@ if ($isAdminExists) {
                 alert("Veuillez remplir tous les champs.");
                 return;
             }
-            sendRequestbis();
+            sendRequest('./AdminCree.php');
         }
     </script>
-
 </head>
 
 <body>
@@ -143,8 +117,8 @@ if ($isAdminExists) {
 
             <input type="submit" value="Créer l'administrateur">            
         </form>
+
         
-        <input type="button" value="Envoyer une requête" onclick="sendRequest()">
     </div>
 
 </body>

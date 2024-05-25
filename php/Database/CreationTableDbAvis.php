@@ -27,3 +27,4 @@ class DatabaseTableCreateAvis
     }
 }
 $conn = null;
+?>

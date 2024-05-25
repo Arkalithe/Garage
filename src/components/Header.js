@@ -14,12 +14,10 @@ const Header = () => {
     return (
         <Navbar bg="light" expand="lg" className="border-bottom">
             <Container>
-                <Navbar.Brand>
-                    <h1 className="align-items-center text-decoration-none lien">
+                <Navbar.Brand>                    
                         <Link to="/" className="lien">
-                            <img src={Logo} alt="Logo" className="Logo" />
-                        </Link>
-                    </h1>
+                            <img src={Logo} alt="Company logo" className="Logo" />
+                        </Link>                    
                 </Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="navmenu" />
@@ -31,19 +29,19 @@ const Header = () => {
                         <Nav.Link as={Link} to="/newavis" className="bouton nav-link">Avis</Nav.Link>
                         <Nav.Link as={Link} to="/voiture" className="bouton nav-link">Voiture</Nav.Link>
 
-                        {auth.accessToken && auth.role === 'admin' && (
-                            <Nav.Link as={Link} to="/adminSpace" className="bouton nav-link">Espace Admin</Nav.Link>
+                        {auth.accessToken && (
+                            <>
+                                {auth.role === 'admin' && (
+                                    <Nav.Link as={Link} to="/adminSpace" className="bouton nav-link">Espace Admin</Nav.Link>
+                                )}
+                                {auth.role === 'employee' && (
+                                    <Nav.Link as={Link} to="/employeSpace" className="bouton nav-link">Espace Employe</Nav.Link>
+                                )}
+                                <Button className="bouton nav-link" onClick={handleLogout}>Déconnexion</Button>
+                            </>
                         )}
-
-                        {auth.accessToken && auth.role === 'employee' && (
-                            <Nav.Link as={Link} to="/employeSpace" className="bouton nav-link">Espace Employe</Nav.Link>
-                        )}
-
                         {!auth.accessToken && (
                             <Nav.Link as={Link} to="/login" className="bouton nav-link">Connexion</Nav.Link>
-                        )}
-                        {auth.accessToken && (
-                            <Button className="bouton nav-link" onClick={handleLogout}>Déconnexion</Button>
                         )}
                     </Nav>
                 </Navbar.Collapse>

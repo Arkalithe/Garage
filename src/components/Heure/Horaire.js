@@ -14,8 +14,12 @@ const Horaire = () => {
 
   const fetchData = async (e) => {
     try {
-      const response = await config.localTestingUrl.get(fetch_url);
-      setBusinessHours(response.data)
+      const response = await config.localTestingUrl.get(fetch_url, {withCredentials: true});
+      if (Array.isArray(response.data)) {
+        setBusinessHours(response.data);      
+      } else {
+        setBusinessHours([])
+      }
     } catch (e) {
       console.error('Problème : ', e)
     }

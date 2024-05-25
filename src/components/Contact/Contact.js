@@ -107,8 +107,8 @@ export const Contact = ({ car }) => {
                             />
                         </Form.Group>
 
-                        <Form.Group>
-                            <Button variant="primary" type="submit">
+                        <Form.Group className='mt-3'>
+                            <Button variant="primary" type="submit" className='mt-3'>
                                 Envoyer Email
                             </Button>
                         </Form.Group>

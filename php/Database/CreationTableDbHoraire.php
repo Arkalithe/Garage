@@ -28,3 +28,4 @@ class DatabaseTableCreateHoraire
     }
 }
 $conn = null;
+?>

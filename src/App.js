@@ -64,11 +64,11 @@ function App() {
 
 
           <Route element={<RequireAuth allowedRoles={[ROLE.employee, ROLE.admin]} />}>
-            <Route path='updateVoiture/:idVoiture' element={<UpdateCar />} />
-            <Route path='updateVoiture' element={<GetUpdateCar />} />
-            <Route path='avis' element={<ModerateAvis />} />
+            <Route path='/updateVoiture/:idVoiture' element={<UpdateCar />} />
+            <Route path='/updateVoiture' element={<GetUpdateCar />} />
+            <Route path='/avis' element={<ModerateAvis />} />
             <Route path="/avis/:idAvis" element={<SingleAvis />} />
-            <Route path="creationVoiture" element={<NewCar />} />  
+            <Route path="/creationVoiture" element={<NewCar />} />  
             <Route path="/employeSpace" element={<EmployeSpace />} />
           </Route>
 

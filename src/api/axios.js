@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const localhost = axios.create({
-    baseURL:"http://localhost/NewGarage",
+    baseURL:"http://localhost/Garage",
     headers : {
         'Content-Type': 'application/json'        
     },

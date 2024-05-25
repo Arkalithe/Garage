@@ -15,7 +15,7 @@ export const NewAvis = () => {
 
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [note, setNote] = useState("");
+  const [note, setNote] = useState(0);
 
 
   const [err, setErr] = useState('');
@@ -100,7 +100,7 @@ export const NewAvis = () => {
             ref={noteRef}
             autoComplete="off"
             value={note}
-            onChange={(e) => setNote(e.target.value)}
+            onChange={(event, newValue) => setNote(newValue)}
             required
           />
           <button className='d-flex flex-column p-2 m-2 mt-3 bouton'>

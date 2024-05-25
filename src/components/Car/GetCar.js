@@ -32,7 +32,12 @@ const GetCar = () => {
   const fetchVoiture = async () => {
     try {
       const res = await config.localTestingUrl.get(register_url);
-      setVoiture(res.data);
+
+      if (Array.isArray(res.data)) {
+        setVoiture(res.data);      
+      } else {
+        setVoiture([])
+      }
     } catch (err) {
      
     }

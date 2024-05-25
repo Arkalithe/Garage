@@ -40,3 +40,4 @@ class DatabaseConnect
         return $this->conn;
     }
 }
+?>

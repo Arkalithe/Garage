@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: GET,POST,");
+header("Access-Control-Allow-Methods: GET,POST,  OPTIONS");
 header('Access-Control-Allow-Credentials: true');
 header('Content-Type: application/json');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
@@ -8,6 +8,10 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 
 include_once '../../Database/Connect.php';
 include_once '../../Class/Depanage.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    exit(0);
+}
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();

@@ -21,7 +21,7 @@ const EditDepanage = () => {
 
   const getData = async () => {
     try {
-      const response = await config.localTestingUrl.get(depanage_url);
+      const response = await config.localTestingUrl.get(depanage_url, {withCredentials: true});
       setDepanageContent(response.data);
 
       const Content = response.data[0];

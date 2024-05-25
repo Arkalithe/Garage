@@ -43,3 +43,4 @@ try {
     echo "Connection Raté : <br>" . $e->getMessage();
     exit;
 }
+?>
