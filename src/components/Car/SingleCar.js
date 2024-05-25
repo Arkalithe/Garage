@@ -97,7 +97,7 @@ const SingleCar = () => {
                             </Carousel>
                         </Row>
                     </Container>
-                    <Button onClick={handleClick} className="bouton">Contact</Button>
+                    <button onClick={handleClick} className="bouton ">Contact</button>
                 </Card>
             )}
         </Container>
