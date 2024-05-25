@@ -45,9 +45,9 @@ const ContactPage = () => {
   };
 
   return (
-    <Container className="voit">
-      <Row>
-        <Col md={6} className="d-flex align-items-center">
+    <Container className="voit align-items-center">
+      <Row className=''>
+        <Col md={6} className="d-flex align-items-center justify-content-center">
           <Form className="p-2 m-2" onSubmit={handleSubmit}>
             <Form.Group controlId="nom">
               <Form.Label>Nom :</Form.Label>
@@ -110,9 +110,9 @@ const ContactPage = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <button className='bouton' type="submit">
               Envoyer Email
-            </Button>
+            </button>
           </Form>
         </Col>
 

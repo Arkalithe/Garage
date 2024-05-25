@@ -68,7 +68,7 @@ const Depanage = () => {
   </div>
 )
 
-  return <div className="col mb-4">{contents}</div>;
+  return <>{contents}</>;
 };
 
 

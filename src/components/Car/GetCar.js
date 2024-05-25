@@ -3,6 +3,7 @@ import config from "../../api/axios";
 import CarCard from './CarCard';
 import CarSlider from './CarSlider';
 import Pagination from './Pagination';
+import { Col, Row, Container } from "react-bootstrap";
 
 const GetCar = () => {
   const register_url = "/Garage/php/Api/Car/CarRead.php";
@@ -70,50 +71,56 @@ const GetCar = () => {
   };
 
   return (
-    <>
-      <section className="d-flex flex-column my-2" style={{ width: "100%" }}>
-        <CarSlider
-          label="Prix"
-          value={priceRangeValue}
-          onChange={priceChange}
-          min={minPrice}
-          max={maxPrice}
-          resetFunc={resetPriceRange}
-        />
-        <CarSlider
-          label="Année"
-          value={yearRangeValue}
-          onChange={yearChange}
-          min={1960}
-          max={maxYear}
-          resetFunc={resetYearRange}
-        />
-        <CarSlider
-          label="Kilométrage"
-          value={kiloRangeValue}
-          onChange={kiloChange}
-          min={minKilo}
-          max={maxKilo}
-          resetFunc={resetKiloRange}
-        />
-      </section>
+    <Container fluid className="p-0 mt-2">
+      <Col className="p-0 m-0">
+        <Col className="p-0 m-0 d-flex align-items-center justify-content-center ">
+          <CarSlider
+            label="Prix"
+            value={priceRangeValue}
+            onChange={priceChange}
+            min={minPrice}
+            max={maxPrice}
+            resetFunc={resetPriceRange}
+          />
+        </Col>
+        <Col className="p-0 m-0 d-flex align-items-center justify-content-center ">
+          <CarSlider
+            label="Année"
+            value={yearRangeValue}
+            onChange={yearChange}
+            min={1960}
+            max={maxYear}
+            resetFunc={resetYearRange}
+          />
+        </Col>
+        <Col className="p-0 m-0 d-flex align-items-center justify-content-center ">
+          <CarSlider
+            label="Kilométrage"
+            value={kiloRangeValue}
+            onChange={kiloChange}
+            min={minKilo}
+            max={maxKilo}
+            resetFunc={resetKiloRange}
+          />
+        </Col>
+      </Col>
 
-      <section>
-        <div className="d-flex flex-wrap justify-content-center">
-          {selectedCars.length > 0 ? (
-            selectedCars.map(car => <CarCard key={car.id} car={car} />)
-          ) : (
-            <h1 className="m-auto">Aucune voiture correspond à vos critères</h1>
-          )}
-        </div>
+      <Col className="d-flex flex-wrap justify-content-center p-0 m-0">
+        {selectedCars.length > 0 ? (
+          selectedCars.map(car => <CarCard key={car.id} car={car} />)
+        ) : (
+          <h1 className="m-auto">Aucune voiture correspond à vos critères</h1>
+        )}
+      </Col>
+      <Row className="d-flex justify-content-center p-0 m-0">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPreviousPage={handlePreviousPage}
           onNextPage={handleNextPage}
         />
-      </section>
-    </>
+      </Row>
+    </Container>
   );
 };
 
