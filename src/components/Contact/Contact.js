@@ -33,11 +33,17 @@ export const Contact = ({ car }) => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
-            alert('Email sent successfully!');
+            alert('Envoie du mail reussie');
+            setMailSetting({
+                nom: '',
+                prenom: '',
+                email: '',
+                phone: '',
+                message: '',
+            });
         } catch (error) {
-            console.error('Error sending email:', error);
-            alert('Failed to send email. Please try again later.');
+            console.error('Erreur envoie du mail:', error);
+            alert('Erreur envoie du mail. Essayer plus tard.');
         }
     };
 
@@ -49,7 +55,7 @@ export const Contact = ({ car }) => {
     return (
         <div className="container">
             <div className="row justify-content-center">
-                <div className="col-md-6">
+                <div >
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="nom">
                             <Form.Label>Nom:</Form.Label>
@@ -108,9 +114,9 @@ export const Contact = ({ car }) => {
                         </Form.Group>
 
                         <Form.Group className='mt-3'>
-                            <Button variant="primary" type="submit" className='mt-3'>
+                            <button type="submit" className='bouton bouton-lien'>
                                 Envoyer Email
-                            </Button>
+                            </button>
                         </Form.Group>
                     </Form>
                 </div>

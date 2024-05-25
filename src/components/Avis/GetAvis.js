@@ -18,16 +18,15 @@ const GetAvis = () => {
           const shuffledData = filteredData.sort(() => Math.random() - 0.5);
       
           setAvis(shuffledData.slice(0, 4));
-        } catch (error) {          
+        } catch (error) {       
+            console.error("Erreure recuperation des avis ", error);   
         }
       };
 
 
-    const avist = avis.map((aviss) => {
-        return (
+    const avist = avis.map((aviss) =>  (
 
             <div className="voit d-flex flex-column container col-5 align-items-center my-3" key={aviss.id}>
-
                 <div className="container pt-2  m-auto">
                     <div >
                         {aviss.name}
@@ -51,8 +50,7 @@ const GetAvis = () => {
                     />
                 </div>
             </div>
-        );
-    });
+        ));
 
     return (
 

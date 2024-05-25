@@ -143,3 +143,14 @@ section {
 .avis-message {
   word-wrap: break-word
 }
+
+.align-left {
+  text-align: left;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgb(0, 0, 0); 
+    background-size: 100%, 100%; 
+
+}
