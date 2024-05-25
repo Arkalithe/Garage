@@ -29,31 +29,38 @@ const ModerateAvis = () => {
   }
 
   if (error) {
-    return <div>Erreur : {error}</div>;
+    return (
+      <div>
+        Erreur : {error}
+        <button onClick={fetchAvis}>Réessayer</button>
+      </div>
+    );
   }
 
   if (!Array.isArray(avis) || avis.length === 0) {
-    return <div>Pas d'avis trouvé</div>;
+    return <div>Pas d'avis a modéré trouvé</div>;
   }
 
   const avist = avis
     .filter((aviss) => aviss.moderate === 0)
     .map((aviss) => (
-      <div className="voit d-flex flex-column container col-5 align-items-center my-3" key={aviss.id}>
-        <div className="container pt-2 m-auto">{aviss.name}</div>
-        <div className="container m-auto">
-          <div className="my-3 avis-message">{aviss.message}</div>
+      <div className="card-container my-3" key={aviss.id}>
+        <div className=" voit card h-100">
+          <div className="card-body d-flex flex-column">
+            <h5 className="card-title">{aviss.name}</h5>
+            <p className="card-text flex-grow-1">{aviss.message}</p>
+            <div className="my-3 d-flex justify-content-center">
+              <Rating type="number" id="note" name="read-only" size="large" value={aviss.note} readOnly />
+            </div>
+            <Link className="bouton bouton-lien mt-auto" to={`/avis/${aviss.id}`}>
+              Plus d'information
+            </Link>
+          </div>
         </div>
-        <div className="container m-auto">
-          <Rating type="number" id="note" name="read-only" size="large" value={aviss.note} readOnly />
-        </div>
-        <Link className="align-self-center bouton lien" to={`/avis/${aviss.id}`}>
-          Plus d'information
-        </Link>
       </div>
     ));
 
-  return <section className="d-flex flex-wrap justify-content-between">{avist}</section>;
+  return <div className="container"><div className="row d-flex justify-content-between">{avist}</div></div>
 };
 
 export default ModerateAvis;
