@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import config from '../../api/axios';
 
@@ -50,7 +50,7 @@ export const VoitureOccasion = () => {
           <Card.Text>{Content.intro}</Card.Text>
           <div className="d-flex justify-content-center mt-auto">
             <Link to={"/voiture"} className="mt-auto">
-              <Button className="bouton bouton-lien align-items-center">Plus d'information</Button>
+              <button className="bouton bouton-lien align-items-center">Plus d'information</button>
             </Link>
           </div>
         </Card.Body>

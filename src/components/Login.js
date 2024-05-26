@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Form, Alert } from 'react-bootstrap';
 import config from '../api/axios';
 import jwtDecode from 'jwt-decode';
 
@@ -89,7 +89,7 @@ const Login = () => {
                         />
                     </Form.Group>
 
-                    <Button className='d-flex flex-column p-2 m-2 mt-3 bouton' type='submit'> Connexion </Button>
+                    <button className='d-flex flex-column p-2 m-2 mt-3 bouton' type='submit'> Connexion </button>
                 </Form>
             </section>
         </Container>

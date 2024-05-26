@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import config from '../../api/axios';
 import { Link } from 'react-router-dom';
-import { Button, Card } from 'react-bootstrap';
+import {Card } from 'react-bootstrap';
 
 
 const Depanage = () => {
@@ -56,7 +56,7 @@ const Depanage = () => {
         
         <div className="d-flex justify-content-center mt-auto" >
         <Link to={"/depanage"} className="mt-auto">
-          <Button className="bouton bouton-lien align-items-center">Plus d'information</Button>
+          <button className="bouton bouton-lien align-items-center">Plus d'information</button>
         </Link>
       </div>
       </Card.Body>

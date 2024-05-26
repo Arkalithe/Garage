@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import config from "../../api/axios";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Reparation = () => {
@@ -54,7 +54,7 @@ const Reparation = () => {
         <Card.Text>{content.intro}</Card.Text>
         <div className="d-flex justify-content-center mt-auto">
           <Link to={"/reparation"} className=" mt-auto">
-            <Button className="bouton bouton-lien" >Plus d'informations</Button>
+            <button className="bouton bouton-lien" >Plus d'informations</button>
           </Link>
         </div>
       </Card.Body>
