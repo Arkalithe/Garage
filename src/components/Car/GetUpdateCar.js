@@ -37,9 +37,9 @@ export const GetUpdateCar = () => {
             try {
                 const res = await config.localTestingUrl.get(get_car, { params: { id: idVoiture } });
                 setCarData(res.data);
-                setLoading(false);
             } catch (err) {
-                setErr('Erreure recuperation donne voiture');
+                setErr('Erreur récupération données voiture');
+            } finally {
                 setLoading(false);
             }
         };
@@ -50,7 +50,7 @@ export const GetUpdateCar = () => {
     const resetYearRange = () => setYearRangeValue([1960, maxYear]);
     const resetKiloRange = () => setKiloRangeValue([minKilo, maxKilo]);
 
-    const carsInRange = carData.filter((car) => {
+    const filteredCars = carData.filter((car) => {
         const carPrice = parseFloat(car.prix);
         const carYear = parseInt(car.annee_circulation);
         const carMileage = parseInt(car.kilometrage);
@@ -64,8 +64,8 @@ export const GetUpdateCar = () => {
         );
     });
 
-    const uniqueCars = Array.from(new Set(carData.map(car => car.id)))
-        .map(id => carData.find(car => car.id === id));
+    const uniqueCars = Array.from(new Set(filteredCars.map(car => car.id)))
+        .map(id => filteredCars.find(car => car.id === id));
 
     const totalPages = Math.ceil(uniqueCars.length / carsPerPage);
 
@@ -84,42 +84,6 @@ export const GetUpdateCar = () => {
     if (isLoading) {
         return <div>Chargement de la page ...</div>;
     }
-
-    const cars = currentCars.map((car) => {
-        const carImages = car.voiture_images ? car.voiture_images.split(",") : [];
-
-        return (
-            <section>
-                <div
-                    className="voit d-flex flex-column align-items-start m-3 px-1 flex-grow-0"
-                    key={car.id}
-                >
-                    <div className="image-container align-self-center p-1">
-                        {carImages.length > 0 ? (
-                            <img
-                                src={require(`../../assests/Image/${carImages[0]}`)}
-                                alt="cars"
-                                className="align-self-center py-3 img-fluid"
-                                style={{ width: "300px", height: "200px" }}
-                            />
-                        ) : (
-                            <div>No Image</div>
-                        )}
-                    </div>
-                    <div>Nom: {car.nom}</div>
-                    <div>Prenom: {car.prenom}</div>
-                    <div>Modele: {car.modele}</div>
-                    <div className="ps-2">Année: {car.annee_circulation}</div>
-                    <div className="ps-2">Kilométrage: {car.kilometrage} Km</div>
-                    <div className="ps-2">Prix: {car.prix} €</div>
-                    <Link className="align-self-center bouton bouton-lien" to={`/updateVoiture/${car.id}`}>
-                        Plus d'information
-                    </Link>
-                </div>
-            </section>
-
-        );
-    });
 
     return (
         <>
@@ -167,8 +131,39 @@ export const GetUpdateCar = () => {
                         </p>
                         <h1 className="d-flex flex-column p-1 m-2">Update Car</h1>
                         <div className='d-flex flex-wrap justify-content-center'>
-                            {cars.length > 0 ? (
-                                cars
+                            {currentCars.length > 0 ? (
+                                currentCars.map((car) => {
+                                    const carImages = car.voiture_images ? car.voiture_images.split(",") : [];
+
+                                    return (
+                                        <div
+                                            className="voit d-flex flex-column align-items-start m-3 px-1 flex-grow-0"
+                                            key={car.id}
+                                        >
+                                            <div className="image-container align-self-center p-1">
+                                                {carImages.length > 0 ? (
+                                                    <img
+                                                        src={require(`../../assests/Image/${carImages[0]}`)}
+                                                        alt="cars"
+                                                        className="align-self-center py-3 img-fluid"
+                                                        style={{ width: "300px", height: "200px" }}
+                                                    />
+                                                ) : (
+                                                    <div>No Image</div>
+                                                )}
+                                            </div>
+                                            <div>Nom: {car.nom}</div>
+                                            <div>Prenom: {car.prenom}</div>
+                                            <div>Modele: {car.modele}</div>
+                                            <div className="ps-2">Année: {car.annee_circulation}</div>
+                                            <div className="ps-2">Kilométrage: {car.kilometrage} Km</div>
+                                            <div className="ps-2">Prix: {car.prix} €</div>
+                                            <Link className="align-self-center bouton bouton-lien" to={`/updateVoiture/${car.id}`}>
+                                                Plus d'information
+                                            </Link>
+                                        </div>
+                                    );
+                                })
                             ) : (
                                 <h1 className="m-auto">Aucune voiture correspond à vos critères</h1>
                             )}
@@ -184,7 +179,7 @@ export const GetUpdateCar = () => {
                     <section className='d-flex justify-content-center mt-auto'>
                         <div className="d-flex justify-content-center mt-auto">
                             <Link to="/adminSpace" className="bouton lien">
-                                Back to Admin Space
+                                Retour à l'espace Admin
                             </Link>
                         </div>
                     </section>

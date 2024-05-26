@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import config from '../../api/axios';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Form, Container, Alert } from 'react-bootstrap';
 
 export const NewCar = () => {
     const errRef = useRef();
@@ -16,7 +16,6 @@ export const NewCar = () => {
 
     const [equipementData, setEquipementData] = useState([]);
     const [caracteristiqueData, setCaracteristiqueData] = useState([]);
-
     const [carData, setCarData] = useState({
         nom: '',
         prenom: '',
@@ -36,14 +35,15 @@ export const NewCar = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('nom', carData.nom);
-        formData.append('prenom', carData.prenom);
-        formData.append('modele', carData.modele);
-        formData.append('prix', carData.prix);
-        formData.append('kilometrage', carData.kilometrage);
-        formData.append('annee_circulation', carData.annee_circulation);
-        formData.append('numero', carData.numero);
-        formData.append('image', carData.image);
+        Object.keys(carData).forEach(key => {
+            if (key === 'images') {
+                carData.images.forEach((image, index) => {
+                    formData.append(`image_${index}`, image);
+                });
+            } else {
+                formData.append(key, carData[key]);
+            }
+        });
 
         equipementData.forEach((equipement, index) => {
             formData.append(`equipement_${index}`, equipement);
@@ -53,14 +53,8 @@ export const NewCar = () => {
             formData.append(`caracteristique_${index}`, caracteristique);
         });
 
-        carData.images.forEach((image, index) => {
-            formData.append(`image_${index}`, image);
-        });
-
         try {
-            await config.localTestingUrl.post(
-                Car_url,
-                formData, {
+            await config.localTestingUrl.post(Car_url, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -85,50 +79,25 @@ export const NewCar = () => {
 
     const handleImageUpload = (event) => {
         const files = event.target.files;
-        const uploadedImages = [];
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            uploadedImages.push(file);
-        }
+        const uploadedImages = Array.from(files);
         setCarData({ ...carData, images: uploadedImages });
     };
 
-    const handleEquipementChange = (index, event) => {
+    const handleDynamicFieldChange = (setData, index, event) => {
         const { value } = event.target;
-        setEquipementData((prevData) => {
+        setData((prevData) => {
             const updatedData = [...prevData];
             updatedData[index] = value;
             return updatedData;
         });
     };
 
-    const handleAddEquipementField = () => {
-        setEquipementData((prevData) => [...prevData, '']);
+    const handleAddDynamicField = (setData) => {
+        setData((prevData) => [...prevData, '']);
     };
 
-    const handleRemoveEquipementField = (index) => {
-        setEquipementData((prevData) => {
-            const updatedData = [...prevData];
-            updatedData.splice(index, 1);
-            return updatedData;
-        });
-    };
-
-    const handleCaracteristiqueChange = (index, event) => {
-        const { value } = event.target;
-        setCaracteristiqueData((prevData) => {
-            const updatedData = [...prevData];
-            updatedData[index] = value;
-            return updatedData;
-        });
-    };
-
-    const handleAddCaracteristiqueField = () => {
-        setCaracteristiqueData((prevData) => [...prevData, '']);
-    };
-
-    const handleRemoveCaracteristiqueField = (index) => {
-        setCaracteristiqueData((prevData) => {
+    const handleRemoveDynamicField = (setData, index) => {
+        setData((prevData) => {
             const updatedData = [...prevData];
             updatedData.splice(index, 1);
             return updatedData;
@@ -136,164 +105,173 @@ export const NewCar = () => {
     };
 
     return (
-        <section className="form-cadre d-flex flex-column align-items-center">
+        <Container className="form-cadre m-3">
             {success ? (
                 <>
-                    <h1 className="d-flex flex-column p-2 m-2">Voiture Ajouté</h1>
-                    <p>
-                        <Link to="/adminSpace" className="bouton lien"> Retour Acceuil </Link>
+                    <h1 className="p-2 m-2 text-center">Voiture Ajouté</h1>
+                    <p className="text-center">
+                        <Link to="/adminSpace" className="btn btn-primary">Retour Accueil</Link>
                     </p>
                 </>
             ) : (
                 <>
-                    <p ref={errRef} className={err ? 'errmsg' : 'offscreen'} aria-live="assertive">
+                    <Alert ref={errRef} variant="danger" show={!!err}>
                         {err}
-                    </p>
+                    </Alert>
 
-                    <h1 className="d-flex flex-column p-1 m-2">Voiture.</h1>
+                    <h1 className="p-1 m-2 text-center">Ajouter une Voiture</h1>
 
-                    <form className="d-flex flex-column p-2 m-2" onSubmit={handleSubmit} encType="multipart/form-data">
-                        <label htmlFor="name">Nom :</label>
-                        <input
-                            type="text"
-                            id="nom"
-                            name="nom"
-                            ref={nameRef}
-                            autoComplete="off"
-                            onChange={handleChange}
-                            value={carData.nom}
-                            required
-                        />
-                        <label htmlFor="prenom">Prenom :</label>
-                        <input
-                            type="text"
-                            id="prenom"
-                            name="prenom"
-                            ref={prenomRef}
-                            autoComplete="off"
-                            onChange={handleChange}
-                            value={carData.prenom}
-                            required
-                        />
-                        <label htmlFor="modele">Modele :</label>
-                        <input
-                            type="text"
-                            id="modele"
-                            ref={modeleRef}
-                            autoComplete="off"
-                            name="modele"
-                            value={carData.modele}
-                            onChange={handleChange}
-                            required
-                        />
-                        <div>
-                            <h3>Equipement :</h3>
-                            {equipementData.map((equipement, index) => (
-                                <div key={index}>
-                                    <input
-                                        type="text"
-                                        value={equipement}
-                                        onChange={(event) => handleEquipementChange(index, event)}
-                                        placeholder={`Equipement ${index + 1}`}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => handleRemoveEquipementField(index)}
-                                        className="bouton-delete-alt"
-                                    >
-                                        Supprimer
-                                    </button>
-                                </div>
-                            ))}
-                            <button type="button" className="bouton-alt" onClick={handleAddEquipementField}>
-                                Ajoute Equipement
-                            </button>
-                        </div>
-                        <div>
-                            <h3>Caracteristique :</h3>
-                            {caracteristiqueData.map((caracteristique, index) => (
-                                <div key={index}>
-                                    <input
-                                        type="text"
-                                        value={caracteristique}
-                                        onChange={(event) => handleCaracteristiqueChange(index, event)}
-                                        placeholder={`Caracteristique ${index + 1}`}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => handleRemoveCaracteristiqueField(index)}
-                                        className="bouton-delete-alt"
-                                    >
-                                        Supprimer
-                                    </button>
-                                </div>
-                            ))}
-                            <button type="button" className="bouton-alt" onClick={handleAddCaracteristiqueField}>
-                                Ajoute Caracteristique
-                            </button>
-                        </div>
-                        <label htmlFor="prix">Prix :</label>
-                        <input
-                            type="number"
-                            id="prix"
-                            ref={prixRef}
-                            autoComplete="off"
-                            name="prix"
-                            value={carData.prix}
-                            onChange={handleChange}
-                            required
-                        />
-                        <label htmlFor="kilometrage">Kilometrage :</label>
-                        <input
-                            type="number"
-                            id="kilometrage"
-                            ref={kilometrageRef}
-                            autoComplete="off"
-                            name="kilometrage"
-                            value={carData.kilometrage}
-                            onChange={handleChange}
-                            required
-                        />
-                        <label htmlFor="annee">Annee de circulation :</label>
-                        <input
-                            type="number"
-                            id="annee_circulation"
-                            ref={anneeRef}
-                            autoComplete="off"
-                            name="annee_circulation"
-                            value={carData.annee_circulation}
-                            onChange={handleChange}
-                            required
-                        />
-                        <label htmlFor="numero">Numero de telephone :</label>
-                        <input
-                            type="Tel"
-                            id="numero"
-                            ref={numeroRef}
-                            autoComplete="off"
-                            name="numero"
-                            value={carData.numero}
-                            onChange={handleChange}
-                            required
-                        />
-                        <label htmlFor="image_url">Image :</label>
-                        <input
-                            type="file"
-                            id="image"
-                            name="image"
-                            ref={imageRef}
-                            accept=".jpeg, .png, .jpg"
-                            onChange={handleImageUpload}
-                            multiple
-                            required
-                        />
-                        <Button className="d-flex flex-column p-2 m-2 mt-3 bouton" type="submit">
+                    <Form onSubmit={handleSubmit} encType="multipart/form-data">
+                        <Form.Group className="mb-3" controlId="nom">
+                            <Form.Label>Nom</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="nom"
+                                ref={nameRef}
+                                autoComplete="off"
+                                onChange={handleChange}
+                                value={carData.nom}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="prenom">
+                            <Form.Label>Prénom</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="prenom"
+                                ref={prenomRef}
+                                autoComplete="off"
+                                onChange={handleChange}
+                                value={carData.prenom}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="modele">
+                            <Form.Label>Modèle</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="modele"
+                                ref={modeleRef}
+                                autoComplete="off"
+                                onChange={handleChange}
+                                value={carData.modele}
+                                required
+                            />
+                        </Form.Group>
+
+                        <h3>Equipements</h3>
+                        {equipementData.map((equipement, index) => (
+                            <Form.Group key={index} className="mb-3">
+                                <Form.Control
+                                    type="text"
+                                    value={equipement}
+                                    onChange={(event) => handleDynamicFieldChange(setEquipementData, index, event)}
+                                    placeholder={`Equipement ${index + 1}`}
+                                />
+                                <button
+                                    variant="danger"
+                                    type="button"
+                                    onClick={() => handleRemoveDynamicField(setEquipementData, index)}
+                                    className="mt-2 bouton-delete"
+                                >
+                                    Supprimer
+                                </button>
+                            </Form.Group>
+                        ))}
+                        <button className='bouton' type="button" onClick={() => handleAddDynamicField(setEquipementData)}>
+                            Ajouter Equipement
+                        </button>
+
+                        <h3>Caractéristiques</h3>
+                        {caracteristiqueData.map((caracteristique, index) => (
+                            <Form.Group key={index} className="mb-3">
+                                <Form.Control
+                                    type="text"
+                                    value={caracteristique}
+                                    onChange={(event) => handleDynamicFieldChange(setCaracteristiqueData, index, event)}
+                                    placeholder={`Caractéristique ${index + 1}`}
+                                />
+                                <button                                    
+                                    type="button"
+                                    onClick={() => handleRemoveDynamicField(setCaracteristiqueData, index)}
+                                    className="mt-2 bouton-delete"
+                                >
+                                    Supprimer
+                                </button>
+                            </Form.Group>
+                        ))}
+                        <button className='bouton' type="button" onClick={() => handleAddDynamicField(setCaracteristiqueData)}>
+                            Ajouter Caractéristique
+                        </button>
+
+                        <Form.Group className="mb-3" controlId="prix">
+                            <Form.Label>Prix</Form.Label>
+                            <Form.Control
+                                type="number"
+                                name="prix"
+                                ref={prixRef}
+                                autoComplete="off"
+                                onChange={handleChange}
+                                value={carData.prix}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="kilometrage">
+                            <Form.Label>Kilométrage</Form.Label>
+                            <Form.Control
+                                type="number"
+                                name="kilometrage"
+                                ref={kilometrageRef}
+                                autoComplete="off"
+                                onChange={handleChange}
+                                value={carData.kilometrage}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="annee_circulation">
+                            <Form.Label>Année de circulation</Form.Label>
+                            <Form.Control
+                                type="number"
+                                name="annee_circulation"
+                                ref={anneeRef}
+                                autoComplete="off"
+                                onChange={handleChange}
+                                value={carData.annee_circulation}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="numero">
+                            <Form.Label>Numéro de téléphone</Form.Label>
+                            <Form.Control
+                                type="tel"
+                                name="numero"
+                                ref={numeroRef}
+                                autoComplete="off"
+                                onChange={handleChange}
+                                value={carData.numero}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="image">
+                            <Form.Label>Image</Form.Label>
+                            <Form.Control
+                                type="file"
+                                name="image"
+                                ref={imageRef}
+                                accept=".jpeg, .png, .jpg"
+                                onChange={handleImageUpload}
+                                multiple
+                                required
+                            />
+                        </Form.Group>
+
+                        <button type="submit" className="bouton lienmt-3">
                             Envoyer
-                        </Button>
-                    </form>
+                        </button>
+                    </Form>
                 </>
             )}
-        </section>
+        </Container>
     );
 };
 

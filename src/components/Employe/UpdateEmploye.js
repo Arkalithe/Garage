@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Form, Button, Spinner, Alert, Col, Row, Container } from 'react-bootstrap';
 import config from '../../api/axios';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const email_regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#€%*]).{7,24}$/;
@@ -134,16 +135,23 @@ export const UpdateEmploye = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <button 
-                type="submit" 
-                disabled={!email || !password || !email_regex.test(email) || !password_regex.test(password)}
-                className='bouton'
+                <button
+                  type="submit"
+                  disabled={!email || !password || !email_regex.test(email) || !password_regex.test(password)}
+                  className='bouton'
                 >Envoyez</button>
               </Form>
             )}
           </div>
         </Col>
       </Row>
+      <section className='d-flex justify-content-center mt-auto'>
+        <div className="d-flex justify-content-center mt-auto">
+          <Link to="/employe" className="bouton lien">
+            Précedent
+          </Link>
+        </div>
+      </section>
     </Container>
   );
 };
