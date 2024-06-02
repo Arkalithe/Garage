@@ -8,9 +8,13 @@ header('Content-Type: application/json');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
 
 include_once '../Database/Connect.php';
+include_once '../AuthCheckRole.php';
 
 $db_connection = new DatabaseConnect();
 $conn = $db_connection->dbConnectionNamed();
+
+$headers = apache_request_headers();
+authCheckRole($conn, $headers, ['admin']);
 
 function msg($success, $status, $message, $extra = [])
 {

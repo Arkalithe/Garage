@@ -4,9 +4,11 @@ class Horaire
 {
     private $conn;
     public $id;
-    public $jour;
-    public $matin;
-    public $apresmidi;
+    public $day_id;
+    public $heure_start;
+    public $heure_fin;
+    public $time_period;
+    public $is_fermed;
 
     public function __construct($db)
     {
@@ -17,7 +19,7 @@ class Horaire
     public function getHoraire()
     {
         try {
-            $sql = "SELECT id, jour, matin, apresmidi FROM horaires";
+            $sql = "SELECT id, day_id, heure_start, heure_fin, time_period, is_fermed FROM horaires";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt;
@@ -33,20 +35,26 @@ class Horaire
         try {
             $sql = "INSERT INTO horaires 
                     SET
-                        jour = :jour,
-                        matin = :matin, 
-                        apresmidi = :apresmidi";
+                        day_id = :day_id,
+                        heure_start = :heure_start, 
+                        heure_fin = :heure_fin,
+                        time_period = :time_period,
+                        is_fermed = :is_fermed";
             $stmt = $this->conn->prepare($sql);
 
             // Assainir les entrées
-            $this->jour = htmlspecialchars(strip_tags($this->jour));
-            $this->matin = htmlspecialchars(strip_tags($this->matin));
-            $this->apresmidi = htmlspecialchars(strip_tags($this->apresmidi));
+            $this->day_id = htmlspecialchars(strip_tags($this->day_id));
+            $this->heure_start = htmlspecialchars(strip_tags($this->heure_start));
+            $this->heure_fin = htmlspecialchars(strip_tags($this->heure_fin));
+            $this->time_period = htmlspecialchars(strip_tags($this->time_period));
+            $this->is_fermed = htmlspecialchars(strip_tags($this->is_fermed));
 
             // Lier les paramètres
-            $stmt->bindParam(":jour", $this->jour);
-            $stmt->bindParam(":matin", $this->matin);
-            $stmt->bindParam(":apresmidi", $this->apresmidi);
+            $stmt->bindParam(":day_id", $this->day_id);
+            $stmt->bindParam(":heure_start", $this->heure_start);
+            $stmt->bindParam(":heure_fin", $this->heure_fin);
+            $stmt->bindParam(":time_period", $this->time_period);
+            $stmt->bindParam(":is_fermed", $this->is_fermed);
 
             if ($stmt->execute()) {
                 return true;
@@ -64,9 +72,11 @@ class Horaire
         try {
             $sql = "SELECT 
                         id, 
-                        jour, 
-                        matin, 
-                        apresmidi
+                        day_id, 
+                        heure_start, 
+                        heure_fin,
+                        time_period,
+                        is_fermed
                     FROM 
                         horaires 
                     WHERE 
@@ -79,9 +89,11 @@ class Horaire
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($dataRow) {
-                $this->jour = $dataRow['jour'];
-                $this->matin = $dataRow['matin'];
-                $this->apresmidi = $dataRow['apresmidi'];
+                $this->day_id = $dataRow['day_id'];
+                $this->heure_start = $dataRow['heure_start'];
+                $this->heure_fin = $dataRow['heure_fin'];
+                $this->time_period = $dataRow['time_period'];
+                $this->is_fermed = $dataRow['is_fermed'];
             } else {
                 throw new Exception("Aucun horaire trouvé avec l'ID donné");
             }
@@ -97,24 +109,30 @@ class Horaire
         try {
             $sql = "UPDATE horaires 
                     SET 
-                        jour = :jour,
-                        matin = :matin, 
-                        apresmidi = :apresmidi
+                        day_id = :day_id,
+                        heure_start = :heure_start, 
+                        heure_fin = :heure_fin,
+                        time_period = :time_period,
+                        is_fermed = :is_fermed
                     WHERE
                         id = :id";
 
             $stmt = $this->conn->prepare($sql);
 
             // Assainir les entrées
-            $this->jour = htmlspecialchars(strip_tags($this->jour));
-            $this->matin = htmlspecialchars(strip_tags($this->matin));
-            $this->apresmidi = htmlspecialchars(strip_tags($this->apresmidi));
+            $this->day_id = htmlspecialchars(strip_tags($this->day_id));
+            $this->heure_start = htmlspecialchars(strip_tags($this->heure_start));
+            $this->heure_fin = htmlspecialchars(strip_tags($this->heure_fin));
+            $this->time_period = htmlspecialchars(strip_tags($this->time_period));
+            $this->is_fermed = htmlspecialchars(strip_tags($this->is_fermed));
             $this->id = htmlspecialchars(strip_tags($this->id));
 
             // Lier les paramètres
-            $stmt->bindParam(":jour", $this->jour);
-            $stmt->bindParam(":matin", $this->matin);
-            $stmt->bindParam(":apresmidi", $this->apresmidi);
+            $stmt->bindParam(":day_id", $this->day_id);
+            $stmt->bindParam(":heure_start", $this->heure_start);
+            $stmt->bindParam(":heure_fin", $this->heure_fin);
+            $stmt->bindParam(":time_period", $this->time_period);
+            $stmt->bindParam(":is_fermed", $this->is_fermed);
             $stmt->bindParam(":id", $this->id);
 
             if ($stmt->execute()) {

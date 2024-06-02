@@ -24,6 +24,24 @@ footer {
   background-color: #A9B4C3;
 
 }
+.footer {
+  width: auto;
+  table-layout: auto;
+  text-align: left;  
+}
+
+.footer th, .footer td {
+  margin: 8px;
+  background-color: #A9B4C3 !important;  
+  border-color: #000000;
+  white-space: nowrap;
+}
+
+.footer tbody, .footer thead {
+  border-color: #000000;
+  white-space: nowrap;
+}
+
 
 .App {
   min-height: 100vh;
@@ -166,4 +184,13 @@ section {
   background-color: rgb(0, 0, 0);
   background-size: 100%, 100%;
 
+}
+.navbar-collapse {
+  position: absolute;
+  width: 100%;
+  background: white;
+  top: 120px; /* Ajustez cette valeur en fonction de la hauteur de votre Navbar */
+  left: 0;
+  z-index: 1000;
+  
 }

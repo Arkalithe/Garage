@@ -8,9 +8,15 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 
 include_once '../../Database/Connect.php';
 include_once '../../Class/Avis.php';
+include_once '../AuthCheckRole.php';
+
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
+
+$headers = apache_request_headers();
+authCheckRole($conn, $headers, ['admin', "employe"]);
+
 $items = new Avis($db);
 $items->id = isset($_GET['id']) ? $_GET['id'] : die();
 

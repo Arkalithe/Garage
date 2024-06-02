@@ -1,9 +1,29 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Table } from 'react-bootstrap';
+
+const daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+
+const formatTime = (time) => {
+  if (!time) return '';
+  const [hours, minutes] = time.split(':');
+  return `${hours}:${minutes}`;
+};
 
 const Footer = ({ horaire }) => {
+  const groupedHours = daysOfWeek.map((day, index) => {
+    const dayId = index + 1;
+    const dayHours = horaire.filter(hour => hour.day_id === dayId);
+    const morning = dayHours.find(hour => hour.time_period === 'Morning') || {};
+    const afternoon = dayHours.find(hour => hour.time_period === 'Afternoon') || {};
+    return {
+      dayName: day,
+      morning: morning.is_fermed ? 'Fermé' : `${formatTime(morning.heure_start)} - ${formatTime(morning.heure_fin)}`,
+      afternoon: afternoon.is_fermed ? 'Fermé' : `${formatTime(afternoon.heure_start)} - ${formatTime(afternoon.heure_fin)}`
+    };
+  });
+
   return (
-    <footer className="mt-auto">
+    <footer className="footer">
       <Container>
         <Row className="align-items-center pt-2">
           <Col xs={2} md={1}>
@@ -13,22 +33,26 @@ const Footer = ({ horaire }) => {
             </svg>
           </Col>
 
-          <Col>
-            {horaire.length > 0 ? (
-              <ul >
-                {horaire.map((day) => (
-                  <li key={day.id} className="d-flex justify-content-start">
-                    <strong className='me-2'>{day.jour}:</strong>
-                    <span>
-                      {day.matin === 'Fermé'
-                        ? `${day.matin} ${day.apresmidi}`
-                        : day.apresmidi === ''
-                          ? day.matin
-                          : `${day.matin}, ${day.apresmidi}`}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+          <Col >
+            {groupedHours.length > 0 ? (
+              <Table bordered className='footer'>
+                <thead>
+                  <tr>
+                    <th>Jour</th>
+                    <th>Matin</th>
+                    <th>Après-midi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {groupedHours.map((day, index) => (
+                    <tr key={index}>
+                      <td><strong>{day.dayName}</strong></td>
+                      <td>{day.morning}</td>
+                      <td>{day.afternoon}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
             ) : (
               <div>Les horaires ne sont pas définis</div>
             )}
@@ -38,6 +62,5 @@ const Footer = ({ horaire }) => {
     </footer>
   );
 };
-
 
 export default Footer;

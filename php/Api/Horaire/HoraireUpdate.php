@@ -8,17 +8,23 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 
 include_once '../../Database/Connect.php';
 include_once '../../Class/Horaire.php';
+include_once '../AuthCheckRole.php';
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
+
+$headers = apache_request_headers();
+authCheckRole($conn, $headers, ['admin']);
 
 $horaire = new Horaire($db);
 $data = json_decode(file_get_contents("php://input"));
 
 $horaire->id = $data->id;
-$horaire->jour = $data->jour;
-$horaire->matin = $data->matin;
-$horaire->apresmidi = $data->apresmidi;
+$horaire->day_id = $data->day_id;
+$horaire->heure_start = $data->heure_start;
+$horaire->heure_fin = $data->heure_fin;
+$horaire->time_period = $data->time_period;
+$horaire->is_fermed = $data->is_fermed;
 
 if ($horaire->updateHoraire()) {
     echo json_encode("Horaire modifié");

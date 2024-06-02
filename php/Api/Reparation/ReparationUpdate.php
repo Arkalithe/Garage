@@ -8,10 +8,16 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 include_once '../../Database/Connect.php';
 include_once '../../Class/Reparation.php';
 
+include_once '../AuthCheckRole.php';
+
+
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
 
+$headers = apache_request_headers();
+authCheckRole($conn, $headers, ['admin']);
 $reparations = new Reparation($db);
+
 
 $id = $_POST['id'];
 $title = $_POST['titre'];

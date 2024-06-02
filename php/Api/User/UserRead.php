@@ -9,9 +9,14 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 
 include_once '../../Database/Connect.php';
 include_once '../../Class/Employe.php';
+include_once '../AuthCheckRole.php';
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
+
+$headers = apache_request_headers();
+authCheckRole($conn, $headers, ['admin']);
+
 $items = new Employee($db);
 $stmt = $items->getUsers();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);

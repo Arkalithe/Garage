@@ -10,9 +10,13 @@ include_once '../../Class/Voiture.php';
 include_once '../../Class/Image.php';
 include_once '../../Class/Equipement.php';
 include_once '../../Class/Caracterstique.php';
+include_once '../AuthCheckRole.php';
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
+
+$headers = apache_request_headers();
+authCheckRole($conn, $headers, ['admin', "employe"]);
 
 $voiture = new Voiture($db);
 $image = new Image($db);
