@@ -6,6 +6,7 @@ class DatabaseCreate
 {
     public function creationDb()
     {
+        // Initialisation de la connexion à la base de données
         $db_connection = new DatabaseConnect();
         $conn = $db_connection->dbConnection();
 

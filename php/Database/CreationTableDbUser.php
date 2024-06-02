@@ -6,11 +6,12 @@ class DatabaseTableCreateUser
 {
     public function creationTableUser()
     {
+        // Initialisation de la connexion à la base de données
         $db_connection = new DatabaseConnect();
         $conn = $db_connection->dbConnectionNamed();
 
         try {
-
+            // Table pour stocker les informations de base des users
             $tsql = "CREATE TABLE IF NOT EXISTS USERS (
                     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     email VARCHAR(255) NOT NULL UNIQUE,

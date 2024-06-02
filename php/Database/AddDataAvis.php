@@ -3,9 +3,12 @@ include_once 'Connect.php';
 
 class AddDataAvis {
     public function dataAvis(){
+        // Initialisation de la connexion à la base de données
         $db_connection = new DatabaseConnect();
         $conn = $db_connection->dbConnectionNamed();
+        
         try {
+            // Données des avis à insérer dans la table avis
             $avis = [
                 ['name' => 'John Marchand', 'message' => 'Content du service', 'note' => '4', 'moderate' => '1'],
                 ['name' => 'Doe Inconnu', 'message' => 'Prix abordable et personelle agrable',  'note' => '5', 'moderate' => '1'],

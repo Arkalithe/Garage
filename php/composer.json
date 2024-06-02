@@ -2,7 +2,8 @@
     "require": {
         "firebase/php-jwt": "^6.7",
         "swiftmailer/swiftmailer": "6.0",
-        "phpmailer/phpmailer": "^6.8"
+        "phpmailer/phpmailer": "^6.8",
+        "vlucas/phpdotenv": "^5.6"
     },
     "require-dev": {
         "php": "^7.4 || ^8.0"

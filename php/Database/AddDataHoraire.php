@@ -9,27 +9,45 @@ class AddDataHoraire
         $conn = $db_connection->dbConnectionNamed();
 
         try {
+            // Données à insérer dans la table HORAIRES
             $horaires = [
-                ['jour' => 'Lundi', 'matin' => '08:45 - 12:00', 'apresmidi' => '14:00 - 18:00'],                
-                ['jour' => 'Mardi', 'matin' => '08:45 - 12:00', 'apresmidi' => '14:00 - 18:00'],
-                ['jour' => 'Mercredi', 'matin' => '08:45 - 12:00',  'apresmidi' => '14:00 - 18:00'],
-                ['jour' => 'Jeudi', 'matin' => '08:45 - 12:00',  'apresmidi' => '14:00 - 18:00'],
-                ['jour' => 'Vendredi', 'matin' => '08:45 - 12:00', 'apresmidi' => '14:00 - 18:00'],
-                ['jour' => 'Samedi', 'matin' => '08:45 - 12:00',  'apresmidi' => '14:00 - 18:00'],
-                ['jour' => 'Dimanche', 'matin' => 'Fermé', "apresmidi" => '']
+                ['day_id' => 1, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Morning', 'is_fermed' => false],
+                ['day_id' => 2, 'heure_start' => '13:00:00', 'heure_fin' => '17:00:00', 'time_period' => 'Morning', 'is_fermed' => false],
+                ['day_id' => 3, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Morning', 'is_fermed' => false],
+                ['day_id' => 4, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Morning', 'is_fermed' => false],
+                ['day_id' => 5, 'heure_start' => '13:00:00', 'heure_fin' => '17:00:00', 'time_period' => 'Morning', 'is_fermed' => false],
+                ['day_id' => 6, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Morning', 'is_fermed' => false],
+                ['day_id' => 7, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Morning', 'is_fermed' => true],
+
+                ['day_id' => 2, 'heure_start' => '13:00:00', 'heure_fin' => '17:00:00', 'time_period' => 'Afternoon', 'is_fermed' => false],
+                ['day_id' => 3, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Afternoon', 'is_fermed' => false],
+                ['day_id' => 4, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Afternoon', 'is_fermed' => false],
+                ['day_id' => 1, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Afternoon', 'is_fermed' => false],
+                ['day_id' => 5, 'heure_start' => '13:00:00', 'heure_fin' => '17:00:00', 'time_period' => 'Afternoon', 'is_fermed' => false],
+                ['day_id' => 6, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Afternoon', 'is_fermed' => false],
+                ['day_id' => 7, 'heure_start' => '08:00:00', 'heure_fin' => '12:00:00', 'time_period' => 'Afternoon', 'is_fermed' => true],
                 
             ];
 
-            $stmt = $conn->prepare("INSERT INTO HORAIRES (jour, matin1, matin2,  ISfermé)
-                VALUES (?, ?, ?)");
-
-            foreach ($horaires as $data) {
-                
-                $stmt->execute([$data['jour'], $data['matin'], $data['apresmidi']]);
-                echo 'Horaire ajouté .<br>';
+            // Préparation de la requête d'insertion
+            $sql = "INSERT INTO HORAIRES (day_id, heure_start, heure_fin, time_period, is_fermed) 
+                    VALUES (:day_id, :heure_start, :heure_fin, :time_period, :is_fermed)";
+            
+            $stmt = $conn->prepare($sql);
+            
+            // Boucle pour insérer chaque horaire
+            foreach ($horaires as $horaire) {
+                $stmt->bindParam(':day_id', $horaire['day_id']);
+                $stmt->bindParam(':heure_start', $horaire['heure_start']);
+                $stmt->bindParam(':heure_fin', $horaire['heure_fin']);
+                $stmt->bindParam(':time_period', $horaire['time_period']);
+                $stmt->bindParam(':is_fermed', $horaire['is_fermed'], PDO::PARAM_BOOL);
+                $stmt->execute();
             }
+
+            echo 'Table Horaires peuplée avec succès<br>';
         } catch (PDOException $e) {
-            echo "Connection Raté: " . $e->getMessage();
+            echo "Connexion échouée : " . $e->getMessage();
             exit;
         }
     }

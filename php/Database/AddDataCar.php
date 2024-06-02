@@ -1,15 +1,19 @@
 <?php
 include_once 'Connect.php';
 
-class AddDataCar {
-    
-    public function dataCar() {
+class AddDataCar
+{
 
+    public function dataCar()
+    {
+
+        // Initialisation de la connexion à la base de données
         $db_connection = new DatabaseConnect();
         $conn = $db_connection->dbConnectionNamed();
 
         try {
- $voituresData = [
+            // Données des voitures à insérer dans la table VOITURES
+            $voituresData = [
                 [15000, 50000, 2019, 'Model X', 'John', 'Doe', '1234567890'],
                 [12000, 40000, 2018, 'Model Y', 'Jane', 'Smith', '9876543210'],
                 [18000, 60000, 2020, 'Model Z', 'Robert', 'Johnson', '4567890123'],
@@ -29,6 +33,7 @@ class AddDataCar {
                 $voituresStmt->execute($data);
             }
 
+            // Données des caractéristiques à insérer dans la table CARACTERISTIQUE
             echo "Data ajouter dans la table VOITURES avec succes.<br>";
             $caracteristiqueData = [
                 ['Caracterisique 1'],
@@ -48,8 +53,9 @@ class AddDataCar {
             foreach ($caracteristiqueData as $data) {
                 $caracteristiqueStmt->execute($data);
             }
-
             echo "Data ajouter dans la table CARACTERISTIQUE avec succes.<br>";
+
+            // Données des équipements à insérer dans la table EQUIPEMENT
             $equipementData = [
                 ['Equipment 1'],
                 ['option 2'],
@@ -68,8 +74,9 @@ class AddDataCar {
             foreach ($equipementData as $data) {
                 $equipementStmt->execute($data);
             }
-
             echo "Data ajouter dans la table EQUIPEMENT avec succes.<br>";
+
+            // Données de liaison entre voitures et caractéristiques à insérer dans la table CVVOITURE
             $cvvoitureData = [
                 [1, 1],
                 [1, 2],
@@ -81,7 +88,7 @@ class AddDataCar {
                 [6, 8],
                 [7, 9],
                 [8, 10],
-                [8, 2] 
+                [8, 2]
             ];
 
             $cvvoitureStmt = $conn->prepare("INSERT INTO CVVOITURE (voiture_id, caracteristique_id) VALUES (?, ?)");
@@ -89,9 +96,9 @@ class AddDataCar {
             foreach ($cvvoitureData as $data) {
                 $cvvoitureStmt->execute($data);
             }
-
             echo "Data ajouter dans la table CVVOITURE avec succes.<br>";
-            
+
+            // Données de liaison entre voitures et équipements à insérer dans la table EVVOITURE
             $evvoitureData = [
                 [1, 1],
                 [2, 2],
@@ -114,51 +121,45 @@ class AddDataCar {
 
             echo "Data ajouter dans la table EVVOITURE avec succes.<br>";
 
-        
+            // Données des images à insérer dans la table IMAGES
             $imagesData = [
                 [1, 'Voiture.png'],
                 [2, 'Voiture5.png'],
                 [3, 'Voiture1.png'],
                 [4, 'Voiture2.png'],
             ];
-            
+
             $imagesStmt = $conn->prepare("INSERT INTO IMAGES (id, image_url) VALUES (?, ?)");
-            
+
             foreach ($imagesData as $data) {
                 $imagesStmt->execute($data);
             }
             echo "Data ajouté dans la tabler IMAGES avec success.<br>";
 
-
+            // Données de liaison entre voitures et images à insérer dans la table VOITURE_IMAGES
             $voitureImagesData = [
-                [1, 1],  
-                [1, 2],  
+                [1, 1],
+                [1, 2],
                 [2, 3],
                 [3, 4],
-                [4, 1],  
-                [5, 2],  
+                [4, 1],
+                [5, 2],
                 [6, 3],
-                [7, 4],    
-                [8, 1],  
-                [9, 2],  
-                [10, 3],                    
+                [7, 4],
+                [8, 1],
+                [9, 2],
+                [10, 3],
             ];
-            
+
             $voitureImagesStmt = $conn->prepare("INSERT INTO VOITURE_IMAGES (voiture_id, image_id) VALUES (?, ?)");
-            
+
             foreach ($voitureImagesData as $data) {
                 $voitureImagesStmt->execute($data);
             }
-            
+
             echo "Data ajouté dans la tabler VOITURE_IMAGES avec success.<br>";
-
-
-        }         
-        catch(PDOException $e) {
-            echo "Ajout Data Raté: " . $e->getMessage() ;
+        } catch (PDOException $e) {
+            echo "Ajout Data Raté: " . $e->getMessage();
         }
     }
 }
-
-
-?>

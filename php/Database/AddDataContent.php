@@ -5,10 +5,12 @@ class AddDataContent
 {
     public function dataContent()
     {
+        // Initialisation de la connexion à la base de données
         $db_connection = new DatabaseConnect();
         $conn = $db_connection->dbConnectionNamed();
 
         try {
+            // Données à insérer dans la table "depannage"
             $depanage = [
                 [
                     'title' => 'Depannage',
@@ -32,6 +34,7 @@ class AddDataContent
                 echo 'Depannage contenu ajouté.<br>';
             }
 
+            // Données à insérer dans la table "reparation"
             $reparations = [
                 [
                     'title' => 'Reparation',
@@ -55,6 +58,7 @@ class AddDataContent
                 echo 'Reparartion contenu ajouté.<br>';
             }
 
+            // Données à insérer dans la table "voitureOccasion"
             $occasions = [
                 [
                     'title' => 'Occasion',
