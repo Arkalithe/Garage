@@ -56,7 +56,7 @@ export const NewAvis = () => {
         </p>
       </section>
     ) : (
-      <section className="form-cadre d-flex flex-column align-items-center">
+      <section className="form-cadre d-flex flex-column align-items-center justify-content-start">
         <p ref={errRef} className={err ? 'errmsg' : 'offscreen'} aria-live="assertive">
           {err}
         </p>
@@ -103,7 +103,7 @@ export const NewAvis = () => {
             onChange={(event, newValue) => setNote(newValue)}
             required
           />
-          <button className='d-flex flex-column p-2 m-2 mt-3 bouton'>
+          <button className='p-2 m-2 mt-3 bouton'>
             Envoyer
           </button>
         </form>

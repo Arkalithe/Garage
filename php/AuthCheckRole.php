@@ -1,6 +1,7 @@
 <?php
 include_once './AuthCheckRole.php';
 
+
 function authCheckRole($db, $header, $requiredRoles)
 {
     $auth = new Auth($db, $header);

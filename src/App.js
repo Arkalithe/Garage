@@ -32,18 +32,12 @@ import EditOcasion from './components/Ocasion/EditOccasion';
 import ContentSpace from './page/ContentSpace';
 import EmployeSpace from './page/EmployeSpace';
 
-
-
-
-
 function App() {
-
 
   const ROLE = {
     'admin': 'admin',
     'employee': 'employee'
   }
-
 
   return (
     <div className='App d-flex flex-column '>

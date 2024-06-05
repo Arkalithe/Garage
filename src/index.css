@@ -27,7 +27,8 @@ footer {
 .footer {
   width: auto;
   table-layout: auto;
-  text-align: left;  
+  text-align: left;
+  margin-top: 20px;
 }
 
 .footer th, .footer td {
@@ -185,12 +186,29 @@ section {
   background-size: 100%, 100%;
 
 }
-.navbar-collapse {
+.navbar-collapse.show {
   position: absolute;
+  top: 120px;
+  left: 0px;
   width: 100%;
-  background: white;
-  top: 120px; /* Ajustez cette valeur en fonction de la hauteur de votre Navbar */
-  left: 0;
+  background-color: white; 
   z-index: 1000;
-  
+}
+
+@media (max-width: 991px) {
+  .navbar {
+    position: relative;
+  }
+}
+ @media (min-width: 576px) {
+  .container-nav {
+    max-width: 100%;
+  }
+}
+.header {
+  margin-bottom: 20px;
+}
+
+.cont-test {
+padding: 0;
 }
