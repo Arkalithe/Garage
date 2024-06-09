@@ -10,6 +10,12 @@ include_once '../../Database/Connect.php';
 include_once '../../Class/Depanage.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+    http_response_code(200);
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 

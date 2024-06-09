@@ -1,5 +1,5 @@
 <?php
-require '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\ExpiredException;
@@ -17,7 +17,7 @@ class JwtHandler
     public function __construct()
     {
         // Charger les variables d'environnement
-        $dotenv = Dotenv::createImmutable(__DIR__);
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__));
         $dotenv->load();
 
         date_default_timezone_set('Europe/Paris');  // Définit le fuseau horaire par défaut

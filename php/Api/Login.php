@@ -1,106 +1,91 @@
 <?php
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: GET,POST");
+header("Access-Control-Allow-Methods: GET, POST,OPTIONS");
 header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: access");
-header("Content-Type: application/json");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include_once '../Database/Connect.php';
 include_once '../Class/JwtHandler.php';
 
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+    http_response_code(200);
+    exit();
+}
+
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
 
-function msg($success,$status,$message,$extra = []){
+function msg($success, $status, $message, $extra = []) {
     return array_merge([
         'success' => $success,
         'status' => $status,
         'message' => $message
-    ],$extra);
+    ], $extra);
 }
 
-
-
 $data = json_decode(file_get_contents("php://input"));
-
 $returnData = [];
 
-if($_SERVER["REQUEST_METHOD"] != "POST"):
-    $returnData = msg(0,404,'Page non trouvé');    
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    $returnData = msg(0, 404, 'Page Not Found');
+    echo json_encode($returnData);
+    exit();
+}
 
-elseif(!isset($data->email) 
-    || !isset($data->password)
+if (!isset($data->email) || !isset($data->password) || empty(trim($data->email)) || empty(trim($data->password))) {
+    $fields = ['fields' => ['email', 'password']];
+    $returnData = msg(0, 422, 'Please fill all the fields!', $fields);
+    echo json_encode($returnData);
+    exit();
+}
 
-    || empty(trim($data->email))
-    || empty(trim($data->password))
+$email = trim($data->email);
+$password = trim($data->password);
 
-    ):
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $returnData = msg(0, 422, 'Invalid Email Address!');
+    echo json_encode($returnData);
+    exit();
+}
 
-    $fields = ['fields' => ['email','password', 'role']];
-    $returnData = msg(0,422,'Remplissez tous les champs !',$fields);
-    http_response_code(422);
+if (strlen($password) < 8) {
+    $returnData = msg(0, 422, 'Password must be at least 8 characters long!');
+    echo json_encode($returnData);
+    exit();
+}
 
-else:
-    $email = trim($data->email);
-    $password = trim($data->password);
+try {
+    $fetch_user_by_email = "SELECT * FROM `users` WHERE `email`=:email";
+    $query_stmt = $db->prepare($fetch_user_by_email);
+    $query_stmt->bindValue(':email', $email, PDO::PARAM_STR);
+    $query_stmt->execute();
 
-
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)):
-        $returnData = msg(0,422,'Adresse Email Invalid ! ');
-        http_response_code(422);
-
-    elseif(strlen($password) < 8):
-        $returnData = msg(0,422,'Le mot de passe doit avoire 8 caracatère, une majuscule, un chiffre et un caractère spécial');
-        http_response_code(422);
-
-    else:
-        try{
-
-            $fetch_user_by_email = "SELECT * FROM `users` WHERE `email`=:email";
-            $query_stmt = $db->prepare($fetch_user_by_email);
-            $query_stmt->bindValue(':email', $email,PDO::PARAM_STR);            
-            $query_stmt->execute();
-
-            if($query_stmt->rowCount()):
-                $row = $query_stmt->fetch(PDO::FETCH_ASSOC);
-                $check_password = password_verify($password, $row['password']);                
-
-                if($check_password):
-
-                    $jwt = new JwtHandler();
-
-                    $accessToken = $jwt->jwtEncodeData(
-                        'http://localhost',
-                        array("id"=> $row['id'], "role"=>$row['role'])
-                    );
-
-                    $returnData = [
-                        'success' => 1,
-                        'message' => 'Vous êtes connecté.',
-                        'accessToken' => $accessToken,
-
-
-                    ];                    
-
-                else:
-                    $returnData = msg(0,422,'Mot de passe Incorect');
-                    http_response_code(422);
-                endif;
-
-
-            else:
-                $returnData = msg(0,422,'Addresse Email Incorect!');
-                http_response_code(422);
-            endif;
+    if ($query_stmt->rowCount()) {
+        $row = $query_stmt->fetch(PDO::FETCH_ASSOC);
+        if (password_verify($password, $row['password'])) {
+            $jwt = new JwtHandler();
+            $accessToken = $jwt->jwtEncodeData(
+                'http://localhost',
+                array("id" => $row['id'], "role" => $row['role'])
+            );
+            error_log('Generated Token: ' . $accessToken); // Debugging line
+            $returnData = [
+                'success' => 1,
+                'message' => 'You have successfully logged in.',
+                'accessToken' => $accessToken
+            ];
+            echo json_encode($returnData); // Ensure proper JSON response
+        } else {
+            $returnData = msg(0, 422, 'Invalid Password!');
+            echo json_encode($returnData);
         }
-        catch(PDOException $e){
-            $returnData = msg(0,500,$e->getMessage());
-            http_response_code(500);
-        }
-
-    endif;
-
-endif;
-
-echo json_encode(array( $accessToken));
+    } else {
+        $returnData = msg(0, 422, 'Invalid Email Address!');
+        echo json_encode($returnData);
+    }
+} catch (PDOException $e) {
+    $returnData = msg(0, 500, $e->getMessage());
+    echo json_encode($returnData);
+}
+?>

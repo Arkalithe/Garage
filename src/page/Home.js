@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import GetAvis from '../components/Avis/GetAvis';
@@ -8,7 +9,7 @@ import VoitureOccasion from '../components/Ocasion/VoitureOccasion';
 const Home = () => {
   return (
     <Container >
-      <h1 className="text-center my-4">Nos Services</h1>
+      <h1 className="text-center my-4 title">Nos Services</h1>
       <section className='d-flex align-items-center justify-content-center '>
         <Row >
           <Col xs={12} md={4} className='mb-3'>
@@ -23,7 +24,7 @@ const Home = () => {
         </Row>
       </section>
       <div className="border my-4"></div>
-      <h1 className="text-center my-4">Témoignages</h1>
+      <h1 className="text-center my-4 title">Témoignages</h1>
       <section className='mb-3'>
         <GetAvis />
       </section>

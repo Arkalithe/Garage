@@ -27,12 +27,13 @@ const GetCar = () => {
 
   useEffect(() => {
     fetchVoiture();
-  }, []);
+  }, [currentPage, priceRangeValue, yearRangeValue, kiloRangeValue]);
 
   const fetchVoiture = async () => {
     try {
       const res = await config.localTestingUrl.get(register_url);
       setVoiture(Array.isArray(res.data) ? res.data : []);
+      console.log(res)
     } catch (err) {
       console.error("Probleme recuperation donnée voiture", err);
     }

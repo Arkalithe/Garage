@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Pagination = ({ currentPage, totalPages, onPreviousPage, onNextPage }) => (
-  <div className="d-flex justify-content-center my-3">
+  <div className="d-flex justify-content-center my-3 form-cadre p-2">
     <button
       className="btn btn-secondary me-2"
       onClick={onPreviousPage}

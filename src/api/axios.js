@@ -16,10 +16,29 @@ const herokuUrl = axios.create({
     withCredentials: true
 });
 
+localhost.interceptors.request.use(config => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+}, error => {
+    return Promise.reject(error);
+});
+
+herokuUrl.interceptors.request.use(config => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+}, error => {
+    return Promise.reject(error);
+});
+
 const config = {
     localTestingUrl: localhost,
     herokuTesting: herokuUrl
 
 }
-
 export default config

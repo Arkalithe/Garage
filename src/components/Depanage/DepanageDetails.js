@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Col, Container, Row } from 'react-bootstrap';
 import config from '../../api/axios';
 
 const DepanageDetails = () => {
@@ -12,13 +12,14 @@ const DepanageDetails = () => {
 
     const getData = async () => {
         try {
-            const response = await config.localTestingUrl.get(depannage_url, {withCredentials: true} );
+            const response = await config.localTestingUrl.get(depannage_url, { withCredentials: true });
             setDepanageContent(response.data);
-        } catch (error) {}
+            console.log(response)
+        } catch (error) { }
     };
 
     const contents = depanageContent.map((Content, index) => (
-        <div className="col mb-4" key={index}>
+        <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center" key={index}>
             <Card className="form-cadre h-100">
                 <Card.Body>
                     <Card.Title>{Content.title}</Card.Title>
@@ -28,7 +29,7 @@ const DepanageDetails = () => {
                                 className="img-fluid"
                                 src={require(`../../assests/Image/${Content.image}`)}
                                 alt="Depanage"
-                                style={{ maxWidth: '300px', maxHeight: '300px' }}
+                                style={{ maxWidth: '100%', height: 'auto'}}
                             />
                         ) : (
                             <div>No Image</div>
@@ -38,10 +39,12 @@ const DepanageDetails = () => {
                     </Card.Text>
                 </Card.Body>
             </Card>
-        </div>
+        </Col>
     ));
 
-    return <div className="row">{contents}</div>;
+    return <Container>
+        <Row className="justify-content-center">{contents}</Row>
+    </Container>;
 };
 
 export default DepanageDetails;

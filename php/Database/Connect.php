@@ -20,10 +20,10 @@ class DatabaseConnect
     {
         $this->conn = null;
         try {     
-
             $this->conn = new PDO(
                 "mysql:host=".$this->serverName.";",$this->userName, $this->password
             );
+            
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo "Connection Failed: " . $e->getMessage();
@@ -37,8 +37,10 @@ class DatabaseConnect
     {   
         $this->conn = null;
         try {
+
             $this->conn =  new PDO("mysql:host=".$this->serverName.";dbname=".$this->dbname,$this->userName, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 
         } catch (PDOException $e) {
             echo "Connection Failed: " . $e->getMessage();
         }

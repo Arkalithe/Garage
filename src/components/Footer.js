@@ -33,7 +33,7 @@ const Footer = ({ horaire }) => {
             </svg>
           </Col>
 
-          <Col >
+          <Col>
             {groupedHours.length > 0 ? (
               <Table bordered className='footer'>
                 <thead>
@@ -56,6 +56,22 @@ const Footer = ({ horaire }) => {
             ) : (
               <div>Les horaires ne sont pas définis</div>
             )}
+          </Col>
+          <Col className="d-none d-md-block">
+            <div className='google-map' style={{width: "100%"}}>
+              <iframe width="100%" height="300" src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=26%20Rue%20Richard%20Wagner,%20Toulouse+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                <a href="https://www.gps.ie/">gps tracker sport</a>
+              </iframe>
+            </div>
+          </Col>
+        </Row>
+        <Row className="d-md-none">
+          <Col>
+            <div className='google-map' style={{width: "100%"}}>
+              <iframe width="100%" height="300" src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=26%20Rue%20Richard%20Wagner,%20Toulouse+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                <a href="https://www.gps.ie/">gps tracker sport</a>
+              </iframe>
+            </div>
           </Col>
         </Row>
       </Container>

@@ -5,7 +5,7 @@ import { Container, Form, Alert } from 'react-bootstrap';
 import config from '../api/axios';
 import jwtDecode from 'jwt-decode';
 
-const login_url = '/Garage/php/Api/Login.php'
+const login_url = process.env.REACT_APP_LOGIN_URL || '/Garage/php/Api/Login.php';
 
 const Login = () => {
 
@@ -37,7 +37,8 @@ const Login = () => {
             const response = await config.localTestingUrl.post(login_url,
                 JSON.stringify({ email, password, })
             );
-            const accessToken = response.data[0];
+
+            const accessToken = response.data.accessToken;
             const dcode = jwtDecode(accessToken)
             const role = dcode.data.role           
 
@@ -47,6 +48,7 @@ const Login = () => {
             navigate(from, { replace: true });
         } catch (err) {            
             if (!err?.response) {
+                console.log(err)
                 setErr('Pas de reponse serveur');              
 
             } else if (err.response?.status === 422) {

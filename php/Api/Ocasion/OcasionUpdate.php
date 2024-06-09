@@ -1,7 +1,7 @@
 <?php
 
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: GET,POST,PUT");
+header("Access-Control-Allow-Methods: GET,POST,PUT, OPTIONS");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
 
@@ -9,6 +9,11 @@ include_once '../../Database/Connect.php';
 include_once '../../Class/Ocasion.php';
 include_once '../AuthCheckRole.php';
 
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+    http_response_code(200);
+    exit();
+}
 
 $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();

@@ -1,7 +1,7 @@
 <?php
-require __DIR__.'/Class/JwtHandler.php';
+include_once __DIR__ . '/Class/JwtHandler.php';
 
-class Auth extends JwtHandler
+class AuthMiddleware extends JwtHandler
 {
     protected $db;
     protected $headers;
@@ -14,31 +14,43 @@ class Auth extends JwtHandler
         $this->headers = $headers;
     }
 
-    public function isValid()
+    public function isValide($requiredRole = null)
     {
-
         if (array_key_exists('Authorization', $this->headers) && preg_match('/Bearer\s(\S+)/', $this->headers['Authorization'], $matches)) {
-
             $data = $this->jwtDecodeData($matches[1]);
 
-            if (
-                isset($data['data']->id) &&
-                $email = $this->fetchEmail($data['data']->id)
-            ) :
-                return [
-                    "success" => 1,
-                    "email" => $email
-                ];
-            else :
+            if (is_object($data['data']) && isset($data['data']->id) && isset($data['data']->role)) {
+                if ($requiredRole === null || $data['data']->role === $requiredRole) {
+                    if ($email = $this->fetchEmail($data['data']->id)) {
+                        return [
+                            "success" => 1,
+                            "data" => (object)[
+                                "email" => $email,
+                                "role" => $data['data']->role
+                            ]
+                        ];
+                    } else {
+                        return [
+                            "success" => 0,
+                            "message" => "Utilisateur introuvable"
+                        ];
+                    }
+                } else {
+                    return [
+                        "success" => 0,
+                        "message" => "Rôle insuffisant ou données utilisateur invalides"
+                    ];
+                }
+            } else {
                 return [
                     "success" => 0,
-                    "message" => $data['message'],
+                    "message" => "Données utilisateur invalides"
                 ];
-            endif;
+            }
         } else {
             return [
                 "success" => 0,
-                "message" => "Token not found in request"
+                "message" => "Token non trouvé dans la requête"
             ];
         }
     }
@@ -46,20 +58,19 @@ class Auth extends JwtHandler
     protected function fetchEmail($id)
     {
         try {
-            $fetch_email_by_id = "SELECT `email` FROM `users` WHERE `id`=:id";
-            $query_stmt = $this->db->prepare($fetch_email_by_id);
-            $query_stmt->bindValue(':id', $id, PDO::PARAM_INT);
-            $query_stmt->execute();
+            $query = "SELECT `email` FROM `users` WHERE `id` = :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
 
-            if ($query_stmt->rowCount()) :
-                return $query_stmt->fetch(PDO::FETCH_ASSOC);
-            else :
+            if ($stmt->rowCount()) {
+                return $stmt->fetch(PDO::FETCH_ASSOC)['email'];
+            } else {
                 return false;
-            endif;
-        } catch (PDOException $e) {
+            }
+        } catch (PDOException $e) {            
+            error_log('Erreur de récupération de l\'email : ' . $e->getMessage());
             return null;
         }
     }
-
-    
 }

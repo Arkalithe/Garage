@@ -7,13 +7,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #070918;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+header {
+  background-color: #A9B4C3;
+}
 
 li {
   list-style: none;
@@ -23,6 +26,10 @@ li {
 footer {
   background-color: #A9B4C3;
 
+}
+
+.title {
+  color:#A9B4C3;
 }
 .footer {
   width: auto;
@@ -49,14 +56,14 @@ footer {
 }
 
 .bouton {
-  background-color: #B2C9AB;
+  background-color: #517048;
   border-radius: 10px;
   margin: 12.5px;
   padding: 12.5px;
 }
 
 .bouton-alt {
-  background-color: #B2C9AB;
+  background-color: #517048;
   border-radius: 10px;
 }
 
@@ -74,7 +81,7 @@ footer {
 }
 
 .bouton-lien {
-  color: #0D21A1;
+  color: #B7C0CD;
   text-decoration: none
 }
 
@@ -94,7 +101,7 @@ section {
 }
 
 .form-cadre {
-  background-color: #E8DDB5;
+  background-color: #F1EAD0;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   max-width: 80vh;
   border-radius: 30px;
@@ -153,7 +160,7 @@ section {
 }
 
 .voit {
-  background-color: #E8DDB5;
+  background-color: #F1EAD0;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
 }
@@ -161,6 +168,10 @@ section {
 .Logo {
   max-width: 10vh;
   max-height: 10vh;
+  width: auto;
+  height: auto;
+  min-width: 100px;
+  min-height: 100px;
 
 }
 
