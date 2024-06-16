@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Form, Card } from 'react-bootstrap';
 import config from '../api/axios';
 
 const ContactPage = () => {
@@ -45,7 +45,7 @@ const ContactPage = () => {
   };
 
   return (
-    <Container className="voit align-items-center">
+    <Container className="voit align-items-center mb-3">
       <Row className=''>
         <Col md={6} className="d-flex align-items-center justify-content-center">
           <Form className="p-2 m-2" onSubmit={handleSubmit}>

@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const AdminSpace = () => {
   return (
-    <Container className='form-cadre p-2'>
+    <Container className='form-cadre p-2 mb-3'>
       <section className='d-flex justify-content-center mt-auto'>
         <h2 className="d-flex justify-content-center mt-auto">
           Espace Administrateur

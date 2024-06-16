@@ -40,7 +40,7 @@ function App() {
   }
 
   return (
-    <div className='App d-flex flex-column '>
+    <div className='App d-flex flex-column min-vh-100'>
 
       <Header />
       <Routes>

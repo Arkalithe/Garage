@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import config from '../../api/axios';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 export const Contact = ({ car }) => {
     const [mailSetting, setMailSetting] = useState({

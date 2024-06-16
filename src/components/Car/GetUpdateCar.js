@@ -36,8 +36,10 @@ export const GetUpdateCar = () => {
         const fetchVoiture = async () => {
             try {
                 const res = await config.localTestingUrl.get(get_car, { params: { id: idVoiture } });
+                console.log( res)
                 setCarData(res.data);
             } catch (err) {
+                console.log(err)
                 setErr('Erreur récupération données voiture');
             } finally {
                 setLoading(false);
@@ -88,17 +90,17 @@ export const GetUpdateCar = () => {
     return (
         <>
             {success ? (
-                <section className="form-cadre d-flex flex-column align-items-center justify-content-start">
+                <section className="form-cadre d-flex flex-column align-items-center justify-content-center text-center">
                     <h1 className="d-flex flex-column p-2 m-2">Car Updated</h1>
                     <p>
                         <Link to="/adminSpace" className="bouton lien">
-                            Back to Admin Space
+                            retour a l'espace Admin
                         </Link>
                     </p>
                 </section>
             ) : (
                 <>
-                    <section className="d-flex flex-column my-2" style={{ width: "100%" }}>
+                    <section className="d-flex flex-column my-2  align-items-center justify-content-center text-center" style={{ width: "100%" }}>
                         <CarSlider
                             label="Prix"
                             value={priceRangeValue}
@@ -125,7 +127,7 @@ export const GetUpdateCar = () => {
                         />
                     </section>
 
-                    <section className="d-flex flex-column">
+                    <section className="d-flex flex-column  align-items-center justify-content-center ">
                         <p ref={errRef} className={err ? 'errmsg' : 'offscreen'} aria-live="assertive">
                             {err}
                         </p>

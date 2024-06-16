@@ -23,7 +23,7 @@ const Footer = ({ horaire }) => {
   });
 
   return (
-    <footer className="footer">
+    <footer className="footer min-mt-1 mt-auto">
       <Container>
         <Row className="align-items-center pt-2">
           <Col xs={2} md={1}>

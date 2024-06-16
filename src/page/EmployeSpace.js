@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const EmployeSpace = () => {
   return (
-    <Container className="form-cadre p-1">
+    <Container className="form-cadre p-1 mb-3">
       <div className="d-flex flex-column container">
         <Row className="justify-content-center">
           <Col lg={5} md={5} sm={12} className="m-1">

@@ -9,10 +9,9 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 
 include_once '../../Database/Connect.php';
 include_once '../../Class/Voiture.php';
-include_once '../AuthCheckRole.php';
+include_once '../../AuthCheckRole.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-
     http_response_code(200);
     exit();
 }
@@ -21,7 +20,7 @@ $database = new DatabaseConnect();
 $db = $database->dbConnectionNamed();
 
 $headers = apache_request_headers();
-authCheckRole($conn, $headers, ['admin', "employe"]);
+authCheckRole($db, $headers, ['admin', "employe"]);
 
 $items = new Voiture($db);
 
