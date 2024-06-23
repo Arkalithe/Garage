@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $database = new DatabaseConnect();
-$db = $database->dbConnectionNamed();
+$db = $database->dbConnection();
 
 $headers = apache_request_headers();
 authCheckRole($db, $headers, ['admin', "employe"]);

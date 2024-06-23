@@ -10,7 +10,7 @@ include_once '../../Class/Voiture.php';
 include_once '../../Class/Image.php';
 include_once '../../Class/Equipement.php';
 include_once '../../Class/Caracterstique.php';
-include_once '../AuthCheckRole.php';
+include_once '../../AuthCheckRole.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
@@ -19,9 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $database = new DatabaseConnect();
-$db = $database->dbConnectionNamed();
+$db = $database->dbConnection();
+
 $headers = apache_request_headers();
-authCheckRole($conn, $headers, ['admin', "employe"]);
+authCheckRole($db, $headers, ['admin', "employe"]);
 
 $items = new Voiture($db);
 

@@ -18,10 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $database = new DatabaseConnect();
-$db = $database->dbConnectionNamed();
+$db = $database->dbConnection();
 
 $headers = apache_request_headers();
-authCheckRole($conn, $headers, ['admin']);
+authCheckRole($db, $headers, ['admin']);
 
 $items = new Employee($db);
 $items->id = isset($_GET['id']) ? $_GET['id'] : die();

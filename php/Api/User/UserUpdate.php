@@ -17,10 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $database = new DatabaseConnect();
-$db = $database->dbConnectionNamed();
+$db = $database->dbConnection();
 
 $headers = apache_request_headers();
-authCheckRole($conn, $headers, ['admin']);
+authCheckRole($db, $headers, ['admin']);
 
 $employee = new Employee($db);
 $data = json_decode(file_get_contents("php://input"));

@@ -16,7 +16,7 @@ include_once '../../Database/Connect.php';
 include_once '../../Class/Ocasion.php';
 
 $database = new DatabaseConnect();
-$db = $database->dbConnectionNamed();
+$db = $database->dbConnection();
 $items = new Ocasion($db);
 $stmt = $items->getOcasion();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);

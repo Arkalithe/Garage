@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $database = new DatabaseConnect();
-$db = $database->dbConnectionNamed();
+$db = $database->dbConnection();
 $items = new Depanage($db);
 $stmt = $items->getDepanage();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);

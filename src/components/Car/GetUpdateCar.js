@@ -91,7 +91,7 @@ export const GetUpdateCar = () => {
         <>
             {success ? (
                 <section className="form-cadre d-flex flex-column align-items-center justify-content-center text-center">
-                    <h1 className="d-flex flex-column p-2 m-2">Car Updated</h1>
+                    <h1 className="d-flex flex-column p-2 m-2 ">Car Updated</h1>
                     <p>
                         <Link to="/adminSpace" className="bouton lien">
                             retour a l'espace Admin
@@ -131,7 +131,7 @@ export const GetUpdateCar = () => {
                         <p ref={errRef} className={err ? 'errmsg' : 'offscreen'} aria-live="assertive">
                             {err}
                         </p>
-                        <h1 className="d-flex flex-column p-1 m-2">Update Car</h1>
+                        <h3 className="d-flex flex-column p-1 m-2 title">Liste des voitures</h3>
                         <div className='d-flex flex-wrap justify-content-center'>
                             {currentCars.length > 0 ? (
                                 currentCars.map((car) => {

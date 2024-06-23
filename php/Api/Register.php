@@ -1,26 +1,27 @@
 <?php
 
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: GET,POST, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Headers: access");
 header('Content-Type: application/json');
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
 
 include_once '../Database/Connect.php';
+include_once '../Class/Employe.php';
 include_once '../AuthCheckRole.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-
     http_response_code(200);
     exit();
 }
 
 $db_connection = new DatabaseConnect();
-$conn = $db_connection->dbConnectionNamed();
+$db = $db_connection->dbConnection();
+$employe = new Employee($db);
 
 $headers = apache_request_headers();
-authCheckRole($conn, $headers, ['admin']);
+authCheckRole($db, $headers, ['admin']);
 
 function msg($success, $status, $message, $extra = [])
 {
@@ -33,59 +34,57 @@ function msg($success, $status, $message, $extra = [])
 
 $data = json_decode(file_get_contents("php://input"));
 $returnData = [];
-$role = "Employe";
+$role = "Employee";
 
-if ($_SERVER["REQUEST_METHOD"] != "POST") :
-
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
     $returnData = msg(0, 404, 'Page Not Found');
-    
-
-elseif (
-    !isset($data->email)
-    || !isset($data->password)
-    || empty(trim($data->password))
-    || empty(trim($data->password))
-) :
-
+    http_response_code(404);
+} elseif (
+    !isset($data->email) ||
+    !isset($data->password) ||
+    empty(trim($data->email)) ||
+    empty(trim($data->password))
+) {
     $fields = ['fields' => ['email', 'password']];
-    $returnData = msg(0, 422, 'Remplisez tous les champs requis', $fields);
+    $returnData = msg(0, 422, 'Remplissez tous les champs requis', $fields);
     http_response_code(422);
-
-else :
+} else {
     $email = trim($data->email);
     $password = trim($data->password);
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) :
-        $returnData = msg(0, 422, 'Adresse Mail Invalid');
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $returnData = msg(0, 422, 'Adresse Mail Invalide');
         http_response_code(422);
-    elseif (strlen($password) < 8) :
-        $returnData = msg(0, 422, 'Le mots de passe doit avoir au moins 8 caractere');
+    } elseif (strlen($password) < 8) {
+        $returnData = msg(0, 422, 'Le mot de passe doit avoir au moins 8 caractères');
         http_response_code(422);
-    else :
+    } else {
         try {
-            $check_email = "SELECT `email` FROM `users` WHERE `email`=:email";
-            $check_email_stmt = $conn->prepare($check_email);
-            $check_email_stmt->bindValue(':email', $email, PDO::PARAM_STR);
-            $check_email_stmt->execute();
-            if ($check_email_stmt->rowCount()) :
-                $returnData = msg(0, 422, 'Cette adresse Mail est déja utilisé');
+            $user = $employe->getUserByEmail($email);
+
+            if ($user) {
+                $returnData = msg(0, 422, 'Cette adresse Mail est déjà utilisée');
                 http_response_code(422);
-            else :
-                $insert_query = "INSERT INTO `users`(`email`,`password`, role) VALUES(:email,:password,:role)";
-                $insert_stmt = $conn->prepare($insert_query);
+            } else {
+                $employe->email = $email;
+                $employe->password = $password;
+                $employe->role = $role;
 
-
-                $insert_stmt->bindValue(':email', $email, PDO::PARAM_STR);
-                $insert_stmt->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
-                $insert_stmt->bindValue(':role', $role, PDO::PARAM_STR);
-
-                $insert_stmt->execute();
-                $returnData = msg(1, 201, 'Employe ajouté reussie');
-                http_response_code(201);
-
-            endif;
+                if ($employe->createUsers()) {
+                    $returnData = msg(1, 201, 'Employé ajouté avec succès');
+                    http_response_code(201);
+                } else {
+                    $returnData = msg(0, 500, 'Erreur lors de l\'ajout de l\'employé');
+                    http_response_code(500);
+                }
+            }
         } catch (PDOException $e) {
             $returnData = msg(0, 500, $e->getMessage());
+            http_response_code(500);
         }
-    endif;
-endif;
+    }
+}
+
 echo json_encode($returnData);
+
+?>

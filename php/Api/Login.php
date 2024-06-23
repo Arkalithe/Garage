@@ -1,20 +1,21 @@
 <?php
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: GET, POST,OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include_once '../Database/Connect.php';
+include_once '../Class/Employe.php';
 include_once '../Class/JwtHandler.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-
     http_response_code(200);
     exit();
 }
 
 $database = new DatabaseConnect();
-$db = $database->dbConnectionNamed();
+$db = $database->dbConnection();
+$employe = new Employee($db);
 
 function msg($success, $status, $message, $extra = []) {
     return array_merge([
@@ -56,18 +57,14 @@ if (strlen($password) < 8) {
 }
 
 try {
-    $fetch_user_by_email = "SELECT * FROM `users` WHERE `email`=:email";
-    $query_stmt = $db->prepare($fetch_user_by_email);
-    $query_stmt->bindValue(':email', $email, PDO::PARAM_STR);
-    $query_stmt->execute();
+    $user = $employe->getUserByEmail($email);
 
-    if ($query_stmt->rowCount()) {
-        $row = $query_stmt->fetch(PDO::FETCH_ASSOC);
-        if (password_verify($password, $row['password'])) {
+    if ($user) {
+        if (password_verify($password, $user['password'])) {
             $jwt = new JwtHandler();
             $accessToken = $jwt->jwtEncodeData(
                 'http://localhost',
-                array("id" => $row['id'], "role" => $row['role'])
+                array("id" => $user['id'], "role" => $user['role'])
             );
             error_log('Generated Token: ' . $accessToken); // Debugging line
             $returnData = [

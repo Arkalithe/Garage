@@ -26,6 +26,21 @@ class Employee
             throw new Exception("Échec de l'obtention des utilisateurs");
         }
     }
+    
+  // Méthode pour obtenir un utilisateur par email
+    public function getUserByEmail($email)
+    {
+        try {
+            $sql = "SELECT id, email, password, role FROM users WHERE email = :email LIMIT 0,1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Erreur de base de données : " . $e->getMessage());
+            throw new Exception("Échec de l'obtention de l'utilisateur par email");
+        }
+    }
 
     // Méthode pour créer un nouvel utilisateur
     public function createUsers()
@@ -105,17 +120,17 @@ class Employee
 
             if (!empty($this->email)) {
                 $sql .= "email = :email, ";
-                $params[':email'] = $this->email;
+                $params[':email'] = htmlspecialchars(strip_tags($this->email));
             }
 
             if (!empty($this->password)) {
                 $sql .= "password = :password, ";
-                $params[':password'] = password_hash($this->password, PASSWORD_DEFAULT);
+                $params[':password'] = password_hash(htmlspecialchars(strip_tags($this->password)), PASSWORD_DEFAULT);
             }
 
             if (!empty($this->role)) {
                 $sql .= "role = :role, ";
-                $params[':role'] = $this->role;
+                $params[':role'] = htmlspecialchars(strip_tags($this->role));
             }
             $sql = rtrim($sql, ', ');
 
@@ -130,8 +145,8 @@ class Employee
 
             if (!$stmt->execute()) {
                 $errorInfo = $stmt->errorInfo();
-                $errorMessage = isset($errorInfo[2]) ? $errorInfo[2] : 'Unknown error';
-                throw new Exception('Error: ' . $errorMessage);
+                $errorMessage = isset($errorInfo[2]) ? $errorInfo[2] : 'erreur inconnue';
+                throw new Exception('Erreur: ' . $errorMessage);
             }
             return true;
         } catch (PDOException $e) {

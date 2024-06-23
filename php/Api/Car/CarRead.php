@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $database = new DatabaseConnect();
-$db = $database->dbConnectionNamed();
+$db = $database->dbConnection();
 $items = new Voiture($db);
 $stmt = $items->getVoiture();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);

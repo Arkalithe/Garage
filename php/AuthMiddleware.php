@@ -6,6 +6,9 @@ class AuthMiddleware extends JwtHandler
     protected $db;
     protected $headers;
     protected $token;
+    protected $exemptedScripts = [
+        'CreateAvis.php'
+    ];
 
     public function __construct($db, $headers)
     {
@@ -14,12 +17,19 @@ class AuthMiddleware extends JwtHandler
         $this->headers = $headers;
     }
 
-    public function isValide($requiredRole = null)
+    public function isValide($requiredRole = null): array
     {
+        if ($this->isExemptedScript()) {
+            return [
+                "success" => 1,
+                "data" => null
+            ];
+        }
+
         if (array_key_exists('Authorization', $this->headers) && preg_match('/Bearer\s(\S+)/', $this->headers['Authorization'], $matches)) {
             $data = $this->jwtDecodeData($matches[1]);
 
-            if (is_object($data['data']) && isset($data['data']->id) && isset($data['data']->role)) {
+            if (is_array($data) && isset($data['data']) && is_object($data['data']) && isset($data['data']->id) && isset($data['data']->role)) {
                 if ($requiredRole === null || $data['data']->role === $requiredRole) {
                     if ($email = $this->fetchEmail($data['data']->id)) {
                         return [
@@ -55,7 +65,13 @@ class AuthMiddleware extends JwtHandler
         }
     }
 
-    protected function fetchEmail($id)
+    protected function isExemptedScript(): bool
+    {
+        $currentScript = basename($_SERVER['SCRIPT_NAME']);
+        return in_array($currentScript, $this->exemptedScripts);
+    }
+
+    protected function fetchEmail(int $id): ?string
     {
         try {
             $query = "SELECT `email` FROM `users` WHERE `id` = :id";
@@ -68,7 +84,7 @@ class AuthMiddleware extends JwtHandler
             } else {
                 return false;
             }
-        } catch (PDOException $e) {            
+        } catch (PDOException $e) {
             error_log('Erreur de récupération de l\'email : ' . $e->getMessage());
             return null;
         }

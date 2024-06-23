@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 
 include_once '../../Database/Connect.php';
 include_once '../../Class/Ocasion.php';
-include_once '../AuthCheckRole.php';
+include_once '../../AuthCheckRole.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $database = new DatabaseConnect();
-$db = $database->dbConnectionNamed();
+$db = $database->dbConnection();
 
 $headers = apache_request_headers();
-authCheckRole($conn, $headers, ['admin']);
+authCheckRole($db, $headers, ['admin']);
 
 $Ocasions = new Ocasion($db);
 
