@@ -7,7 +7,7 @@ class AddDataUsers {
     public function dataUser(){
         // Initialisation de la connexion à la base de données
         $db_connection = new DatabaseConnect();
-        $conn = $db_connection->dbConnectionNamed();
+        $conn = $db_connection->dbConnection();
 
         try {
             $users = [

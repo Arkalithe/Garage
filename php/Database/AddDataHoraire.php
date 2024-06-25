@@ -6,7 +6,7 @@ class AddDataHoraire
     public function dataHoraire()
     {
         $db_connection = new DatabaseConnect();
-        $conn = $db_connection->dbConnectionNamed();
+        $conn = $db_connection->dbConnection();
 
         try {
             // Données à insérer dans la table HORAIRES

@@ -14,7 +14,7 @@ include_once 'AddDataUsers.php';
 
 // Initialisation de la connexion à la base de données
 $db_connection = new DatabaseConnect();
-$conn = $db_connection->dbConnectionNamed();
+$conn = $db_connection->dbConnection();
 
 // Initialisation des objets pour la création et le peuplement de la base de données
 $db_create = new DatabaseCreate();

@@ -5,7 +5,7 @@ class AddDataAvis {
     public function dataAvis(){
         // Initialisation de la connexion à la base de données
         $db_connection = new DatabaseConnect();
-        $conn = $db_connection->dbConnectionNamed();
+        $conn = $db_connection->dbConnection();
         
         try {
             // Données des avis à insérer dans la table avis

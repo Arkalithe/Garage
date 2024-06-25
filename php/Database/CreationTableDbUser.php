@@ -8,7 +8,7 @@ class DatabaseTableCreateUser
     {
         // Initialisation de la connexion à la base de données
         $db_connection = new DatabaseConnect();
-        $conn = $db_connection->dbConnectionNamed();
+        $conn = $db_connection->dbConnection();
 
         try {
             // Table pour stocker les informations de base des users
