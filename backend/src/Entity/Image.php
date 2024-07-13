@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\EquipementRepository;
+use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ApiResource]
-#[ORM\Entity(repositoryClass: EquipementRepository::class)]
-class Equipement
+#[ORM\Entity(repositoryClass: ImageRepository::class)]
+class Image
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,21 +16,21 @@ class Equipement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $equipement = null;
+    private ?string $ImagePath = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEquipement(): ?string
+    public function getImagePath(): ?string
     {
-        return $this->equipement;
+        return $this->ImagePath;
     }
 
-    public function setEquipement(string $equipement): static
+    public function setImagePath(string $ImagePath): static
     {
-        $this->equipement = $equipement;
+        $this->ImagePath = $ImagePath;
 
         return $this;
     }

@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Images;
+use App\Entity\Avis;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Images>
+ * @extends ServiceEntityRepository<Avis>
  */
-class ImagesRepository extends ServiceEntityRepository
+class AvisRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Images::class);
+        parent::__construct($registry, Avis::class);
     }
 
     //    /**
-    //     * @return Images[] Returns an array of Images objects
+    //     * @return Avis[] Returns an array of Avis objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('i.id', 'ASC')
+    //            ->orderBy('a.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Images
+    //    public function findOneBySomeField($value): ?Avis
     //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

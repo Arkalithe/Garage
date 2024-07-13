@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VoitureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Metadata\ApiResource;
 
-#[ORM\Entity(repositoryClass: VoitureRepository::class)]
 #[ApiResource]
+#[ORM\Entity(repositoryClass: VoitureRepository::class)]
 class Voiture
 {
     #[ORM\Id]
@@ -24,10 +24,10 @@ class Voiture
     private ?int $kilometrage = null;
 
     #[ORM\Column]
-    private ?int $annee_circulation = null;
+    private ?int $anneeCirculation = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $modle = null;
+    private ?string $modele = null;
 
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
@@ -39,28 +39,28 @@ class Voiture
     private ?string $numero = null;
 
     /**
-     * @var Collection<int, CvVoiture>
+     * @var Collection<int, Caracteristique>
      */
-    #[ORM\ManyToMany(targetEntity: CvVoiture::class, mappedBy: 'Voiture')]
-    private Collection $cvVoiture;
+    #[ORM\ManyToMany(targetEntity: Caracteristique::class)]
+    private Collection $caracteristique;
 
     /**
-     * @var Collection<int, EvVoiture>
+     * @var Collection<int, Equipement>
      */
-    #[ORM\ManyToMany(targetEntity: EvVoiture::class, mappedBy: 'voiture')]
-    private Collection $EvVoiture;
+    #[ORM\ManyToMany(targetEntity: Equipement::class)]
+    private Collection $equipements;
 
     /**
      * @var Collection<int, VoitureImage>
      */
-    #[ORM\ManyToMany(targetEntity: VoitureImage::class, mappedBy: 'voiture')]
-    private Collection $ImageVoiture;
+    #[ORM\OneToMany(targetEntity: VoitureImage::class, mappedBy: 'voiture')]
+    private Collection $image;
 
     public function __construct()
     {
-        $this->cvVoiture = new ArrayCollection();
-        $this->EvVoiture = new ArrayCollection();
-        $this->ImageVoiture = new ArrayCollection();
+        $this->caracteristique = new ArrayCollection();
+        $this->equipements = new ArrayCollection();
+        $this->image = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,24 +94,24 @@ class Voiture
 
     public function getAnneeCirculation(): ?int
     {
-        return $this->annee_circulation;
+        return $this->anneeCirculation;
     }
 
-    public function setAnneeCirculation(int $annee_circulation): static
+    public function setAnneeCirculation(int $anneeCirculation): static
     {
-        $this->annee_circulation = $annee_circulation;
+        $this->anneeCirculation = $anneeCirculation;
 
         return $this;
     }
 
-    public function getModle(): ?string
+    public function getModele(): ?string
     {
-        return $this->modle;
+        return $this->modele;
     }
 
-    public function setModle(string $modle): static
+    public function setModele(string $modele): static
     {
-        $this->modle = $modle;
+        $this->modele = $modele;
 
         return $this;
     }
@@ -153,55 +153,49 @@ class Voiture
     }
 
     /**
-     * @return Collection<int, CvVoiture>
+     * @return Collection<int, Caracteristique>
      */
-    public function getCvVoiture(): Collection
+    public function getCaracteristique(): Collection
     {
-        return $this->cvVoiture;
+        return $this->caracteristique;
     }
 
-    public function addCvVoiture(CvVoiture $cvVoiture): static
+    public function addCaracteristique(Caracteristique $caracteristique): static
     {
-        if (!$this->cvVoiture->contains($cvVoiture)) {
-            $this->cvVoiture->add($cvVoiture);
-            $cvVoiture->addVoiture($this);
+        if (!$this->caracteristique->contains($caracteristique)) {
+            $this->caracteristique->add($caracteristique);
         }
 
         return $this;
     }
 
-    public function removeCvVoiture(CvVoiture $cvVoiture): static
+    public function removeCaracteristique(Caracteristique $caracteristique): static
     {
-        if ($this->cvVoiture->removeElement($cvVoiture)) {
-            $cvVoiture->removeVoiture($this);
-        }
+        $this->caracteristique->removeElement($caracteristique);
 
         return $this;
     }
 
     /**
-     * @return Collection<int, EvVoiture>
+     * @return Collection<int, Equipement>
      */
-    public function getEvVoiture(): Collection
+    public function getEquipements(): Collection
     {
-        return $this->EvVoiture;
+        return $this->equipements;
     }
 
-    public function addEvVoiture(EvVoiture $evVoiture): static
+    public function addEquipement(Equipement $equipement): static
     {
-        if (!$this->EvVoiture->contains($evVoiture)) {
-            $this->EvVoiture->add($evVoiture);
-            $evVoiture->addVoiture($this);
+        if (!$this->equipements->contains($equipement)) {
+            $this->equipements->add($equipement);
         }
 
         return $this;
     }
 
-    public function removeEvVoiture(EvVoiture $evVoiture): static
+    public function removeEquipement(Equipement $equipement): static
     {
-        if ($this->EvVoiture->removeElement($evVoiture)) {
-            $evVoiture->removeVoiture($this);
-        }
+        $this->equipements->removeElement($equipement);
 
         return $this;
     }
@@ -209,25 +203,28 @@ class Voiture
     /**
      * @return Collection<int, VoitureImage>
      */
-    public function getImageVoiture(): Collection
+    public function getImage(): Collection
     {
-        return $this->ImageVoiture;
+        return $this->image;
     }
 
-    public function addImageVoiture(VoitureImage $imageVoiture): static
+    public function addImage(VoitureImage $image): static
     {
-        if (!$this->ImageVoiture->contains($imageVoiture)) {
-            $this->ImageVoiture->add($imageVoiture);
-            $imageVoiture->addVoiture($this);
+        if (!$this->image->contains($image)) {
+            $this->image->add($image);
+            $image->setVoiture($this);
         }
 
         return $this;
     }
 
-    public function removeImageVoiture(VoitureImage $imageVoiture): static
+    public function removeImage(VoitureImage $image): static
     {
-        if ($this->ImageVoiture->removeElement($imageVoiture)) {
-            $imageVoiture->removeVoiture($this);
+        if ($this->image->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getVoiture() === $this) {
+                $image->setVoiture(null);
+            }
         }
 
         return $this;

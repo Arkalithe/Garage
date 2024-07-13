@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\EVVoiture;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<EVVoiture>
+ * @extends ServiceEntityRepository<User>
  */
-class EVVoitureRepository extends ServiceEntityRepository
+class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EVVoiture::class);
+        parent::__construct($registry, User::class);
     }
 
     //    /**
-    //     * @return EVVoiture[] Returns an array of EVVoiture objects
+    //     * @return User[] Returns an array of User objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
+    //        return $this->createQueryBuilder('u')
+    //            ->andWhere('u.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
+    //            ->orderBy('u.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?EVVoiture
+    //    public function findOneBySomeField($value): ?User
     //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
+    //        return $this->createQueryBuilder('u')
+    //            ->andWhere('u.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

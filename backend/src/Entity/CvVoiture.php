@@ -2,88 +2,52 @@
 
 namespace App\Entity;
 
-use App\Repository\CvVoitureRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\CVVoitureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CvVoitureRepository::class)]
-class CvVoiture
+#[ApiResource]
+#[ORM\Entity(repositoryClass: CVVoitureRepository::class)]
+class CVVoiture
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, Voiture>
-     */
-    #[ORM\ManyToMany(targetEntity: Voiture::class, inversedBy: 'cvVoiture')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private Collection $Voiture;
+    private ?Voiture $voiture = null;
 
-    /**
-     * @var Collection<int, Caracteristique>
-     */
-    #[ORM\ManyToMany(targetEntity: Caracteristique::class, inversedBy: 'CvVoiture')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private Collection $caracteristique;
-
-    public function __construct()
-    {
-        $this->Voiture = new ArrayCollection();
-        $this->caracteristique = new ArrayCollection();
-    }
+    private ?caracteristique $caracteristique = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Voiture>
-     */
-    public function getVoiture(): Collection
+    public function getVoiture(): ?Voiture
     {
-        return $this->Voiture;
+        return $this->voiture;
     }
 
-    public function addVoiture(Voiture $voiture): static
+    public function setVoiture(?Voiture $voiture): static
     {
-        if (!$this->Voiture->contains($voiture)) {
-            $this->Voiture->add($voiture);
-        }
+        $this->voiture = $voiture;
 
         return $this;
     }
 
-    public function removeVoiture(Voiture $voiture): static
-    {
-        $this->Voiture->removeElement($voiture);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Caracteristique>
-     */
-    public function getCaracteristique(): Collection
+    public function getCaracteristique(): ?caracteristique
     {
         return $this->caracteristique;
     }
 
-    public function addCaracteristique(Caracteristique $caracteristique): static
+    public function setCaracteristique(?caracteristique $caracteristique): static
     {
-        if (!$this->caracteristique->contains($caracteristique)) {
-            $this->caracteristique->add($caracteristique);
-        }
-
-        return $this;
-    }
-
-    public function removeCaracteristique(Caracteristique $caracteristique): static
-    {
-        $this->caracteristique->removeElement($caracteristique);
+        $this->caracteristique = $caracteristique;
 
         return $this;
     }

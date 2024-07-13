@@ -2,88 +2,52 @@
 
 namespace App\Entity;
 
-use App\Repository\EvVoitureRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\EVVoitureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EvVoitureRepository::class)]
-class EvVoiture
+#[ApiResource]
+#[ORM\Entity(repositoryClass: EVVoitureRepository::class)]
+class EVVoiture
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, Voiture>
-     */
-    #[ORM\ManyToMany(targetEntity: Voiture::class, inversedBy: 'EvVoiture')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private Collection $voiture;
+    private ?Voiture $voiture = null;
 
-    /**
-     * @var Collection<int, Equipement>
-     */
-    #[ORM\ManyToMany(targetEntity: Equipement::class, inversedBy: 'EvVoiture')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private Collection $equipement;
-
-    public function __construct()
-    {
-        $this->voiture = new ArrayCollection();
-        $this->equipement = new ArrayCollection();
-    }
+    private ?Equipement $equipement = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Voiture>
-     */
-    public function getVoiture(): Collection
+    public function getVoiture(): ?Voiture
     {
         return $this->voiture;
     }
 
-    public function addVoiture(Voiture $voiture): static
+    public function setVoiture(?Voiture $voiture): static
     {
-        if (!$this->voiture->contains($voiture)) {
-            $this->voiture->add($voiture);
-        }
+        $this->voiture = $voiture;
 
         return $this;
     }
 
-    public function removeVoiture(Voiture $voiture): static
-    {
-        $this->voiture->removeElement($voiture);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Equipement>
-     */
-    public function getEquipement(): Collection
+    public function getEquipement(): ?Equipement
     {
         return $this->equipement;
     }
 
-    public function addEquipement(Equipement $equipement): static
+    public function setEquipement(?Equipement $equipement): static
     {
-        if (!$this->equipement->contains($equipement)) {
-            $this->equipement->add($equipement);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipement(Equipement $equipement): static
-    {
-        $this->equipement->removeElement($equipement);
+        $this->equipement = $equipement;
 
         return $this;
     }

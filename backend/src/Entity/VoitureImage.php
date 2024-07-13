@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VoitureImageRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource]
 #[ORM\Entity(repositoryClass: VoitureImageRepository::class)]
 class VoitureImage
 {
@@ -15,75 +15,39 @@ class VoitureImage
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, Voiture>
-     */
-    #[ORM\ManyToMany(targetEntity: Voiture::class, inversedBy: 'ImageVoiture')]
+    #[ORM\ManyToOne(inversedBy: 'image')]
     #[ORM\JoinColumn(nullable: false)]
-    private Collection $voiture;
+    private ?Voiture $voiture = null;
 
-    /**
-     * @var Collection<int, Images>
-     */
-    #[ORM\ManyToMany(targetEntity: Images::class, inversedBy: 'ImageVoiture')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private Collection $image_url;
-
-    public function __construct()
-    {
-        $this->voiture = new ArrayCollection();
-        $this->image_url = new ArrayCollection();
-    }
+    private ?Image $image = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Voiture>
-     */
-    public function getVoiture(): Collection
+    public function getVoiture(): ?Voiture
     {
         return $this->voiture;
     }
 
-    public function addVoiture(Voiture $voiture): static
+    public function setVoiture(?Voiture $voiture): static
     {
-        if (!$this->voiture->contains($voiture)) {
-            $this->voiture->add($voiture);
-        }
+        $this->voiture = $voiture;
 
         return $this;
     }
 
-    public function removeVoiture(Voiture $voiture): static
+    public function getImage(): ?Image
     {
-        $this->voiture->removeElement($voiture);
-
-        return $this;
+        return $this->image;
     }
 
-    /**
-     * @return Collection<int, Images>
-     */
-    public function getImageUrl(): Collection
+    public function setImage(?Image $image): static
     {
-        return $this->image_url;
-    }
-
-    public function addImageUrl(Images $imageUrl): static
-    {
-        if (!$this->image_url->contains($imageUrl)) {
-            $this->image_url->add($imageUrl);
-        }
-
-        return $this;
-    }
-
-    public function removeImageUrl(Images $imageUrl): static
-    {
-        $this->image_url->removeElement($imageUrl);
+        $this->image = $image;
 
         return $this;
     }
