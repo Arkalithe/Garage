@@ -7,6 +7,7 @@ use App\Repository\VoitureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource]
 #[ORM\Entity(repositoryClass: VoitureRepository::class)]
@@ -18,24 +19,38 @@ class Voiture
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
+    #[Assert\Positive]
     private ?int $prix = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
+    #[Assert\Positive]
     private ?int $kilometrage = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
+    #[Assert\Range(min: 1886, max: 2100)]
     private ?int $anneeCirculation = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 50)]
     private ?string $modele = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 50)]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 50)]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 30)]
     private ?string $numero = null;
 
     /**
@@ -53,7 +68,7 @@ class Voiture
     /**
      * @var Collection<int, VoitureImage>
      */
-    #[ORM\OneToMany(targetEntity: VoitureImage::class, mappedBy: 'voiture')]
+    #[ORM\OneToMany(targetEntity: VoitureImage::class, mappedBy: 'voiture', cascade: ['persist'])]
     private Collection $image;
 
     public function __construct()

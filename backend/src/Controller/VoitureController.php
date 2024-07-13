@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Voiture;
@@ -10,12 +11,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class VoitureController extends AbstractController
 {
     #[Route('/api/voitures', name: 'create_voiture', methods: ['POST'])]
-    public function createVoiture(Request $request, EntityManagerInterface $em): Response
-    {
+    public function createVoiture(
+        Request $request, 
+        EntityManagerInterface $em, 
+        ValidatorInterface $validator, 
+        SerializerInterface $serializer
+    ): Response {
         $data = json_decode($request->getContent(), true);
 
         $voiture = new Voiture();
@@ -30,19 +37,24 @@ class VoitureController extends AbstractController
         foreach ($data['caracteristiques'] as $caracteristiqueName) {
             $caracteristique = new Caracteristique();
             $caracteristique->setCaracteristique($caracteristiqueName);
-            $voiture->getCaracteristique()->add($caracteristique);
+            $voiture->addCaracteristique($caracteristique);
         }
 
         foreach ($data['equipements'] as $equipementName) {
             $equipement = new Equipement();
             $equipement->setEquipement($equipementName);
-            $voiture->getEquipements()->add($equipement);
+            $voiture->addEquipement($equipement);
         }
 
         foreach ($data['images'] as $imageName) {
             $voitureImage = new VoitureImage();
             $voitureImage->setImage($imageName);
-            $voiture->getImage()->add($voitureImage);
+            $voiture->addImage($voitureImage);
+        }
+
+        $errors = $validator->validate($voiture);
+        if (count($errors) > 0) {
+            return new Response($serializer->serialize($errors, 'json'), Response::HTTP_BAD_REQUEST, ['Content-Type' => 'application/json']);
         }
 
         $em->persist($voiture);
@@ -52,7 +64,7 @@ class VoitureController extends AbstractController
     }
 
     #[Route('/api/voitures/{id}', name: 'get_voiture', methods: ['GET'])]
-    public function getVoiture($id, EntityManagerInterface $em): Response
+    public function getVoiture(int $id, EntityManagerInterface $em): Response
     {
         $voiture = $em->getRepository(Voiture::class)->find($id);
 
