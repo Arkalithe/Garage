@@ -2,33 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Put;
-use ApiPlatform\Metadata\Delete;
-use ApiPlatform\Metadata\GetCollection;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ApiResource(
-    operations: [
-        new GetCollection(),
-        new Post(
-            uriTemplate: '/register',
-            controller: 'App\Controller\UserController::register',
-            openapiContext: [
-                'summary' => 'Register a new user',
-                'description' => 'Registers a new user with a hashed password',
-            ]
-        ),
-        new Get(),
-        new Put(),
-        new Delete()
-    ]
-)]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements PasswordAuthenticatedUserInterface
 {
@@ -39,7 +17,7 @@ class User implements PasswordAuthenticatedUserInterface
 
     #[Assert\NotBlank]
     #[Assert\Email]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[Assert\NotBlank]
@@ -91,4 +69,9 @@ class User implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
 }
