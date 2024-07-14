@@ -38,6 +38,7 @@ class UserController extends AbstractController
     #[Route('/register', name: 'user_register', methods: ['POST'])]
     public function register(Request $request): JsonResponse
     {
+        $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
         $data = json_decode($request->getContent(), true);
 
         if (!$data || !isset($data['email'], $data['password'], $data['role'])) {
@@ -97,8 +98,9 @@ class UserController extends AbstractController
     }
 
     #[Route('/users/{id}', name: 'get_user_by_id', methods: ['GET'])]
-    public function getUserById(int $id): JsonResponse
+    public function getUserById(int $id, Request $request): JsonResponse
     {
+        $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
         $user = $this->entityManager->getRepository(User::class)->find($id);
 
         if (!$user) {
@@ -109,8 +111,10 @@ class UserController extends AbstractController
     }
 
     #[Route('/users', name: 'get_users', methods: ['GET'])]
-    public function getUsers(): JsonResponse
+    public function getUsers(Request $request): JsonResponse
     {
+        $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
+
         $users = $this->entityManager->getRepository(User::class)->findAll();
 
         return $this->json($users);
