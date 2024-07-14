@@ -6,6 +6,7 @@ use App\Entity\Voiture;
 use App\Entity\Caracteristique;
 use App\Entity\Equipement;
 use App\Entity\VoitureImage;
+use App\EventSubscriber\JwtSubscriber;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class VoitureController extends AbstractController
 {
+    private JwtSubscriber $jwtSubscriber;
+
+    public function __construct(JwtSubscriber $jwtSubscriber)
+    {
+        $this->jwtSubscriber = $jwtSubscriber;
+    }
+
     #[Route('/api/voitures', name: 'create_voiture', methods: ['POST'])]
     public function createVoiture(
         Request $request, 
@@ -60,7 +68,7 @@ class VoitureController extends AbstractController
         $em->persist($voiture);
         $em->flush();
 
-        return new Response('Voiture créée avec succès', Response::HTTP_CREATED);
+        return new Response('Voiture created with success', Response::HTTP_CREATED);
     }
 
     #[Route('/api/voitures/{id}', name: 'get_voiture', methods: ['GET'])]
@@ -69,7 +77,7 @@ class VoitureController extends AbstractController
         $voiture = $em->getRepository(Voiture::class)->find($id);
 
         if (!$voiture) {
-            return new Response('Voiture non trouvée', Response::HTTP_NOT_FOUND);
+            return new Response('Voiture not found', Response::HTTP_NOT_FOUND);
         }
 
         return $this->json($voiture, Response::HTTP_OK, [], [
@@ -95,10 +103,12 @@ class VoitureController extends AbstractController
         ValidatorInterface $validator, 
         SerializerInterface $serializer
     ): Response {
+        $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
+
         $voiture = $em->getRepository(Voiture::class)->find($id);
 
         if (!$voiture) {
-            return new Response('Voiture non trouvée', Response::HTTP_NOT_FOUND);
+            return new Response('Voiture not found', Response::HTTP_NOT_FOUND);
         }
 
         $data = json_decode($request->getContent(), true);
@@ -118,21 +128,23 @@ class VoitureController extends AbstractController
 
         $em->flush();
 
-        return new Response('Voiture mise à jour avec succès', Response::HTTP_OK);
+        return new Response('Voiture updated with success', Response::HTTP_OK);
     }
 
     #[Route('/api/voitures/{id}', name: 'delete_voiture', methods: ['DELETE'])]
-    public function deleteVoiture(int $id, EntityManagerInterface $em): Response
+    public function deleteVoiture(int $id, EntityManagerInterface $em, Request $request): Response
     {
+        $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
+
         $voiture = $em->getRepository(Voiture::class)->find($id);
 
         if (!$voiture) {
-            return new Response('Voiture non trouvée', Response::HTTP_NOT_FOUND);
+            return new Response('Voiture not found', Response::HTTP_NOT_FOUND);
         }
 
         $em->remove($voiture);
         $em->flush();
 
-        return new Response('Voiture supprimée avec succès', Response::HTTP_NO_CONTENT);
+        return new Response('Voiture deleted with success', Response::HTTP_NO_CONTENT);
     }
 }
