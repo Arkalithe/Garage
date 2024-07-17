@@ -21,7 +21,7 @@ class CVVoiture
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?caracteristique $caracteristique = null;
+    private ?Caracteristique $caracteristique = null;
 
     public function getId(): ?int
     {
@@ -40,12 +40,12 @@ class CVVoiture
         return $this;
     }
 
-    public function getCaracteristique(): ?caracteristique
+    public function getCaracteristique(): ?Caracteristique
     {
         return $this->caracteristique;
     }
 
-    public function setCaracteristique(?caracteristique $caracteristique): static
+    public function setCaracteristique(?Caracteristique $caracteristique): static
     {
         $this->caracteristique = $caracteristique;
 

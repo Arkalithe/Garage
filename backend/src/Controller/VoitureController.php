@@ -6,6 +6,9 @@ use App\Entity\Voiture;
 use App\Entity\Caracteristique;
 use App\Entity\Equipement;
 use App\Entity\VoitureImage;
+use App\Entity\Image;
+use App\Entity\CVVoiture;
+use App\Entity\EVVoiture;
 use App\EventSubscriber\JwtSubscriber;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,6 +34,9 @@ class VoitureController extends AbstractController
         ValidatorInterface $validator, 
         SerializerInterface $serializer
     ): Response {
+
+        $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
+        
         $data = json_decode($request->getContent(), true);
 
         $voiture = new Voiture();
@@ -43,21 +49,46 @@ class VoitureController extends AbstractController
         $voiture->setNumero($data['numero']);
 
         foreach ($data['caracteristiques'] as $caracteristiqueName) {
-            $caracteristique = new Caracteristique();
-            $caracteristique->setCaracteristique($caracteristiqueName);
-            $voiture->addCaracteristique($caracteristique);
+            $caracteristique = $em->getRepository(Caracteristique::class)->findOneBy(['caracteristique' => $caracteristiqueName]);
+            if (!$caracteristique) {
+                $caracteristique = new Caracteristique();
+                $caracteristique->setCaracteristique($caracteristiqueName);
+                $em->persist($caracteristique);
+            }
+            $cvVoiture = new CVVoiture();
+            $cvVoiture->setVoiture($voiture);
+            $cvVoiture->setCaracteristique($caracteristique);
+            $voiture->addCaracteristique($cvVoiture);
+            $em->persist($cvVoiture);
         }
 
         foreach ($data['equipements'] as $equipementName) {
-            $equipement = new Equipement();
-            $equipement->setEquipement($equipementName);
-            $voiture->addEquipement($equipement);
+            $equipement = $em->getRepository(Equipement::class)->findOneBy(['equipement' => $equipementName]);
+            if (!$equipement) {
+                $equipement = new Equipement();
+                $equipement->setEquipement($equipementName);
+                $em->persist($equipement);
+            }
+            $evVoiture = new EVVoiture();
+            $evVoiture->setVoiture($voiture);
+            $evVoiture->setEquipement($equipement);
+            $voiture->addEquipement($evVoiture);
+            $em->persist($evVoiture);
         }
 
-        foreach ($data['images'] as $imageName) {
+        foreach ($data['images'] as $imagePath) {
+            $image = $em->getRepository(Image::class)->findOneBy(['ImagePath' => $imagePath]);
+            if (!$image) {
+                $image = new Image();
+                $image->setImagePath($imagePath);
+                $em->persist($image);
+            }
+
             $voitureImage = new VoitureImage();
-            $voitureImage->setImage($imageName);
+            $voitureImage->setVoiture($voiture);
+            $voitureImage->setImage($image);
             $voiture->addImage($voitureImage);
+            $em->persist($voitureImage);
         }
 
         $errors = $validator->validate($voiture);
@@ -113,6 +144,7 @@ class VoitureController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
+        // Update Voiture properties
         $voiture->setPrix($data['prix'] ?? $voiture->getPrix());
         $voiture->setKilometrage($data['kilometrage'] ?? $voiture->getKilometrage());
         $voiture->setAnneeCirculation($data['anneeCirculation'] ?? $voiture->getAnneeCirculation());
@@ -120,6 +152,64 @@ class VoitureController extends AbstractController
         $voiture->setNom($data['nom'] ?? $voiture->getNom());
         $voiture->setPrenom($data['prenom'] ?? $voiture->getPrenom());
         $voiture->setNumero($data['numero'] ?? $voiture->getNumero());
+
+        // Update Caracteristiques
+        foreach ($voiture->getCaracteristique() as $cvVoiture) {
+            $em->remove($cvVoiture);
+        }
+        $voiture->getCaracteristique()->clear();
+        foreach ($data['caracteristiques'] as $caracteristiqueName) {
+            $caracteristique = $em->getRepository(Caracteristique::class)->findOneBy(['caracteristique' => $caracteristiqueName]);
+            if (!$caracteristique) {
+                $caracteristique = new Caracteristique();
+                $caracteristique->setCaracteristique($caracteristiqueName);
+                $em->persist($caracteristique);
+            }
+            $cvVoiture = new CVVoiture();
+            $cvVoiture->setVoiture($voiture);
+            $cvVoiture->setCaracteristique($caracteristique);
+            $voiture->addCaracteristique($cvVoiture);
+            $em->persist($cvVoiture);
+        }
+
+        // Update Equipements
+        foreach ($voiture->getEquipements() as $evVoiture) {
+            $em->remove($evVoiture);
+        }
+        $voiture->getEquipements()->clear();
+        foreach ($data['equipements'] as $equipementName) {
+            $equipement = $em->getRepository(Equipement::class)->findOneBy(['equipement' => $equipementName]);
+            if (!$equipement) {
+                $equipement = new Equipement();
+                $equipement->setEquipement($equipementName);
+                $em->persist($equipement);
+            }
+            $evVoiture = new EVVoiture();
+            $evVoiture->setVoiture($voiture);
+            $evVoiture->setEquipement($equipement);
+            $voiture->addEquipement($evVoiture);
+            $em->persist($evVoiture);
+        }
+
+        // Update Images
+        foreach ($voiture->getImage() as $voitureImage) {
+            $em->remove($voitureImage);
+        }
+        $voiture->getImage()->clear();
+        foreach ($data['images'] as $imagePath) {
+            $image = $em->getRepository(Image::class)->findOneBy(['ImagePath' => $imagePath]);
+            if (!$image) {
+                $image = new Image();
+                $image->setImagePath($imagePath);
+                $em->persist($image);
+            }
+
+            $voitureImage = new VoitureImage();
+            $voitureImage->setVoiture($voiture);
+            $voitureImage->setImage($image);
+            $voiture->addImage($voitureImage);
+            $em->persist($voitureImage);
+        }
 
         $errors = $validator->validate($voiture);
         if (count($errors) > 0) {
@@ -140,6 +230,21 @@ class VoitureController extends AbstractController
 
         if (!$voiture) {
             return new Response('Voiture not found', Response::HTTP_NOT_FOUND);
+        }
+
+        // Remove associated Caracteristiques
+        foreach ($voiture->getCaracteristique() as $cvVoiture) {
+            $em->remove($cvVoiture);
+        }
+
+        // Remove associated Equipements
+        foreach ($voiture->getEquipements() as $evVoiture) {
+            $em->remove($evVoiture);
+        }
+
+        // Remove associated Images
+        foreach ($voiture->getImage() as $voitureImage) {
+            $em->remove($voitureImage);
         }
 
         $em->remove($voiture);

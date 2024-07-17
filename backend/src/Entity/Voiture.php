@@ -51,21 +51,12 @@ class Voiture
     #[Assert\Length(max: 30)]
     private ?string $numero = null;
 
-    /**
-     * @var Collection<int, Caracteristique>
-     */
-    #[ORM\ManyToMany(targetEntity: Caracteristique::class)]
+    #[ORM\OneToMany(targetEntity: CVVoiture::class, mappedBy: 'voiture', cascade: ['persist'])]
     private Collection $caracteristique;
 
-    /**
-     * @var Collection<int, Equipement>
-     */
-    #[ORM\ManyToMany(targetEntity: Equipement::class)]
+    #[ORM\OneToMany(targetEntity: EVVoiture::class, mappedBy: 'voiture', cascade: ['persist'])]
     private Collection $equipements;
 
-    /**
-     * @var Collection<int, VoitureImage>
-     */
     #[ORM\OneToMany(targetEntity: VoitureImage::class, mappedBy: 'voiture', cascade: ['persist'])]
     private Collection $image;
 
@@ -165,57 +156,58 @@ class Voiture
         return $this;
     }
 
-    /**
-     * @return Collection<int, Caracteristique>
-     */
     public function getCaracteristique(): Collection
     {
         return $this->caracteristique;
     }
 
-    public function addCaracteristique(Caracteristique $caracteristique): static
+    public function addCaracteristique(CVVoiture $cvVoiture): static
     {
-        if (!$this->caracteristique->contains($caracteristique)) {
-            $this->caracteristique->add($caracteristique);
+        if (!$this->caracteristique->contains($cvVoiture)) {
+            $this->caracteristique->add($cvVoiture);
+            $cvVoiture->setVoiture($this);
         }
 
         return $this;
     }
 
-    public function removeCaracteristique(Caracteristique $caracteristique): static
+    public function removeCaracteristique(CVVoiture $cvVoiture): static
     {
-        $this->caracteristique->removeElement($caracteristique);
+        if ($this->caracteristique->removeElement($cvVoiture)) {
+            if ($cvVoiture->getVoiture() === $this) {
+                $cvVoiture->setVoiture(null);
+            }
+        }
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Equipement>
-     */
     public function getEquipements(): Collection
     {
         return $this->equipements;
     }
 
-    public function addEquipement(Equipement $equipement): static
+    public function addEquipement(EVVoiture $evVoiture): static
     {
-        if (!$this->equipements->contains($equipement)) {
-            $this->equipements->add($equipement);
+        if (!$this->equipements->contains($evVoiture)) {
+            $this->equipements->add($evVoiture);
+            $evVoiture->setVoiture($this);
         }
 
         return $this;
     }
 
-    public function removeEquipement(Equipement $equipement): static
+    public function removeEquipement(EVVoiture $evVoiture): static
     {
-        $this->equipements->removeElement($equipement);
+        if ($this->equipements->removeElement($evVoiture)) {
+            if ($evVoiture->getVoiture() === $this) {
+                $evVoiture->setVoiture(null);
+            }
+        }
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, VoitureImage>
-     */
     public function getImage(): Collection
     {
         return $this->image;
@@ -234,7 +226,6 @@ class Voiture
     public function removeImage(VoitureImage $image): static
     {
         if ($this->image->removeElement($image)) {
-            // set the owning side to null (unless already changed)
             if ($image->getVoiture() === $this) {
                 $image->setVoiture(null);
             }

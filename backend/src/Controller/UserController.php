@@ -39,6 +39,7 @@ class UserController extends AbstractController
     public function register(Request $request): JsonResponse
     {
         $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
+        
         $data = json_decode($request->getContent(), true);
 
         if (!$data || !isset($data['email'], $data['password'], $data['role'])) {

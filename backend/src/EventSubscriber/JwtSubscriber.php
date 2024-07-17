@@ -3,6 +3,8 @@
 namespace App\EventSubscriber;
 
 use App\Service\JwtHandler;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -53,4 +55,6 @@ class JwtSubscriber
             throw new AccessDeniedHttpException('You do not have the necessary role.');
         }
     }
+
+    
 }
