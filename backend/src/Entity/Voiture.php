@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VoitureRepository::class)]
 class Voiture
@@ -14,50 +15,61 @@ class Voiture
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['voiture:read'])]
     private ?int $id = null;
 
     #[ORM\Column]
     #[Assert\NotNull]
     #[Assert\Positive]
+    #[Groups(['voiture:read'])]
     private ?int $prix = null;
 
     #[ORM\Column]
     #[Assert\NotNull]
     #[Assert\Positive]
+    #[Groups(['voiture:read'])]
     private ?int $kilometrage = null;
 
     #[ORM\Column]
     #[Assert\NotNull]
+    #[Groups(['voiture:read'])]
     #[Assert\Range(min: 1886, max: 2100)]
     private ?int $anneeCirculation = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 50)]
+    #[Groups(['voiture:read'])]
     private ?string $modele = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 50)]
+    #[Groups(['voiture:read'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 50)]
+    #[Groups(['voiture:read'])]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 30)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 30)]
+    #[Groups(['voiture:read'])]
     private ?string $numero = null;
 
     #[ORM\OneToMany(targetEntity: CVVoiture::class, mappedBy: 'voiture', cascade: ['persist'])]
+    #[Groups(['voiture:read'])]
     private Collection $caracteristique;
 
     #[ORM\OneToMany(targetEntity: EVVoiture::class, mappedBy: 'voiture', cascade: ['persist'])]
+    #[Groups(['voiture:read'])]
     private Collection $equipements;
 
     #[ORM\OneToMany(targetEntity: VoitureImage::class, mappedBy: 'voiture', cascade: ['persist'])]
+    #[Groups(['voiture:read'])]
     private Collection $image;
 
     public function __construct()

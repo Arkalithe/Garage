@@ -17,6 +17,8 @@ class JwtSubscriber
     private const PUBLIC_ROUTES = [
         '/login' => [],
         '/register' => [],
+        '/api/voitures' => ['GET'],
+        '/api/voitures/{id}' => ['GET'],
     ];
 
     public function __construct(JwtHandler $jwtHandler)
@@ -28,9 +30,12 @@ class JwtSubscriber
     {
         $request = $event->getRequest();
         $path = $request->getPathInfo();
+        $method = $request->getMethod();
 
-        if (isset(self::PUBLIC_ROUTES[$path]) && empty(self::PUBLIC_ROUTES[$path])) {
-            return;
+        foreach (self::PUBLIC_ROUTES as $route => $methods) {
+            if (preg_match("#^" . preg_quote($route, '#') . "(/|$)#", $path) && (empty($methods) || in_array($method, $methods))) {
+                return;
+            }
         }
 
         $authHeader = $request->headers->get('Authorization');
@@ -55,6 +60,4 @@ class JwtSubscriber
             throw new AccessDeniedHttpException('You do not have the necessary role.');
         }
     }
-
-    
 }
