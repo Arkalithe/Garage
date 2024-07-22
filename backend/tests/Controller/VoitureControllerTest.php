@@ -46,7 +46,7 @@ class VoitureControllerTest extends WebTestCase
     private function resetSchema(): void
     {
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
-
+    
         if (!empty($metadata)) {
             $tool = new \Doctrine\ORM\Tools\SchemaTool($this->entityManager);
             $tool->dropSchema($metadata);
@@ -242,12 +242,15 @@ class VoitureControllerTest extends WebTestCase
     {
         $voiture = $this->entityManager->getRepository(Voiture::class)->findOneBy([]);
         $this->assertNotNull($voiture, 'No Voiture found in the database.');
-
+    
         $jwtToken = $this->createJwtToken('admin', 'admin');
-
+    
         $payload = $this->createVoiturePayload();
         $payload['prix'] = 35000;
-
+        $payload['caracteristique'] = ['Air Conditioning', 'Heated Seats'];
+        $payload['equipement'] = ['GPS', 'Sunroof'];
+        $payload['images'] = ['/images/car1.jpg', '/images/car3.jpg'];
+    
         $this->client->request(
             'PUT',
             '/api/voitures/' . $voiture->getId(),
@@ -259,35 +262,53 @@ class VoitureControllerTest extends WebTestCase
             ],
             json_encode($payload)
         );
-
+    
         $response = $this->client->getResponse();
-
+    
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
         $this->assertStringContainsString('Voiture updated with success', $response->getContent());
-
+    
         $updatedVoiture = $this->entityManager->getRepository(Voiture::class)->find($voiture->getId());
         $this->assertEquals(35000, $updatedVoiture->getPrix());
+        $this->assertCount(2, $updatedVoiture->getCaracteristique());
+        $this->assertCount(2, $updatedVoiture->getEquipements());
+        $this->assertCount(2, $updatedVoiture->getImage());
     }
 
     public function testDeleteVoiture(): void
     {
         $voiture = $this->entityManager->getRepository(Voiture::class)->findOneBy([]);
         $this->assertNotNull($voiture, 'No Voiture found in the database.');
-
+        
+        $voitureId = $voiture->getId();
+    
         $jwtToken = $this->createJwtToken('admin', 'admin');
-
+    
         $this->client->request(
             'DELETE',
-            '/api/voitures/' . $voiture->getId(),
+            '/api/voitures/' . $voitureId,
             [],
             [],
             [
                 'HTTP_Authorization' => sprintf('Bearer %s', $jwtToken),
             ]
         );
-
+    
         $response = $this->client->getResponse();
-
         $this->assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
+    
+        $deletedVoiture = $this->entityManager->getRepository(Voiture::class)->find($voitureId);
+        $this->assertNull($deletedVoiture, 'Voiture should be deleted.');
+
+        $deletedCaracteristiques = $this->entityManager->getRepository(CVVoiture::class)->findBy(['voiture' => $voitureId]);
+        $this->assertCount(0, $deletedCaracteristiques, 'All related caracteristiques should be deleted.');
+    
+        $deletedEquipements = $this->entityManager->getRepository(EVVoiture::class)->findBy(['voiture' => $voitureId]);
+        $this->assertCount(0, $deletedEquipements, 'All related equipements should be deleted.');
+    
+        $deletedImages = $this->entityManager->getRepository(VoitureImage::class)->findBy(['voiture' => $voitureId]);
+        $this->assertCount(0, $deletedImages, 'All related images should be deleted.');
     }
+    
+    
 }

@@ -60,15 +60,15 @@ class Voiture
     #[Groups(['voiture:read'])]
     private ?string $numero = null;
 
-    #[ORM\OneToMany(targetEntity: CVVoiture::class, mappedBy: 'voiture', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: CVVoiture::class, mappedBy: 'voiture', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['voiture:read'])]
     private Collection $caracteristique;
 
-    #[ORM\OneToMany(targetEntity: EVVoiture::class, mappedBy: 'voiture', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: EVVoiture::class, mappedBy: 'voiture', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['voiture:read'])]
     private Collection $equipements;
 
-    #[ORM\OneToMany(targetEntity: VoitureImage::class, mappedBy: 'voiture', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: VoitureImage::class, mappedBy: 'voiture', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['voiture:read'])]
     private Collection $image;
 
