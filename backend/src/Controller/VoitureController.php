@@ -26,12 +26,88 @@ class VoitureController extends AbstractController
     {
         $this->jwtSubscriber = $jwtSubscriber;
     }
+    private function populateVoiture(Voiture $voiture, array $data, EntityManagerInterface $em): void
+    {
+        $voiture->setPrix($data['prix']);
+        $voiture->setKilometrage($data['kilometrage']);
+        $voiture->setAnneeCirculation($data['anneeCirculation']);
+        $voiture->setModele($data['modele']);
+        $voiture->setNom($data['nom']);
+        $voiture->setPrenom($data['prenom']);
+        $voiture->setNumero($data['numero']);
 
+        $this->handleCaracteristiques($voiture, $data['caracteristique'], $em);
+        $this->handleEquipements($voiture, $data['equipement'], $em);
+        $this->handleImages($voiture, $data['images'], $em);
+    }
+
+    private function handleCaracteristiques(Voiture $voiture, array $caracteristiques, EntityManagerInterface $em): void
+    {
+        foreach ($voiture->getCaracteristique() as $cvVoiture) {
+            $em->remove($cvVoiture);
+        }
+        $voiture->getCaracteristique()->clear();
+
+        foreach ($caracteristiques as $caracteristiqueName) {
+            $caracteristique = $em->getRepository(Caracteristique::class)->findOneBy(['caracteristique' => $caracteristiqueName])
+                ?? new Caracteristique();
+            $caracteristique->setCaracteristique($caracteristiqueName);
+            $em->persist($caracteristique);
+
+            $cvVoiture = new CVVoiture();
+            $cvVoiture->setVoiture($voiture);
+            $cvVoiture->setCaracteristique($caracteristique);
+            $voiture->addCaracteristique($cvVoiture);
+            $em->persist($cvVoiture);
+        }
+    }
+
+    private function handleEquipements(Voiture $voiture, array $equipements, EntityManagerInterface $em): void
+    {
+        foreach ($voiture->getEquipements() as $evVoiture) {
+            $em->remove($evVoiture);
+        }
+        $voiture->getEquipements()->clear();
+
+        foreach ($equipements as $equipementName) {
+            $equipement = $em->getRepository(Equipement::class)->findOneBy(['equipement' => $equipementName])
+                ?? new Equipement();
+            $equipement->setEquipement($equipementName);
+            $em->persist($equipement);
+
+            $evVoiture = new EVVoiture();
+            $evVoiture->setVoiture($voiture);
+            $evVoiture->setEquipement($equipement);
+            $voiture->addEquipement($evVoiture);
+            $em->persist($evVoiture);
+        }
+    }
+
+    private function handleImages(Voiture $voiture, array $images, EntityManagerInterface $em): void
+    {
+        foreach ($voiture->getImage() as $voitureImage) {
+            $em->remove($voitureImage);
+        }
+        $voiture->getImage()->clear();
+
+        foreach ($images as $imagePath) {
+            $image = $em->getRepository(Image::class)->findOneBy(['ImagePath' => $imagePath])
+                ?? new Image();
+            $image->setImagePath($imagePath);
+            $em->persist($image);
+
+            $voitureImage = new VoitureImage();
+            $voitureImage->setVoiture($voiture);
+            $voitureImage->setImage($image);
+            $voiture->addImage($voitureImage);
+            $em->persist($voitureImage);
+        }
+    }
     #[Route('/api/voitures', name: 'create_voiture', methods: ['POST'])]
     public function createVoiture(
-        Request $request, 
-        EntityManagerInterface $em, 
-        ValidatorInterface $validator, 
+        Request $request,
+        EntityManagerInterface $em,
+        ValidatorInterface $validator,
         SerializerInterface $serializer
     ): Response {
         $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
@@ -78,10 +154,10 @@ class VoitureController extends AbstractController
 
     #[Route('/api/voitures/{id}', name: 'update_voiture', methods: ['PUT'])]
     public function updateVoiture(
-        int $id, 
-        Request $request, 
-        EntityManagerInterface $em, 
-        ValidatorInterface $validator, 
+        int $id,
+        Request $request,
+        EntityManagerInterface $em,
+        ValidatorInterface $validator,
         SerializerInterface $serializer
     ): Response {
         $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
@@ -120,83 +196,5 @@ class VoitureController extends AbstractController
         $em->flush();
 
         return new Response('Voiture deleted with success', Response::HTTP_NO_CONTENT);
-    }
-
-    private function populateVoiture(Voiture $voiture, array $data, EntityManagerInterface $em): void
-    {
-        $voiture->setPrix($data['prix']);
-        $voiture->setKilometrage($data['kilometrage']);
-        $voiture->setAnneeCirculation($data['anneeCirculation']);
-        $voiture->setModele($data['modele']);
-        $voiture->setNom($data['nom']);
-        $voiture->setPrenom($data['prenom']);
-        $voiture->setNumero($data['numero']);
-
-        $this->handleCaracteristiques($voiture, $data['caracteristiques'], $em);
-        $this->handleEquipements($voiture, $data['equipements'], $em);
-        $this->handleImages($voiture, $data['images'], $em);
-    }
-
-    private function handleCaracteristiques(Voiture $voiture, array $caracteristiques, EntityManagerInterface $em): void
-    {
-        foreach ($voiture->getCaracteristique() as $cvVoiture) {
-            $em->remove($cvVoiture);
-        }
-        $voiture->getCaracteristique()->clear();
-
-        foreach ($caracteristiques as $caracteristiqueName) {
-            $caracteristique = $em->getRepository(Caracteristique::class)->findOneBy(['caracteristique' => $caracteristiqueName]) 
-                ?? new Caracteristique();
-            $caracteristique->setCaracteristique($caracteristiqueName);
-            $em->persist($caracteristique);
-
-            $cvVoiture = new CVVoiture();
-            $cvVoiture->setVoiture($voiture);
-            $cvVoiture->setCaracteristique($caracteristique);
-            $voiture->addCaracteristique($cvVoiture);
-            $em->persist($cvVoiture);
-        }
-    }
-
-    private function handleEquipements(Voiture $voiture, array $equipements, EntityManagerInterface $em): void
-    {
-        foreach ($voiture->getEquipements() as $evVoiture) {
-            $em->remove($evVoiture);
-        }
-        $voiture->getEquipements()->clear();
-
-        foreach ($equipements as $equipementName) {
-            $equipement = $em->getRepository(Equipement::class)->findOneBy(['equipement' => $equipementName]) 
-                ?? new Equipement();
-            $equipement->setEquipement($equipementName);
-            $em->persist($equipement);
-
-            $evVoiture = new EVVoiture();
-            $evVoiture->setVoiture($voiture);
-            $evVoiture->setEquipement($equipement);
-            $voiture->addEquipement($evVoiture);
-            $em->persist($evVoiture);
-        }
-    }
-
-    private function handleImages(Voiture $voiture, array $images, EntityManagerInterface $em): void
-    {
-        foreach ($voiture->getImage() as $voitureImage) {
-            $em->remove($voitureImage);
-        }
-        $voiture->getImage()->clear();
-
-        foreach ($images as $imagePath) {
-            $image = $em->getRepository(Image::class)->findOneBy(['ImagePath' => $imagePath]) 
-                ?? new Image();
-            $image->setImagePath($imagePath);
-            $em->persist($image);
-
-            $voitureImage = new VoitureImage();
-            $voitureImage->setVoiture($voiture);
-            $voitureImage->setImage($image);
-            $voiture->addImage($voitureImage);
-            $em->persist($voitureImage);
-        }
     }
 }

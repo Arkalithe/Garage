@@ -2,12 +2,18 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Caracteristique;
+use App\Entity\CVVoiture;
+use App\Entity\Equipement;
+use App\Entity\EVVoiture;
+use App\Entity\Image;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\JwtHandler;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Psr\Log\LoggerInterface;
 use App\Entity\Voiture;
+use App\Entity\VoitureImage;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 
@@ -56,7 +62,7 @@ class VoitureControllerTest extends WebTestCase
     private function loadVoitureFixtures(): void
     {
         $faker = Factory::create();
-        
+
         for ($i = 0; $i < 20; $i++) {
             $voiture = new Voiture();
             $voiture->setPrix($faker->numberBetween(15000, 50000));
@@ -64,12 +70,39 @@ class VoitureControllerTest extends WebTestCase
             $voiture->setAnneeCirculation($faker->numberBetween(2000, 2023));
             $voiture->setModele($faker->randomElement(['Model S', 'Model X',]));
             $voiture->setNom($faker->lastName());
-            $voiture->setPrenom($faker->firstName()); 
-            $voiture->setNumero($faker->phoneNumber()); 
-            
+            $voiture->setPrenom($faker->firstName());
+            $voiture->setNumero($faker->phoneNumber());
+
+            $caracteristique = new Caracteristique();
+            $caracteristique->setCaracteristique('Air Conditioning');
+            $this->entityManager->persist($caracteristique);
+
+            $cvVoiture = new CVVoiture();
+            $cvVoiture->setVoiture($voiture);
+            $cvVoiture->setCaracteristique($caracteristique);
+            $voiture->addCaracteristique($cvVoiture);
+
+            $equipement = new Equipement();
+            $equipement->setEquipement('GPS');
+            $this->entityManager->persist($equipement);
+
+            $evVoiture = new EVVoiture();
+            $evVoiture->setVoiture($voiture);
+            $evVoiture->setEquipement($equipement);
+            $voiture->addEquipement($evVoiture);
+
+            $image = new Image();
+            $image->setImagePath('/images/car1.jpg');
+            $this->entityManager->persist($image);
+            $voitureImage = new VoitureImage();
+            $voitureImage->setVoiture($voiture);
+            $voitureImage->setImage($image);
+            $voiture->addImage($voitureImage);
+
             $this->entityManager->persist($voiture);
+
         }
-    
+
         $this->entityManager->flush();
     }
 
@@ -83,8 +116,8 @@ class VoitureControllerTest extends WebTestCase
             'nom' => 'Doe',
             'prenom' => 'John',
             'numero' => '1234567890',
-            'caracteristiques' => ['Air Conditioning', 'Leather Seats'],
-            'equipements' => ['GPS', 'Bluetooth'],
+            'caracteristique' => ['Air Conditioning', 'Leather Seats'],
+            'equipement' => ['GPS', 'Bluetooth'],
             'images' => ['/images/car1.jpg', '/images/car2.jpg']
         ];
     }
@@ -109,6 +142,14 @@ class VoitureControllerTest extends WebTestCase
 
         $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
         $this->assertStringContainsString('Voiture created with success', $response->getContent());
+
+        $createdVoiture = $this->entityManager->getRepository(Voiture::class)->findOneBy(['nom' => 'Doe']);
+        $this->assertNotNull($createdVoiture);
+        $this->assertEquals(25000, $createdVoiture->getPrix());
+
+        $this->assertCount(2, $createdVoiture->getCaracteristique());
+        $this->assertCount(2, $createdVoiture->getEquipements());
+        $this->assertCount(2, $createdVoiture->getImage());
     }
 
     public function testCreateVoitureWithoutToken(): void
@@ -170,12 +211,11 @@ class VoitureControllerTest extends WebTestCase
         $this->assertStringContainsString('Model S', $response->getContent());
         $this->assertStringContainsString('Model X', $response->getContent());
     }
-
     public function testGetVoiture(): void
     {
         $voiture = $this->entityManager->getRepository(Voiture::class)->findOneBy([]);
         $this->assertNotNull($voiture, 'No Voiture found in the database.');
-
+    
         $this->client->request(
             'GET',
             '/api/voitures/' . $voiture->getId(),
@@ -185,11 +225,17 @@ class VoitureControllerTest extends WebTestCase
                 'CONTENT_TYPE' => 'application/json',
             ]
         );
-
+    
         $response = $this->client->getResponse();
-
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
-        $this->assertStringContainsString($voiture->getModele(), $response->getContent());
+    
+        $content = $response->getContent();    
+        $data = json_decode($content, true);
+        
+        $this->assertEquals($voiture->getModele(), $data['modele']);
+        $this->assertEquals('Air Conditioning', $data['caracteristique'][0]['caracteristique']['caracteristique']);
+        $this->assertEquals('GPS', $data['equipements'][0]['equipement']['equipement']);
+        $this->assertEquals('/images/car1.jpg', $data['image'][0]['image']['ImagePath']);
     }
 
     public function testUpdateVoiture(): void
