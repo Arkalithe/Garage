@@ -4,7 +4,7 @@ import config from '../../api/axios';
 
 const DepanageDetails = () => {
     const [depanageContent, setDepanageContent] = useState([]);
-    const depannage_url = "/Garage/php/Api/Depanage/DepanageRead.php";
+    const depannage_url = "/api/depannage_contents";
 
     useEffect(() => {
         getData();

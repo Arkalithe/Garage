@@ -5,7 +5,7 @@ import config from '../../api/axios';
 export const VoitureOccasion = () => {
 
   const [voitureContent, setVoitureContent] = useState([]);
-  const voiture_url = "/Garage/php/Api/Ocasion/OcasionRead.php";
+  const voiture_url = "/api/reparation_contents";
 
   useEffect(() => {
     getData();

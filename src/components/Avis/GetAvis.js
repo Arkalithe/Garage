@@ -4,7 +4,7 @@ import { Rating } from "@mui/material";
 import { Container } from "react-bootstrap";
 
 const GetAvis = () => {
-    const register_url = '/Garage/php/Api/Avis/AvisRead.php';
+    const register_url = '/api/aviss';
     const [avis, setAvis] = useState([]);
 
 
@@ -15,6 +15,7 @@ const GetAvis = () => {
     const fetchAvis = async () => {
         try {
             const response = await config.localTestingUrl.get(register_url);
+            console.log(response.data)
             const filteredData = response.data.filter(aviss => aviss.moderate === 1);
             const shuffledData = filteredData.sort(() => Math.random() - 0.5);
 

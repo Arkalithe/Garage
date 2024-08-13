@@ -12,8 +12,8 @@ const EditDepanage = () => {
     image: null,
   });
 
-  const depanage_url = "/Garage/php/Api/Depanage/DepanageRead.php";
-  const depanage_edit_url = "/Garage/php/Api/Depanage/DepanageUpdate.php";
+  const depanage_url = "/api/depannage_contents";
+  const depanage_edit_url = "/api/depannage_contents";
 
   useEffect(() => {
     getData();
@@ -47,7 +47,7 @@ const EditDepanage = () => {
     }
 
     try {
-      await config.localTestingUrl.post(depanage_edit_url, newFormData, {
+      await config.localTestingUrl.patch(depanage_edit_url, newFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

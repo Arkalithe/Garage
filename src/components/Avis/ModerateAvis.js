@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Rating } from "@mui/material";
 
 const ModerateAvis = () => {
-  const register_url = "/Garage/php/Api/Avis/AvisRead.php";
+  const register_url = "/api/aviss";
   const [avis, setAvis] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);

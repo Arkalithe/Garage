@@ -12,8 +12,8 @@ const EditReparation = () => {
         image: null,
     });
 
-    const reparation_url = "/Garage/php/Api/Reparation/ReparationRead.php";
-    const reparation_edit_url = "/Garage/php/Api/Reparation/ReparationUpdate.php";
+    const reparation_url = "//api/reparation_contents";
+    const reparation_edit_url = "/api/reparation_contents";
 
     useEffect(() => {
         getData();
@@ -46,7 +46,7 @@ const EditReparation = () => {
         }
 
         try {
-            await config.localTestingUrl.post(reparation_edit_url, newFormData, {
+            await config.localTestingUrl.patch(reparation_edit_url, newFormData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

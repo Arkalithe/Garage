@@ -5,9 +5,9 @@ import { Rating } from "@mui/material";
 import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
 
 const SingleAvis = () => {
-    const avis_url = "/Garage/php/Api/Avis/AvisGetSingle.php";
-    const deleteAvis_url = "/Garage/php/Api/Avis/AvisDelete.php";
-    const updateAvis_url = "/Garage/php/Api/Avis/AvisUpdate.php";
+    const avis_url = "/api/aviss";
+    const deleteAvis_url = "/api/aviss";
+    const updateAvis_url = "/api/aviss";
 
     const [isLoading, setLoading] = useState(true);
     const [avis, setAvis] = useState([]);
@@ -32,7 +32,7 @@ const SingleAvis = () => {
         const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cet avis ?");
         if (confirmDelete) {
             try {
-                await config.localTestingUrl.post(deleteAvis_url, { ids: [idAvis] });
+                await config.localTestingUrl.delete(deleteAvis_url, { params: { id: idAvis } });
                 navigate(-1); // Go back to the previous page
             } catch (error) {
                 console.error("Error deleting avis:", error);
@@ -52,7 +52,7 @@ const SingleAvis = () => {
                     name: avis.name
                 };
 
-                await config.localTestingUrl.post(updateAvis_url, updatedAvis);
+                await config.localTestingUrl.patch(updateAvis_url, updatedAvis);
                 setAvis(prevAvis => ({ ...prevAvis, moderate: 1 }));
                 navigate(-1); // Go back to the previous page
             } catch (error) {

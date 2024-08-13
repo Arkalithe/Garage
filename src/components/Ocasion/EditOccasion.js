@@ -12,8 +12,8 @@ const EditOcasion = () => {
     image: null,
   });
 
-  const ocasion_url = "/Garage/php/Api/Ocasion/OcasionRead.php";
-  const ocasion_edit_url = "/Garage/php/Api/Ocasion/OcasionUpdate.php";
+  const ocasion_url = "/api/voiture_contents";
+  const ocasion_edit_url = "/api/voiture_contents";
 
   useEffect(() => {
     getData();
@@ -45,7 +45,7 @@ const EditOcasion = () => {
     }
 
     try {
-      await config.localTestingUrl.post(ocasion_edit_url, newFormData, {
+      await config.localTestingUrl.patch(ocasion_edit_url, newFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

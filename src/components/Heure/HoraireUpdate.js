@@ -9,8 +9,8 @@ const timeOptions = Array.from({ length: 24 }, (_, i) => {
 }).flat();
 
 const HoraireUpdate = () => {
-  const update_url = '/Garage/php/Api/Horaire/HoraireUpdate.php';
-  const fetch_url = '/Garage/php/Api/Horaire/HoraireRead.php';
+  const update_url = '/api/horaires';
+  const fetch_url = '/api/horaires';
 
   const [businessHours, setBusinessHours] = useState([]);
   const [groupedHours, setGroupedHours] = useState([]);
@@ -55,7 +55,7 @@ const HoraireUpdate = () => {
         for (const hour of hoursToUpdate) {
           const { id, day_id, heure_start, heure_fin, time_period, is_fermed } = hour;
           const data = { id, day_id, heure_start, heure_fin, time_period, is_fermed };
-          await config.localTestingUrl.post(update_url, JSON.stringify(data));
+          await config.localTestingUrl.patch(update_url, JSON.stringify(data));
         }
       }
     } catch (error) {

@@ -5,7 +5,7 @@ import config from '../../api/axios';
 const Horaire = () => {
 
 
-  const fetch_url = '/Garage/php/Api/Horaire/HoraireRead.php';
+  const fetch_url = '/api/horaires';
   const [businessHours, setBusinessHours] = useState([]);
 
   useEffect(() => {
