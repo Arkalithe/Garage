@@ -21,6 +21,27 @@ class User implements PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[Assert\NotBlank]
+    #[Assert\Length(min: 8, minMessage: "Le Mot de Passe doit faire au moins 8 caractère")]
+    #[Assert\Regex(
+        pattern: "/[a-z]/",
+        message: "Le Mot de Passe doit contenire au moins une lettre minuscule",
+        match: true
+    )]
+    #[Assert\Regex(
+        pattern: "/[A-Z]/",
+        message: "Le Mot de Passe doit contenire au moins une lettre majuscule",
+        match: true
+    )]
+    #[Assert\Regex(
+        pattern: "/[0-9]/",
+        message: "Le Mot de Passe doit contenire au moins un chiffre",
+        match: true
+    )]
+    #[Assert\Regex(
+        pattern: "/[^a-zA-Z0-9]/",
+        message: "Le Mot de Passe doit contenire au moins un caractère special",
+        match: true
+    )]
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 

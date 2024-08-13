@@ -7,7 +7,6 @@ use App\Repository\CVVoitureRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource]
 #[ORM\Entity(repositoryClass: CVVoitureRepository::class)]
 class CVVoiture
 {

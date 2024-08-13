@@ -19,6 +19,12 @@ class JwtSubscriber
         '/register' => [],
         '/api/voitures' => ['GET'],
         '/api/voitures/{id}' => ['GET'],
+        '/api/aviss' => ['GET'],
+        '/api/voiture_contents' => ["GET"],
+        '/api/reparation_contents' => ['GET'],
+        '/api/depannage_contents' => ['GET'],
+        '/api' => [],
+        '/_profiler' => []
     ];
 
     public function __construct(JwtHandler $jwtHandler)
@@ -32,8 +38,11 @@ class JwtSubscriber
         $path = $request->getPathInfo();
         $method = $request->getMethod();
 
+        error_log('Path: ' . $path);
+        error_log('Method: ' . $method);
+
         foreach (self::PUBLIC_ROUTES as $route => $methods) {
-            if (preg_match("#^" . preg_quote($route, '#') . "(/|$)#", $path) && (empty($methods) || in_array($method, $methods))) {
+            if (preg_match("#^" . preg_quote($route, '#') . "(?:/\d+)?(/|$)#", $path) && (empty($methods) || in_array($method, $methods))) {
                 return;
             }
         }
