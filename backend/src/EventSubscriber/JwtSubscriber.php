@@ -17,6 +17,7 @@ class JwtSubscriber
     private const PUBLIC_ROUTES = [
         '/login' => [],
         '/register' => [],
+        '/create-admin' => [],
         '/api/voitures' => ['GET'],
         '/api/voitures/{id}' => ['GET'],
         '/api/aviss' => ['GET'],

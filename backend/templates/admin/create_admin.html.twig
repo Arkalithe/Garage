@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire de création d'un Admin{% endblock %}
+
+{% block body %}
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: white;">
+        <div style="text-align: center; max-width: 400px; width: 100%; border: 1px solid #ccc; box-shadow: 2px 2px 8px rgba(0,0,0,0.25); padding: 20px; border-radius: 10px; background-color: #777777;">
+            {% if not existingAdmin %}
+                <h1>Formulaire de création d'un Admin</h1>
+
+                {{ form_start(adminCreationForm, { attr: { style: 'display: flex; flex-direction: column; gap: 20px; align-items: center;' } }) }}
+                {% for field in adminCreationForm %}
+                    <div style="margin-bottom: 15px;">
+                        {{ form_row(field, { attr: { class: 'form-control' } }) }}
+                    </div>
+                {% endfor %}
+                {{ form_end(adminCreationForm) }}
+            {% else %}
+                <div class="alert alert-danger">
+                    Un admin existe déjà. Vous allez être redirigé.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
