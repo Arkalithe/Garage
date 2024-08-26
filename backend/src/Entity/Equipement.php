@@ -13,7 +13,6 @@ class Equipement
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['voiture:read'])]
-    
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

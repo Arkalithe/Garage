@@ -84,12 +84,12 @@ class Horaire
         return $this;
     }
 
-    public function isFermed(): ?bool
+    public function getIsFermed(): ?bool
     {
         return $this->isFermed;
     }
 
-    public function setFermed(bool $isFermed): static
+    public function setIsFermed(bool $isFermed): static
     {
         $this->isFermed = $isFermed;
 

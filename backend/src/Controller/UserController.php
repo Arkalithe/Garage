@@ -7,6 +7,7 @@ use App\EventSubscriber\JwtSubscriber;
 use App\Service\JwtHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -22,12 +23,13 @@ class UserController extends AbstractController
     private JwtSubscriber $jwtSubscriber;
 
     public function __construct(
-        JwtHandler $jwtHandler,
+        JwtHandler                  $jwtHandler,
         UserPasswordHasherInterface $passwordHasher,
-        EntityManagerInterface $entityManager,
-        ValidatorInterface $validator,
-        JwtSubscriber $jwtSubscriber
-    ) {
+        EntityManagerInterface      $entityManager,
+        ValidatorInterface          $validator,
+        JwtSubscriber               $jwtSubscriber
+    )
+    {
         $this->jwtHandler = $jwtHandler;
         $this->passwordHasher = $passwordHasher;
         $this->entityManager = $entityManager;
@@ -39,7 +41,7 @@ class UserController extends AbstractController
     public function register(Request $request): JsonResponse
     {
         $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
-        
+
         $data = json_decode($request->getContent(), true);
 
         if (!$data || !isset($data['email'], $data['password'], $data['role'])) {
@@ -95,7 +97,11 @@ class UserController extends AbstractController
             $user->getRole()
         );
 
-        return new JsonResponse(['status' => 'Login successful', 'token' => $token]);
+        $response = new JsonResponse(['status' => 'Login successful', 'token' => $token]);
+        $cookie = new Cookie('jwt', $token, time() + (3600 * 3), '/', null, true, true, false, 'none');
+        $response->headers->setCookie($cookie);
+
+        return $response;
     }
 
     #[Route('/users/{id}', name: 'get_user_by_id', methods: ['GET'])]

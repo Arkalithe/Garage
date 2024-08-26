@@ -56,7 +56,7 @@ const Header = () => {
                             <Nav.Link as={Link} to="/newavis" className="bouton nav-link" onClick={() => setExpanded(false)}>Avis</Nav.Link>
                             <Nav.Link as={Link} to="/voiture" className="bouton nav-link" onClick={() => setExpanded(false)}> Voiture</Nav.Link>
 
-                            {auth.accessToken && (
+                            {auth.token && (
                                 <>
                                     {auth.role === 'admin' && (
                                         <Nav.Link as={Link} to="/adminSpace" className="bouton nav-link" onClick={() => setExpanded(false)}>Espace Admin</Nav.Link>
@@ -67,7 +67,7 @@ const Header = () => {
                                     <Button className="bouton nav-link" onClick={handleLogout}>Déconnexion</Button>
                                 </>
                             )}
-                            {!auth.accessToken && (
+                            {!auth.token && (
                                 <Nav.Link as={Link} to="/login" className="bouton nav-link" onClick={() => setExpanded(false)}>Connexion</Nav.Link>
                             )}
                         </Nav>

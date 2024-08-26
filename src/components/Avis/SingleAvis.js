@@ -17,9 +17,10 @@ const SingleAvis = () => {
     useEffect(() => {
         const fetchAvis = async () => {
             try {
-                const response = await config.localTestingUrl.get(avis_url, { params: { id: idAvis } });
-                console.log(response);
-                setAvis(response.data);
+                const response = await config.localhost.get(avis_url, { params: { id: idAvis } });
+                const avisData = response.data['hydra:member'];
+                console.log(avisData);
+                setAvis(avisData);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching avis:", error);

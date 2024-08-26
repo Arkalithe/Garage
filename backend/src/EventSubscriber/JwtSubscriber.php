@@ -16,7 +16,6 @@ class JwtSubscriber
 
     private const PUBLIC_ROUTES = [
         '/login' => [],
-        '/register' => [],
         '/create-admin' => [],
         '/api/voitures' => ['GET'],
         '/api/voitures/{id}' => ['GET'],
@@ -39,18 +38,13 @@ class JwtSubscriber
         $path = $request->getPathInfo();
         $method = $request->getMethod();
 
-        error_log('Path: ' . $path);
-        error_log('Method: ' . $method);
-
-        foreach (self::PUBLIC_ROUTES as $route => $methods) {
-            if (preg_match("#^" . preg_quote($route, '#') . "(?:/\d+)?(/|$)#", $path) && (empty($methods) || in_array($method, $methods))) {
-                return;
-            }
+        if ($this->isPublicRoute($path, $method)) {
+            return;
         }
 
         $authHeader = $request->headers->get('Authorization');
         if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-            throw new AccessDeniedHttpException('Missing or invalid JWT token');
+            throw new AccessDeniedHttpException('Missing ou invalid JWT token');
         }
 
         $decodedToken = $this->jwtHandler->jwtDecodeData($matches[1]);
@@ -58,16 +52,30 @@ class JwtSubscriber
             throw new AccessDeniedHttpException($decodedToken['message']);
         }
 
-        $userRole = $decodedToken['role'];
+        $userRole = $decodedToken['role'] ?? null;
+        if (!$userRole) {
+            throw new AccessDeniedHttpException("Vous n'avez pas le token");
+        }
         $request->attributes->set('jwt_data', $decodedToken['data']);
         $request->attributes->set('jwt_role', $userRole);
+    }
+
+    private function isPublicRoute(string $path, string $method): bool
+    {
+        foreach (self::PUBLIC_ROUTES as $route => $methods) {
+            if (preg_match("#^" . preg_quote($route, '#') . "(?:/\d+)?(/|$)#", $path) &&
+                (empty($methods) || in_array($method, $methods))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function denyAccessUnlessRole(string $requiredRole, Request $request): void
     {
         $role = $request->attributes->get('jwt_role');
         if ($role !== $requiredRole) {
-            throw new AccessDeniedHttpException('You do not have the necessary role.');
+            throw new AccessDeniedHttpException("Vous n'est pas le bon role.");
         }
     }
 }

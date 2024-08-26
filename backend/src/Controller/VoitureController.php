@@ -26,6 +26,7 @@ class VoitureController extends AbstractController
     {
         $this->jwtSubscriber = $jwtSubscriber;
     }
+
     private function populateVoiture(Voiture $voiture, array $data, EntityManagerInterface $em): void
     {
         $voiture->setPrix($data['prix']);
@@ -53,7 +54,6 @@ class VoitureController extends AbstractController
                 ?? new Caracteristique();
             $caracteristique->setCaracteristique($caracteristiqueName);
             $em->persist($caracteristique);
-
             $cvVoiture = new CVVoiture();
             $cvVoiture->setVoiture($voiture);
             $cvVoiture->setCaracteristique($caracteristique);
@@ -103,13 +103,15 @@ class VoitureController extends AbstractController
             $em->persist($voitureImage);
         }
     }
+
     #[Route('/api/voitures', name: 'create_voiture', methods: ['POST'])]
     public function createVoiture(
-        Request $request,
+        Request                $request,
         EntityManagerInterface $em,
-        ValidatorInterface $validator,
-        SerializerInterface $serializer
-    ): Response {
+        ValidatorInterface     $validator,
+        SerializerInterface    $serializer
+    ): Response
+    {
         $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
 
         $data = json_decode($request->getContent(), true);
@@ -154,12 +156,13 @@ class VoitureController extends AbstractController
 
     #[Route('/api/voitures/{id}', name: 'update_voiture', methods: ['PUT'])]
     public function updateVoiture(
-        int $id,
-        Request $request,
+        int                    $id,
+        Request                $request,
         EntityManagerInterface $em,
-        ValidatorInterface $validator,
-        SerializerInterface $serializer
-    ): Response {
+        ValidatorInterface     $validator,
+        SerializerInterface    $serializer
+    ): Response
+    {
         $this->jwtSubscriber->denyAccessUnlessRole('admin', $request);
 
         $voiture = $em->getRepository(Voiture::class)->find($id);

@@ -15,8 +15,9 @@ const Reparation = () => {
   const getData = async () => {
     try {
       const response = await config.localTestingUrl.get(reparation_url);
-      if (Array.isArray(response.data)) {
-        setReparationContent(response.data);
+      const reparationData = response.data['hydra:member'];
+      if (Array.isArray(reparationData)) {
+        setReparationContent(reparationData);
       } else {
         setReparationContent([]);
       }
@@ -31,10 +32,10 @@ const Reparation = () => {
       <Card.Body className="d-flex flex-column ">
         <Card.Title style={{ fontSize: "40px", textAlign: "center" }}>{content.title}</Card.Title>
         <div className="pb-3 m-2 flex-grow-1">
-          {content.image.length > 0 ? (
+          {content.imagePath.length > 0 ? (
             <Card.Img
               variant="top"
-              src={require(`../../assests/Image/${content.image}`)}
+              src={require(`../../assests/Image/${content.imagePath}`)}
               alt="Reparation"
               style={{
                 width: "100%",

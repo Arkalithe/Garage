@@ -22,7 +22,7 @@ const HoraireUpdate = () => {
   const fetchBusinessHours = async () => {
     try {
       const response = await config.localTestingUrl.get(fetch_url);
-      const fetchedHours = response.data;
+      const fetchedHours = response.data['hydra:member'];
       setBusinessHours(fetchedHours);
       groupBusinessHours(fetchedHours);
     } catch (error) {

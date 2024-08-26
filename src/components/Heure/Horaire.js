@@ -15,8 +15,9 @@ const Horaire = () => {
   const fetchData = async (e) => {
     try {
       const response = await config.localTestingUrl.get(fetch_url, {withCredentials: true});
-      if (Array.isArray(response.data)) {
-        setBusinessHours(response.data);      
+      const horaires = response.data['hydra:member'];
+      if (Array.isArray(horaires)) {
+        setBusinessHours(horaires);
       } else {
         setBusinessHours([])
       }

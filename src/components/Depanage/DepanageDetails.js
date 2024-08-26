@@ -13,6 +13,7 @@ const DepanageDetails = () => {
     const getData = async () => {
         try {
             const response = await config.localTestingUrl.get(depannage_url, { withCredentials: true });
+
             setDepanageContent(response.data);
             console.log(response)
         } catch (error) { }
@@ -24,10 +25,10 @@ const DepanageDetails = () => {
                 <Card.Body>
                     <Card.Title>{Content.title}</Card.Title>
                     <Card.Text>
-                        {Content.image.length > 0 ? (
+                        {Content.imagePath.length > 0 ? (
                             <img
                                 className="img-fluid"
-                                src={require(`../../assests/Image/${Content.image}`)}
+                                src={require(`../../assests/Image/${Content.imagePath}`)}
                                 alt="Depanage"
                                 style={{ maxWidth: '100%', height: 'auto'}}
                             />

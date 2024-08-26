@@ -42,11 +42,11 @@ class User implements PasswordAuthenticatedUserInterface
         message: "Le Mot de Passe doit contenire au moins un caractère special",
         match: true
     )]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 1000)]
     private ?string $password = null;
 
     #[Assert\NotBlank]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 25)]
     private ?string $role = null;
 
     public function getId(): ?int
@@ -97,11 +97,11 @@ class User implements PasswordAuthenticatedUserInterface
 
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 }

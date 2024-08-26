@@ -15,8 +15,9 @@ export const VoitureOccasion = () => {
   const getData = async () => {
     try {
       const response = await config.localTestingUrl.get(voiture_url);
-      if (Array.isArray(response.data)) {
-        setVoitureContent(response.data);
+      const occasionData = response.data['hydra:member'];
+      if (Array.isArray(occasionData)) {
+        setVoitureContent(occasionData);
       } else {
         setVoitureContent([]);
       }      
@@ -29,10 +30,10 @@ export const VoitureOccasion = () => {
         <Card.Body className='d-flex flex-column'>
           <Card.Title style={{ fontSize: "40px", textAlign: "center" }}>{Content.title}</Card.Title>
           <div className="pb-3 m-2 flex-grow-1">
-            {Content.image.length > 0 ? (
+            {Content.imagePath.length > 0 ? (
               <Card.Img
                 className="img-fluid"
-                src={require(`../../assests/Image/${Content.image}`)}
+                src={require(`../../assests/Image/${Content.imagePath}`)}
                 alt="Reparation"
                 style={{
                   width: "100%",

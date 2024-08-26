@@ -3,17 +3,12 @@ import useAuth from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Container, Form, Alert } from 'react-bootstrap';
 import config from '../api/axios';
-import jwtDecode from 'jwt-decode';
-
-const login_url = process.env.REACT_APP_LOGIN_URL || '/Garage/php/Api/Login.php';
 
 const Login = () => {
-
-    const { setAuth } = useAuth();
-
+    const { login } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || '/';
 
     const emailRef = useRef();
     const errRef = useRef();
@@ -24,47 +19,36 @@ const Login = () => {
 
     useEffect(() => {
         emailRef.current.focus();
-    }, [])
+    }, []);
 
     useEffect(() => {
         setErr('');
-    }, [email, password])
+    }, [email, password]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await config.localTestingUrl.post(login_url,
-                JSON.stringify({ email, password, })
-            );
-
-            const accessToken = response.data.accessToken;
-            const dcode = jwtDecode(accessToken)
-            const role = dcode.data.role           
-
-            setAuth({ email, password,role, accessToken})
+            await login(email, password);
             setEmail('');
             setPassword('');
             navigate(from, { replace: true });
-        } catch (err) {            
+        } catch (err) {
             if (!err?.response) {
-                console.log(err)
-                setErr('Pas de reponse serveur');              
-
+                setErr('Pas de reponse serveur');
             } else if (err.response?.status === 422) {
-                setErr("Email ou mot de passe incorect")
+                setErr("Email ou mot de passe incorect");
             } else if (err.response?.status === 401) {
-                setErr("Vous n'avez pas les droits")
+                setErr("Vous n'avez pas les droits");
             } else {
-                setErr('Problème connexion')
+                setErr('Problème connexion');
             }
             errRef.current.focus();
         }
-    }
+    };
 
     return (
         <Container className='d-flex flex-column align-items-center m-auto'>
-
             <section className="form-cadre d-flex flex-column align-items-center justify-content-start m-auto">
                 <Alert ref={errRef} variant="danger" className={err ? '' : 'offscreen'} aria-live='assertive'> {err} </Alert>
                 <h1 className='d-flex flex-column p-2 m-2'>Connexion</h1>
@@ -84,7 +68,7 @@ const Login = () => {
                     <Form.Group controlId='password'>
                         <Form.Label>Password:</Form.Label>
                         <Form.Control
-                            type='password'                            
+                            type='password'
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}
                             required
@@ -95,7 +79,7 @@ const Login = () => {
                 </Form>
             </section>
         </Container>
-    )
-}
+    );
+};
 
 export default Login;

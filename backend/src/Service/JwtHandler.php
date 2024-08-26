@@ -18,7 +18,7 @@ class JwtHandler
     public function __construct(ParameterBagInterface $params, LoggerInterface $logger)
     {
         $this->issuedAt = time();
-        $this->expire = $this->issuedAt + 3600; // 1 heure d'expiration
+        $this->expire = $this->issuedAt + 3600;
         $this->jwtSecret = $params->get('app.jwt_secret');
         $this->logger = $logger;
     }
@@ -43,19 +43,19 @@ class JwtHandler
             $decoded = JWT::decode($jwtToken, new Key($this->jwtSecret, 'HS256'));
 
             if (time() > $decoded->exp) {
-                throw new ExpiredException('Token has expired');
+                throw new ExpiredException('Le token a expiré');
             }
 
             return [
-                "data" => (array) $decoded->data,
+                "data" => (array)$decoded->data,
                 "role" => $decoded->role
             ];
         } catch (ExpiredException $e) {
-            $this->logger->error('JWT expired: ' . $e->getMessage());
-            return ["message" => 'Token has expired'];
+            $this->logger->error('JWT expire: ' . $e->getMessage());
+            return ["message" => 'Le token a expiré'];
         } catch (\Exception $e) {
-            $this->logger->error('JWT decode error: ' . $e->getMessage());
-            return ["message" => 'Invalid token'];
+            $this->logger->error('JWT decode erreur: ' . $e->getMessage());
+            return ["message" => 'Le token est invalide'];
         }
     }
 }

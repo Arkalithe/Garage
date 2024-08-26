@@ -16,7 +16,8 @@ const ModerateAvis = () => {
   const fetchAvis = async () => {
     try {
       const response = await config.localTestingUrl.get(register_url);
-      setAvis(response.data);
+      const avisData = response.data['hydra:member'];
+      setAvis(avisData);
       setLoading(false);
     } catch (error) {
       setError(error.message);

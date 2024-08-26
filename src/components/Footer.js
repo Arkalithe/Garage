@@ -5,7 +5,8 @@ const daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi',
 
 const formatTime = (time) => {
   if (!time) return '';
-  const [hours, minutes] = time.split(':');
+  const [date, timeStamp] = time.split('T');
+  const [hours, minutes] = timeStamp.split(':');
   return `${hours}:${minutes}`;
 };
 
@@ -13,12 +14,12 @@ const Footer = ({ horaire }) => {
   const groupedHours = daysOfWeek.map((day, index) => {
     const dayId = index + 1;
     const dayHours = horaire.filter(hour => hour.day_id === dayId);
-    const morning = dayHours.find(hour => hour.time_period === 'Morning') || {};
-    const afternoon = dayHours.find(hour => hour.time_period === 'Afternoon') || {};
+    const morning = dayHours.find(hour => hour.timePeriode === 'Morning') || {};
+    const afternoon = dayHours.find(hour => hour.timePeriode === 'Afternoon') || {};
     return {
       dayName: day,
-      morning: morning.is_fermed ? 'Fermé' : `${formatTime(morning.heure_start)} - ${formatTime(morning.heure_fin)}`,
-      afternoon: afternoon.is_fermed ? 'Fermé' : `${formatTime(afternoon.heure_start)} - ${formatTime(afternoon.heure_fin)}`
+      morning: morning.isFermed ? 'Fermé' : `${formatTime(morning.heureStart) + "H"} - ${formatTime(morning.heureFin) + "H"}`,
+      afternoon: afternoon.isFermed ? 'Fermé' : `${formatTime(afternoon.heureStart )+ "H"} - ${formatTime(afternoon.heureFin )+ "H"}`
     };
   });
 
