@@ -36,7 +36,11 @@ composer install
 
 4. Avant d'exécuter l'application, assurez-vous de configurer les paramètres de connexion à la base de données. 
 
-Ouvrez le fichier `Connect.php` situé dans le répertoire back-end`(php/Database/Connect.php)` et mettez à jour les variables suivantes 
+Version Php avec Symfony
+Une fois situé dans le répertoire back-end`(backend/)`  faite un composer serve pour lancer le serveur
+
+Version Php sans Symfony
+Ouvrez le fichier `Connect.php` situé dans le répertoire back-end`(php/Database/Connect.php)` et pensez a mettre à jour les variables de base de donnés suivantes 
 
 ### Database Configuration
 
@@ -85,3 +89,9 @@ npm start
 
 12. l'email = momo@momo.momo et le mot de passe = Momomo0*
 
+### Deploiment
+
+1. Pour deployer l'application Il faut deployer pour le Back-end le dossier php(vielle version) ou le dossier Back-End .
+2. Il faut deployer aussi le front end qui est le dossier de base.
+
+Pour allez plus vite vous pouvez utilisez des plaforme comme Heroku and Netlify qui permette de deploy le site en utilisant Github dirrectement.
